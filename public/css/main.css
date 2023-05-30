@@ -1,0 +1,20 @@
+/* 
+
+#919537
+
+#F0F1EC
+
+#A87651
+
+#D5D6B7
+
+#3F4E09
+
+*/
+header{
+    display: flex;
+    justify-content: space-between;
+}
+.logo{
+    width: 15rem;
+}
