@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self'"> -->
+        <title>Home | Noti</title>
+        <!-- link ICONS -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+        />
+        <!-- FAVICON -->
+        <link rel="icon" href="img/favicon.ico" />
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <!-- LINK CSS -->
+        <link rel="stylesheet" href="../css/main.css" />
+    </head>
+    <body>
+        <!-- HEADER -->
+        <header>
+            <figure class="logo">
+                <img src="../img/logo/Logo2.svg" alt="logo" />
+            </figure>
+            <nav>
+                <ul>
+                    <div class="user">
+                        <li>
+                            <a href="/register">
+                                <!-- <i class="fa-solid fa-user-plus"></i> -->
+                                <img src="../img/adduser.png" alt="add user image">
+                                <span class="noneUser user-plus">Registrieren</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/login">
+                                <!-- <i class="fa-solid fa-user"></i> -->
+                                <img src="../img/user.png" alt="user image">
+                                <span class="noneUser user">Anmelden</span>
+                            </a>
+                        </li>
+                    </div>
+                    <div class="menu">
+                        <li><a href="#">WARUM NOTI</a></li>
+                        <li><a href="#">FUNKTIONEN</a></li>
+                        <li><a href="#">FÜR TEAMS</a></li>
+                        <li><a href="#">HILFE</a></li>
+                    </div>
+                </ul>
+            </nav>
+        </header>
+        <!-- MAIN -->
+        <main class="mainIndex">
+            <div>
+                <h1>Zähme deine Arbeit, organisiere dein Leben</h1>
+                <p>
+                    Merke dir alles und bewältige jedes Projekt – mit deinen
+                    Notizen, Aufgaben und Terminen an einem gemeinsamen Ort.
+                </p>
+                <button type="button">
+                    <a href="/register">Kostenlos registrieren</a>
+                </button>
+                <p class="plogin">
+                    <a href="/login"
+                        >Du besitzt bereits ein Konto? Anmelden</a
+                    >
+                </p>
+            </div>
+        </main>
+        <!-- FOOTER -->
+        <footer>
+            <section>
+                <figure class="logo">
+                    <img src="../img/logo/IconVerde.svg" alt="logo" />
+                    <span>NOTI</span>
+                </figure>
+                <div class="socialMedia">
+                    <ul>
+                        <li>
+                            <a href="#" target="_blank"
+                                ><i class="fa-brands fa-facebook"></i
+                            ></a>
+                        </li>
+                        <li>
+                            <a href="#" target="_blank"
+                                ><i class="fa-brands fa-instagram"></i
+                            ></a>
+                        </li>
+                        <li>
+                            <a href="#" target="_blank"
+                                ><i class="fa-brands fa-twitter"></i
+                            ></a>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+            <hr />
+            <div class="legalInfo">
+                <p>© 2023 Noti Corporation. Alle Rechte vorbehalten.</p>
+                <nav>
+                    <ul>
+                        <li><a href="#">Sicherheit</a></li>
+                        <li><a href="#">Rechtliche Hinweise</a></li>
+                        <li><a href="#">Datenschutz</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </footer>
+        <script src="../scripts/headerAnimation.js"></script>
+    </body>
+</html>

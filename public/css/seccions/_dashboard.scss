@@ -1,0 +1,44 @@
+.mainDash {
+    section {
+        display: flex;
+        flex-direction: column;
+        gap: 2.5rem;
+        padding: 5rem;
+        border-radius: 0.5rem;
+        box-shadow: inset 0px 2px 50px 2px rgba(145, 149, 55, 0.3);
+        .head {
+            display: flex;
+            justify-content: space-between;
+            // h1 {
+            //     font-size: 2rem;
+            // }
+            button {
+                border: none;
+                padding: .5rem 2rem;
+                background-color: #3F4E09;
+                border-radius: 0.2rem;
+                font-size: 1.1rem;
+                color: #ffffff;
+                transition: 0.5s;
+                &:hover {
+                    background-color: transparent;
+                    border: 1.7px solid #3F4E09;
+                    color: #3F4E09;
+                }
+            }
+        }
+        .notes {
+            // padding: 5rem;
+            // background-color: #F0F1EC;
+            // border-radius: 0.5rem;
+            // box-shadow: inset 0px 2px 50px 2px rgba(0, 0, 0, 0.2);
+            // background-image: url('../../img/bg.png');
+            // background-repeat: no-repeat;
+            // background-size: cover;
+            // background-position: center;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.7rem;
+        }
+    }
+}

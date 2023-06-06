@@ -1,0 +1,67 @@
+@import '../utilities/mixins';
+@import '../utilities/maps';
+
+footer {
+    padding: 2rem 6rem;
+    section {
+        @include flex(space-between, center);
+        // display: flex;
+        // justify-content: space-between;
+        // align-items: center;
+        padding: 3rem 0;
+        .logo {
+            @include flex(false, end, 0.7rem);
+            // display: flex;
+            // align-items: end;
+            // gap: .7rem;
+            img {
+                // width: 3.5rem;
+                @include measures(3.5rem);
+            }
+            span {
+                font-size: 2rem;
+            }
+        }
+        .socialMedia {
+            ul {
+                @include flex(false, false, 3rem);
+                // display: flex;
+                // gap: 3rem;
+                li {
+                    a {
+                        .fa-brands {
+                            font-size: 1.6rem;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    hr {
+        border: none;
+        background-color: map-get($map: $colors, $key: btn);
+        color: map-get($map: $colors, $key: btn);
+        // height: 0.08rem;
+        @include measures(auto, 0.08rem);
+    }
+    .legalInfo {
+        @include flex(space-between);
+        // display: flex;
+        // justify-content: space-between;
+        padding: 3rem 0;
+        nav {
+            ul {
+                @include flex(false, false, 2.5rem);
+                // display: flex;
+                // gap: 2.5rem;
+                li {
+                    a {
+                        &:hover {
+                            text-decoration: underline;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

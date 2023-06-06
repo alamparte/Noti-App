@@ -1,0 +1,39 @@
+.mainNote {
+    section {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        width: 70%;
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            input, textarea {
+                padding: 1rem;
+                font-size: 1.1rem;
+                border-radius: 0.3rem;
+                border: 1.5px solid #d5d6b7;
+                transition: 0.5s;
+                outline: none;
+                &:focus {
+                    border: 1.5px solid #d5d6b7;
+                    box-shadow: 0px 2px 18px #F0F1EC;
+                }
+            }
+            button {
+                width: 30%;
+               border: none;
+               padding: 1rem 0;
+               background-color: #919537;
+               border-radius: 0.2rem;
+               font-size: 1.1rem;
+               color: white;
+               &:hover{
+                background-color: transparent;
+                border: 1.7px solid #919537;
+                color: #919537;
+               }
+            }
+        }
+    }
+}

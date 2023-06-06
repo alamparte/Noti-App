@@ -1,0 +1,27 @@
+.mainHome {
+    gap: 3rem;
+    .servus {
+        width: 60%;
+        h2 {
+            font-size: 3rem;
+        }
+    }
+    .createNote {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        figure {
+            img {
+                width: 25rem;
+            }
+        }
+        h1 {
+            font-size: 2rem;
+        }
+        p {
+            font-size: 1.5rem;
+            font-weight: 300;
+        }
+    }
+}

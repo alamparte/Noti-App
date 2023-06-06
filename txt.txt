@@ -1,0 +1,31 @@
+
+Must >
+        - Register/login/logout
+        - CRUD Operationen (read, create, update, delete Notizen)
+        - DatenBank
+        - Drag & Drop
+
+
+Should >
+        - Change/forgot Password
+        - Pagination (Notizen in dashboard)
+
+
+Nice to have > 
+                - Change language
+                - nach Datum sortieren
+
+
+
+/* 
+
+#919537
+
+#F0F1EC
+
+#A87651
+
+#D5D6B7
+
+#3F4E09
+

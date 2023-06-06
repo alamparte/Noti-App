@@ -1,0 +1,32 @@
+@import '../utilities/variables';
+@import '../utilities/maps';
+
+body {
+    font-family: $font;
+    font-size: $fsize-primary;
+    background-color: map-get($map: $colors, $key: bg-color-1);
+    scroll-behavior: smooth;
+}
+h1 {
+    font-size: 2.3rem;
+}
+h2 {
+    font-size: 1.3rem;
+}
+/* width */
+::-webkit-scrollbar {
+    width: 0.5rem;
+}
+/* Track */
+::-webkit-scrollbar-track {
+    background: map-get($map: $colors, $key: bg-color-1);
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: map-get($map: $colors, $key: btn);
+    border-radius: 1rem;
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: map-get($map: $colors, $key: link);
+}

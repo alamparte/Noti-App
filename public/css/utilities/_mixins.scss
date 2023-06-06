@@ -1,0 +1,27 @@
+// width - height
+@mixin measures($width, $height: false) {
+    width: $width;
+    @if $height {
+        height: $height;
+    }
+}
+// flex
+@mixin flex($x: false, $y: false, $gap: false, $direction: false) {
+    display: flex;
+    @if $x {
+        justify-content: $x;
+    }
+    @if $y {
+        align-items: $y;
+    }
+    @if $gap {
+        gap: $gap;
+    }
+    @if $direction {
+        flex-direction: $direction;
+    }
+}
+// border
+@mixin border($color, $width) {
+    border: $width solid $color;
+}
