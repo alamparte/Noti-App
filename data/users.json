@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1686407172052,
+    "username": "ana",
+    "email": "ana@gmail.com",
+    "password": "$2b$10$z4vONKa7NUKxOYZENYz3.OzB.q3U8n74b.SC9Sr52Hz9gn5xvaZDW"
+  },
+  {
+    "id": 1686407457918,
+    "username": "ana",
+    "email": "mana@hot.com",
+    "password": "$2b$10$KTBikHsj5.L2oACdyoBReuAPt6bRBoaY21/EbPr00GhUYr7CkGiYm"
+  },
+  {
+    "id": 1686412752911,
+    "username": "admin",
+    "email": "admin@jdfd.co",
+    "password": "$2b$10$H9X/k9cdpFMIpb9MvnDfp.uW/3HPHlV2xYy0rKGRlWx86VK5u7IC."
+  }
+]
