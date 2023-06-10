@@ -12,12 +12,17 @@ a {
     text-decoration: none;
     color: map-get($map: $colors, $key: base);
     transition: 0.2s ease-in-out;
+    font-size: $fsize-primary;
     &:hover {
         color: map-get($map: $colors, $key: link);
-        transition: 0.2s all;
     }
 }
 button {
     cursor: pointer;
     background-color: transparent;
+    border: none;
+    font-size: $fsize-primary;
+}
+input, textarea{
+    font-size: $fsize-primary;
 }

@@ -1,38 +1,39 @@
+@import '../utilities/mixins';
+@import '../utilities/variables';
+@import '../utilities/maps';
 .mainNote {
+    @include measures(100%, auto);
+    @include grid(center);
+    padding: 4rem 0;
     section {
-        display: flex;
-        flex-direction: column;
-        gap: 1.5rem;
-        width: 70%;
+        @include measures(50%, auto);
+        max-width: 70rem;
+        @include flex(false, false, 1.5rem, column);
         form {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            input, textarea {
-                padding: 1rem;
-                font-size: 1.1rem;
-                border-radius: 0.3rem;
-                border: 1.5px solid #d5d6b7;
-                transition: 0.5s;
-                outline: none;
-                &:focus {
-                    border: 1.5px solid #d5d6b7;
-                    box-shadow: 0px 2px 18px #F0F1EC;
-                }
+            @include flex(false, false, 1.5rem, column);
+            input,
+            textarea {
+                @include input;
             }
             button {
-                width: 30%;
-               border: none;
-               padding: 1rem 0;
-               background-color: #919537;
-               border-radius: 0.2rem;
-               font-size: 1.1rem;
-               color: white;
-               &:hover{
-                background-color: transparent;
-                border: 1.7px solid #919537;
-                color: #919537;
-               }
+                @include measures(20rem);
+                padding: 1rem 0;
+                background-color: map-get($map: $colors, $key: link);
+                border-radius: 0.2rem;
+                color: map-get($map: $colors, $key: base-2);
+                transition: all .4s;
+                @include border(
+                        0.123rem,
+                        map-get($map: $colors, $key: link)
+                    );
+                &:hover {
+                    background-color: transparent;
+                    @include border(
+                        0.123rem,
+                        map-get($map: $colors, $key: link)
+                    );
+                    color: map-get($map: $colors, $key: link);
+                }
             }
         }
     }

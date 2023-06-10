@@ -1,19 +1,22 @@
+@import '../utilities/mixins';
+@import '../utilities/maps';
 .mainHome {
-    gap: 3rem;
+    @include measures(100%, auto);
+    @include grid(center, false, 3rem);
+    padding: 3rem 0;
     .servus {
-        width: 60%;
+        @include measures(60%);
         h2 {
             font-size: 3rem;
+            color: map-get($map: $colors, $key: btn);
         }
     }
     .createNote {
         text-align: center;
-        display: flex;
-        flex-direction: column;
-        gap: 1.5rem;
+        @include flex(false, false, 1.5rem, column);
         figure {
             img {
-                width: 25rem;
+                @include measures(25rem, auto);
             }
         }
         h1 {
@@ -21,7 +24,15 @@
         }
         p {
             font-size: 1.5rem;
-            font-weight: 300;
+            font-weight: map-get($map: $font-weight, $key: light);
+            a {
+                font-size: 1.4rem;
+                font-weight: map-get($map: $font-weight, $key: regular);
+                color: map-get($map: $colors, $key: btn);
+                &:hover {
+                    color: map-get($map: $colors, $key: link);
+                }
+            }
         }
     }
 }

@@ -9,31 +9,24 @@ header {
     }
     nav {
         ul {
-            @include flex(flase, false, 1.3rem, column);
+            @include flex(false, false, 1.3rem, column);
             div {
-                @include flex(end, false, 1.3rem);
+                @include flex(flex-end, false, 1.3rem);
             }
             .menu {
                 li {
                     a {
                         font-weight: map-get($map: $font-weight, $key: light);
-                        &:hover {
-                            font-weight: map-get(
-                                $map: $font-weight,
-                                $key: regular
-                            );
-                        }
                     }
                 }
             }
             .user {
                 li {
-                    .logout {
-                        @include flex(false, center);
-                        img {
-                            // width: 2.3rem;
-                            @include measures(2.3rem);
+                    a {
+                        &:hover {
+                            fill: map-get($map: $colors, $key: link);
                         }
+                        @include flex(false, center, 0.4rem);
                     }
                 }
             }
@@ -46,4 +39,5 @@ header {
     background-color: map-get($map: $colors, $key: bg-color-1);
     transition: 0.3s all;
     box-shadow: 0 1px 20px map-get($map: $colors, $key: btn);
+    z-index: 999;
 }

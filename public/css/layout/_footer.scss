@@ -2,21 +2,14 @@
 @import '../utilities/maps';
 
 footer {
-    padding: 2rem 6rem;
+    padding: 0 6rem;
     section {
-        @include flex(space-between, center);
-        // display: flex;
-        // justify-content: space-between;
-        // align-items: center;
+        @include flex(space-between, flex-end);
         padding: 3rem 0;
         .logo {
-            @include flex(false, end, 0.7rem);
-            // display: flex;
-            // align-items: end;
-            // gap: .7rem;
+            @include flex(false, flex-end, 0.7rem);
             img {
-                // width: 3.5rem;
-                @include measures(3.5rem);
+                @include measures(3.5rem, auto);
             }
             span {
                 font-size: 2rem;
@@ -25,12 +18,19 @@ footer {
         .socialMedia {
             ul {
                 @include flex(false, false, 3rem);
-                // display: flex;
-                // gap: 3rem;
                 li {
                     a {
-                        .fa-brands {
-                            font-size: 1.6rem;
+                        svg {
+                            border: none;
+                            border-radius: 50%;
+                            outline-offset: 0px;
+                            transition: all 500ms;
+                            &:hover {
+                                fill: map-get($map: $colors, $key: link);
+                                outline: 1px solid;
+                                outline-color: #91915c;
+                                outline-offset: 0.8rem;
+                            }
                         }
                     }
                 }
@@ -41,19 +41,14 @@ footer {
         border: none;
         background-color: map-get($map: $colors, $key: btn);
         color: map-get($map: $colors, $key: btn);
-        // height: 0.08rem;
         @include measures(auto, 0.08rem);
     }
     .legalInfo {
         @include flex(space-between);
-        // display: flex;
-        // justify-content: space-between;
         padding: 3rem 0;
         nav {
             ul {
                 @include flex(false, false, 2.5rem);
-                // display: flex;
-                // gap: 2.5rem;
                 li {
                     a {
                         &:hover {

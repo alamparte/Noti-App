@@ -21,7 +21,38 @@
         flex-direction: $direction;
     }
 }
+// grid
+@mixin grid($x: false, $y: false, $gap: false) {
+    display: grid;
+    @if $x {
+        justify-items: $x;
+    }
+    @if $y {
+        align-items: $y;
+    }
+    @if $gap {
+        gap: $gap;
+    }
+}
 // border
 @mixin border($color, $width) {
     border: $width solid $color;
+}
+// input , textarea
+@mixin input{
+    padding: 1rem;
+    border-radius: 0.3rem;
+    @include border(
+        0.094rem,
+        map-get($map: $colors, $key: bg-color-1)
+    );
+    transition: all 0.5s;
+    outline: none;
+    &:focus {
+        @include border(
+            0.094rem,
+            map-get($map: $colors, $key: link)
+        );
+        box-shadow: 0px 2px 18px rgba(145, 149, 55, 0.7);
+    }
 }
