@@ -1,18 +1,15 @@
+@import '../utilities/mixins';
+@import '../utilities/maps';
+
 .loginRegister {
     @include measures(100%, auto);
     @include grid(center);
     padding: 4rem 0;
     .back {
-        // width: 70%;
         @include measures(70%);
-
-        // display: flex;
-        // align-items: center;
-        // gap: .5rem;
         @include flex(false, center, 0.5rem);
         margin-bottom: 2.5rem;
         img {
-            // width: 1.3rem;
             @include measures(1.3rem);
         }
     }

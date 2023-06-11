@@ -1,5 +1,6 @@
 @import '../utilities/mixins';
 @import '../utilities/maps';
+
 .mainEdit {
     @include measures(100%, auto);
     @include grid(center);

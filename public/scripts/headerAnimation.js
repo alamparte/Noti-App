@@ -1,7 +1,5 @@
-
 // sticky header
 const header = document.querySelector('header');
-console.log(header);
 const toggleClass = 'is-sticky';
 
 window.addEventListener('scroll', () => {

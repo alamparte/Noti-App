@@ -2,27 +2,20 @@
 @import '../utilities/maps';
 @import '../utilities/variables';
 .formStyles {
-    // background-color: #f0f1ec;
     background-color: map-get($map: $colors, $key: bg-color-2);
-    // width: 40%;
     @include measures(40%);
     border-radius: 0.3rem;
     box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.2);
-    // display: grid;
-    // justify-items: center;
-    // align-items: center;
-    // gap: 3rem;
     @include grid(center, center, 3rem);
     padding: 3rem 0;
     p {
-        // font-weight: 300;
         font-weight: map-get($map: $font-weight, $key: light);
         font-size: 1.2rem;
         text-align: center;
         a {
             display: block;
             padding: 1rem 0;
-            color: #3f4e09;
+            color: map-get($map: $colors, $key: btn);
             font-size: 1.3rem;
             transition: 0.5s;
             &:hover {
@@ -38,28 +31,21 @@
                 padding-bottom: 0.7rem;
 
                 img {
-                    // width: 4rem;
                     @include measures(4rem);
                 }
             }
             span {
                 font-size: 1.6rem;
-                // font-weight: bolder;
                 font-weight: map-get($map: $font-weight, $key: bold);
                 letter-spacing: 0.8rem;
             }
         }
     }
     form {
-        // display: flex;
-        // flex-direction: column;
-        // gap: 1.3rem;
         @include flex(false, false, 1.3rem, column);
-        // width: 80%;
         @include measures(80%);
         input {
             padding: 1rem;
-            // font-size: 1.1rem;
             font-size: $fsize-primary;
             border-radius: 0.3rem;
             border: 1.5px solid #d5d6b7;
@@ -75,12 +61,11 @@
             padding: 1rem 0;
             background-color: rgba(145, 80, 31, 0.411);
             border-radius: 0.2rem;
-            // font-size: 1.1rem;
             color: #743607;
             transition: 0.8s ease-in-out;
             &:hover {
                 background-color: transparent;
-                border: .099rem solid #743607;
+                border: 0.099rem solid #743607;
             }
         }
     }

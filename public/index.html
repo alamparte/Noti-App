@@ -4,25 +4,21 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self'"> -->
+        <meta
+            http-equiv="Content-Security-Policy"
+            content="default-src 'self'"
+        />
         <title>Home | Noti</title>
         <!-- FAVICON -->
         <link rel="icon" href="img/favicon.ico" />
-        <!-- Google Fonts -->
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600;700&display=swap"
-            rel="stylesheet"
-        />
         <!-- LINK CSS -->
-        <link rel="stylesheet" href="../css/main.css" />
+        <link rel="stylesheet" href="css/main.css" />
     </head>
     <body>
-        <!-- HEADER -->
+        <!-- START HEADER -->
         <header>
             <figure class="logo">
-                <img src="../img/logo/Logo2.svg" alt="logo" />
+                <img src="img/logo/Logo2.svg" alt="logo" />
             </figure>
             <nav>
                 <ul>
@@ -58,17 +54,19 @@
                         </li>
                     </div>
                     <div class="menu">
-                        <li><a href="#">WARUM NOTI</a></li>
-                        <li><a href="#">FUNKTIONEN</a></li>
-                        <li><a href="#">FÜR TEAMS</a></li>
-                        <li><a href="#">HILFE</a></li>
+                        <li><a href="pages/menu.html">WARUM NOTI</a></li>
+                        <li><a href="pages/404.html">FUNKTIONEN</a></li>
+                        <li><a href="pages/404.html">FÜR TEAMS</a></li>
+                        <li><a href="pages/404.html">HILFE</a></li>
                     </div>
                 </ul>
             </nav>
         </header>
-        <!-- MAIN -->
+        <!-- END HEADER -->
+
+        <!-- START MAIN -->
         <main class="mainIndex">
-            <div>
+            <div class="mainContent">
                 <h1>Zähme deine Arbeit, organisiere dein Leben</h1>
                 <p>
                     Merke dir alles und bewältige jedes Projekt – mit deinen
@@ -81,18 +79,99 @@
                     <a href="/login">Du besitzt bereits ein Konto? Anmelden</a>
                 </p>
             </div>
+            <!-- FAQ -->
+            <section class="faq">
+                <figure>
+                    <img src="img/faq.png" alt="faq vector">
+                </figure>
+                <div class="accordion">
+                    <h2>FAQ</h2>
+                    <div class="accorItem">
+                        <button id="accorBtn1" aria-expanded="false">
+                            <span class="accorTitle">
+                                Muss ich zuerst ein Konto erstellen, um Noti
+                                online nutzen zu können?
+                            </span>
+                            <span class="icon" aria-hidden="true"></span>
+                        </button>
+                        <div class="accorContent">
+                            <p>
+                                Ja! Um unseren virtuellen Notizblock nutzen zu
+                                können, müssen Sie sich registrieren oder
+                                anmelden. Die Registrierung/Anmeldung ist
+                                in wenigen Schritten erledigt.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="accorItem">
+                        <button id="accorBtn2" aria-expanded="false">
+                            <span class="accorTitle">
+                                Alle Funktionen sind kostenlos?
+                            </span>
+                            <span class="icon" aria-hidden="true"></span>
+                        </button>
+                        <div class="accorContent">
+                            <p>
+                                Ja! Vom Schreiben bis zum Online-Bearbeiten von
+                                Texten sind alle Funktionen dieses
+                                Online-Notizblocks absolut kostenlos. Wir
+                                schränken die Verwendungsmöglichkeiten nicht
+                                ein.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="accorItem">
+                        <button id="accorBtn3" aria-expanded="false">
+                            <span class="accorTitle">
+                                Sind meine Notizen hier sicher?
+                            </span>
+                            <span class="icon" aria-hidden="true"></span>
+                        </button>
+                        <div class="accorContent">
+                            <p>
+                                Nun, da es sich um einen Online-Notizblock
+                                handelt, bei dem alle Vorgänge in der Cloud
+                                erfolgen, haben wir keinen direkten Zugriff auf
+                                Ihre Dateien und speichern oder bewahren Ihre
+                                Daten auch nicht bei uns auf. Ihre Dateien sind
+                                also absolut sicher.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="accorItem">
+                        <button id="accorBtn4" aria-expanded="false">
+                            <span class="accorTitle">
+                                Kann ich in diesem Online-Notizblock mehrere
+                                Notizen gleichzeitig verwalten?
+                            </span>
+                            <span class="icon" aria-hidden="true"></span>
+                        </button>
+                        <div class="accorContent">
+                            <p>
+                                Ja! Mit unserem Online-Notizblock können Sie
+                                mehrere Dateien gleichzeitig schreiben,
+                                bearbeiten und verwalten und haben gleichzeitig
+                                einen vollständigen Überblick über alle Ihre
+                                anderen Dateien.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </main>
-        <!-- FOOTER -->
+        <!-- END MAIN -->
+
+        <!-- START FOOTER -->
         <footer>
             <section>
                 <figure class="logo">
-                    <img src="../img/logo/IconVerde.svg" alt="logo" />
+                    <img src="img/logo/IconVerde.svg" alt="logo" />
                     <span>NOTI</span>
                 </figure>
                 <div class="socialMedia">
                     <ul>
                         <li>
-                            <a href="#" target="_blank">
+                            <a href="pages/404.html" target="_blank">
                                 <svg
                                     height="1.6rem"
                                     width="1.6rem"
@@ -105,7 +184,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#" target="_blank">
+                            <a href="pages/404.html" target="_blank">
                                 <svg
                                     height="1.6rem"
                                     width="1.6rem"
@@ -118,7 +197,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#" target="_blank">
+                            <a href="pages/404.html" target="_blank">
                                 <svg
                                     height="1.6rem"
                                     width="1.6rem"
@@ -138,13 +217,17 @@
                 <p>© 2023 Noti Corporation. Alle Rechte vorbehalten.</p>
                 <nav>
                     <ul>
-                        <li><a href="#">Sicherheit</a></li>
-                        <li><a href="#">Rechtliche Hinweise</a></li>
-                        <li><a href="#">Datenschutz</a></li>
+                        <li><a href="pages/404.html">Sicherheit</a></li>
+                        <li><a href="pages/404.html">Rechtliche Hinweise</a></li>
+                        <li><a href="pages/404.html">Datenschutz</a></li>
                     </ul>
                 </nav>
             </div>
         </footer>
-        <script src="../scripts/headerAnimation.js"></script>
+        <!-- END FOOTER -->
+
+        <!-- JS LINK -->
+        <script src="scripts/headerAnimation.js"></script>
+        <script src="scripts/faqAccordion.js"></script>
     </body>
 </html>

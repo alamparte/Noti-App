@@ -3,9 +3,9 @@
 
 .mainIndex {
     @include measures(100%, auto);
-    @include flex(center, center);
+    @include flex(center, center, 1rem, column);
     padding: 3rem 0 0 0;
-    div {
+    .mainContent {
         max-width: 75rem;
         @include flex(center, center, 2rem, column);
         font-size: 1.5rem;
@@ -41,6 +41,94 @@
             a {
                 font-weight: map-get($map: $font-weight, $key: light);
                 text-decoration: underline;
+                font-size: 1.3rem;
+            }
+        }
+    }
+    .faq {
+        @include flex(space-between, center, 4rem);
+        padding: 6rem;
+        text-align: center;
+        @include measures(100%, auto);
+        figure {
+            img {
+                @include measures(35rem, auto);
+            }
+        }
+        h2 {
+            padding-bottom: 1rem;
+        }
+        .accordion {
+            padding: 0 2rem;
+        }
+        .accorItem {
+            border-bottom: 0.11rem solid map-get($map: $colors, $key: btn);
+            button {
+                position: relative;
+                display: block;
+                text-align: left;
+                font-size: 1rem;
+                @include measures(100%);
+                padding: 1.5rem 0;
+                color: map-get($map: $colors, $key: btn);
+                font-weight: map-get($map: $font-weight, $key: medium);
+                border: none;
+                outline: none;
+                &:hover,
+                &:focus {
+                    color: map-get($map: $colors, $key: link);
+                }
+                .icon {
+                    display: inline-block;
+                    position: absolute;
+                    top: 1.125rem;
+                    right: 0;
+                    @include measures(1.375rem, 1.375rem);
+                    border: 0.06rem solid;
+                    border-radius: 50%;
+                    &::before,
+                    &::after {
+                        content: '';
+                        display: block;
+                        position: absolute;
+                        background: currentColor;
+                    }
+                    &::before {
+                        top: 0.5625rem;
+                        left: 0.3125rem;
+                        width: 0.625rem;
+                        height: 0.125rem;
+                    }
+                    &::after {
+                        top: 0.3125rem;
+                        left: 0.5625rem;
+                        width: 0.125rem;
+                        height: 0.625rem;
+                    }
+                }
+            }
+            button[aria-expanded='true'] {
+                border-bottom: 0.11rem solid map-get($map: $colors, $key: link);
+                .icon::after {
+                    width: 0;
+                }
+                + .accorContent {
+                    opacity: 1;
+                    max-height: 9rem;
+                    transition: all 200ms linear;
+                }
+            }
+            .accorContent {
+                opacity: 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: opacity 200ms linear, max-height 200ms linear;
+                p {
+                    line-height: 1.5rem;
+                    font-weight: map-get($map: $font-weight, $key: light);
+                    margin: 2rem 0;
+                    text-align: left;
+                }
             }
         }
     }

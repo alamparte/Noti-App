@@ -1,3 +1,31 @@
+@font-face {
+  font-family: "Josefin Sans";
+  src: url("font/JosefinSans-Regular.woff2") format("woff2"), url("font/JosefinSans-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Josefin Sans";
+  src: url("font/JosefinSans-SemiBold.woff2") format("woff2"), url("font/JosefinSans-SemiBold.woff") format("woff");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Josefin Sans";
+  src: url("font/JosefinSans-Bold.woff2") format("woff2"), url("font/JosefinSans-Bold.woff") format("woff");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Josefin Sans";
+  src: url("font/JosefinSans-Light.woff2") format("woff2"), url("font/JosefinSans-Light.woff") format("woff");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
 * {
   margin: 0;
   padding: 0;
@@ -84,7 +112,7 @@ h2 {
 .formStyles p a {
   display: block;
   padding: 1rem 0;
-  color: #3f4e09;
+  color: #3F4E09;
   font-size: 1.3rem;
   transition: 0.5s;
 }
@@ -441,9 +469,11 @@ header nav ul .user li a:hover {
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 1rem;
+  flex-direction: column;
   padding: 3rem 0 0 0;
 }
-.mainIndex div {
+.mainIndex .mainContent {
   max-width: 75rem;
   display: flex;
   justify-content: center;
@@ -452,18 +482,18 @@ header nav ul .user li a:hover {
   flex-direction: column;
   font-size: 1.5rem;
 }
-.mainIndex div h1 {
+.mainIndex .mainContent h1 {
   line-height: 4rem;
 }
-.mainIndex div p {
+.mainIndex .mainContent p {
   width: 75%;
   line-height: 2rem;
   text-align: center;
 }
-.mainIndex div button {
+.mainIndex .mainContent button {
   margin: 2rem;
 }
-.mainIndex div button a {
+.mainIndex .mainContent button a {
   padding: 1.3rem 4rem;
   font-size: 1.2rem;
   color: white;
@@ -471,15 +501,105 @@ header nav ul .user li a:hover {
   border-radius: 0.3rem;
   font-weight: 400;
 }
-.mainIndex div button a:hover {
+.mainIndex .mainContent button a:hover {
   color: #3F4E09;
   border: #3F4E09 solid 0.125rem;
   background-color: transparent;
   box-shadow: 1px 2px 30px 1px;
 }
-.mainIndex div .plogin a {
+.mainIndex .mainContent .plogin a {
   font-weight: 300;
   text-decoration: underline;
+  font-size: 1.3rem;
+}
+.mainIndex .faq {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 4rem;
+  padding: 6rem;
+  text-align: center;
+  width: 100%;
+  height: auto;
+}
+.mainIndex .faq figure img {
+  width: 35rem;
+  height: auto;
+}
+.mainIndex .faq h2 {
+  padding-bottom: 1rem;
+}
+.mainIndex .faq .accordion {
+  padding: 0 2rem;
+}
+.mainIndex .faq .accorItem {
+  border-bottom: 0.11rem solid #3F4E09;
+}
+.mainIndex .faq .accorItem button {
+  position: relative;
+  display: block;
+  text-align: left;
+  font-size: 1rem;
+  width: 100%;
+  padding: 1.5rem 0;
+  color: #3F4E09;
+  font-weight: 600;
+  border: none;
+  outline: none;
+}
+.mainIndex .faq .accorItem button:hover, .mainIndex .faq .accorItem button:focus {
+  color: #919537;
+}
+.mainIndex .faq .accorItem button .icon {
+  display: inline-block;
+  position: absolute;
+  top: 1.125rem;
+  right: 0;
+  width: 1.375rem;
+  height: 1.375rem;
+  border: 0.06rem solid;
+  border-radius: 50%;
+}
+.mainIndex .faq .accorItem button .icon::before, .mainIndex .faq .accorItem button .icon::after {
+  content: "";
+  display: block;
+  position: absolute;
+  background: currentColor;
+}
+.mainIndex .faq .accorItem button .icon::before {
+  top: 0.5625rem;
+  left: 0.3125rem;
+  width: 0.625rem;
+  height: 0.125rem;
+}
+.mainIndex .faq .accorItem button .icon::after {
+  top: 0.3125rem;
+  left: 0.5625rem;
+  width: 0.125rem;
+  height: 0.625rem;
+}
+.mainIndex .faq .accorItem button[aria-expanded=true] {
+  border-bottom: 0.11rem solid #919537;
+}
+.mainIndex .faq .accorItem button[aria-expanded=true] .icon::after {
+  width: 0;
+}
+.mainIndex .faq .accorItem button[aria-expanded=true] + .accorContent {
+  opacity: 1;
+  max-height: 9rem;
+  transition: all 200ms linear;
+}
+.mainIndex .faq .accorItem .accorContent {
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 200ms linear, max-height 200ms linear;
+}
+.mainIndex .faq .accorItem .accorContent p {
+  line-height: 1.5rem;
+  font-weight: 300;
+  margin: 2rem 0;
+  text-align: left;
 }
 
 .loginRegister {
@@ -498,6 +618,100 @@ header nav ul .user li a:hover {
 }
 .loginRegister .back img {
   width: 1.3rem;
+}
+
+.mainMenu {
+  width: 100%;
+  height: auto;
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  gap: 4rem;
+  padding: 3rem 0;
+  text-align: center;
+}
+.mainMenu .header {
+  max-width: 60rem;
+}
+.mainMenu .header h1 {
+  font-size: 3rem;
+  padding-bottom: 1.2rem;
+}
+.mainMenu .header p {
+  font-size: 1.6rem;
+  line-height: 2.3rem;
+}
+.mainMenu .header button {
+  margin: 2.3rem;
+}
+.mainMenu .header button a {
+  padding: 1rem 4rem;
+  font-size: 1.2rem;
+  color: white;
+  background-color: #3F4E09;
+  border-radius: 0.3rem;
+  font-weight: 400;
+}
+.mainMenu .header button a:hover {
+  color: #3F4E09;
+  border: #3F4E09 solid 0.125rem;
+  background-color: transparent;
+  box-shadow: 1px 2px 30px 1px;
+}
+.mainMenu .cards,
+.mainMenu .ideas {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-content: center;
+  gap: 1.4rem;
+  max-width: 80rem;
+}
+.mainMenu .card,
+.mainMenu .idea {
+  display: flex;
+  justify-content: flex-start;
+  gap: 1.3rem;
+  flex-direction: column;
+}
+.mainMenu .cards .card {
+  background-color: #f0f1ec;
+  text-align: left;
+  box-shadow: 2px 2px 15px 1px #919537;
+  padding: 1.9rem 1.3rem;
+  border-radius: 0.4rem;
+  border: #919537 solid 0.123rem;
+  width: 19rem;
+  height: 26rem;
+}
+.mainMenu .cards .card h2,
+.mainMenu .cards .card h3 {
+  font-size: 1.7rem;
+}
+.mainMenu .cards .card p {
+  font-size: 1.3rem;
+  line-height: 1.6rem;
+}
+.mainMenu .cards .card span svg {
+  fill: #3F4E09;
+}
+.mainMenu .header2 {
+  max-width: 60rem;
+  margin-top: 1.5rem;
+}
+.mainMenu .header2 h3 {
+  font-size: 2.6rem;
+  padding-bottom: 1.2rem;
+}
+.mainMenu .header2 p {
+  font-size: 1.5rem;
+  line-height: 2.3rem;
+}
+.mainMenu .ideas .idea h4,
+.mainMenu .ideas .idea h5 {
+  font-size: 1.3rem;
+}
+.mainMenu .ideas .idea p {
+  line-height: 1.7rem;
 }
 
 .mainNote {

@@ -1,6 +1,7 @@
 @import '../utilities/mixins';
 @import '../utilities/variables';
 @import '../utilities/maps';
+
 .mainNote {
     @include measures(100%, auto);
     @include grid(center);
