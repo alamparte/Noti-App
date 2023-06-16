@@ -15,8 +15,9 @@ h2 {
 }
 /* width */
 ::-webkit-scrollbar {
-    width: 0.7rem;
+    width: 0.5rem;
 }
+
 /* Track */
 ::-webkit-scrollbar-track {
     background: map-get($map: $colors, $key: bg-color-1);

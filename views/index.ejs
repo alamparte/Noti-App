@@ -8,17 +8,18 @@
             http-equiv="Content-Security-Policy"
             content="default-src 'self'"
         />
-        <title>Home | Noti</title>
+        <meta name="description" content="<%= locals.description %>">
+        <title><%= locals.title %></title>
         <!-- FAVICON -->
-        <link rel="icon" href="img/favicon.ico" />
+        <link rel="icon" href="../img/favicon.ico" />
         <!-- LINK CSS -->
-        <link rel="stylesheet" href="css/main.css" />
+        <link rel="stylesheet" href="../css/main.css" />
     </head>
     <body>
         <!-- START HEADER -->
         <header>
             <figure class="logo">
-                <img src="img/logo/Logo2.svg" alt="logo" />
+                <img src="../img/logo/Logo2.svg" alt="logo" />
             </figure>
             <nav>
                 <ul>
@@ -54,10 +55,10 @@
                         </li>
                     </div>
                     <div class="menu">
-                        <li><a href="pages/menu.html">WARUM NOTI</a></li>
-                        <li><a href="pages/404.html">FUNKTIONEN</a></li>
-                        <li><a href="pages/404.html">FÜR TEAMS</a></li>
-                        <li><a href="pages/404.html">HILFE</a></li>
+                        <li><a href="/why-noti">WARUM NOTI</a></li>
+                        <li><a href="/page-not-found">FUNKTIONEN</a></li>
+                        <li><a href="/page-not-found">FÜR TEAMS</a></li>
+                        <li><a href="/page-not-found">HILFE</a></li>
                     </div>
                 </ul>
             </nav>
@@ -171,7 +172,7 @@
                 <div class="socialMedia">
                     <ul>
                         <li>
-                            <a href="pages/404.html" target="_blank">
+                            <a href="/page-not-found" target="_blank">
                                 <svg
                                     height="1.6rem"
                                     width="1.6rem"
@@ -184,7 +185,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="pages/404.html" target="_blank">
+                            <a href="/page-not-found" target="_blank">
                                 <svg
                                     height="1.6rem"
                                     width="1.6rem"
@@ -197,7 +198,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="pages/404.html" target="_blank">
+                            <a href="/page-not-found" target="_blank">
                                 <svg
                                     height="1.6rem"
                                     width="1.6rem"
@@ -217,9 +218,9 @@
                 <p>© 2023 Noti Corporation. Alle Rechte vorbehalten.</p>
                 <nav>
                     <ul>
-                        <li><a href="pages/404.html">Sicherheit</a></li>
-                        <li><a href="pages/404.html">Rechtliche Hinweise</a></li>
-                        <li><a href="pages/404.html">Datenschutz</a></li>
+                        <li><a href="/page-not-found">Sicherheit</a></li>
+                        <li><a href="/page-not-found">Rechtliche Hinweise</a></li>
+                        <li><a href="/page-not-found">Datenschutz</a></li>
                     </ul>
                 </nav>
             </div>
@@ -227,7 +228,7 @@
         <!-- END FOOTER -->
 
         <!-- JS LINK -->
-        <script src="scripts/headerAnimation.js"></script>
-        <script src="scripts/faqAccordion.js"></script>
+        <script src="../js/headerAnimation.js"></script>
+        <script src="../js/faqAccordion.js"></script>
     </body>
 </html>

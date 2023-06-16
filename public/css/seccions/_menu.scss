@@ -94,6 +94,11 @@
             p {
                 line-height: 1.7rem;
             }
+            span {
+                svg {
+                    fill: map-get($map: $colors, $key: link);
+                }
+            }
         }
     }
 }

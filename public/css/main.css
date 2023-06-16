@@ -74,7 +74,7 @@ h2 {
 
 /* width */
 ::-webkit-scrollbar {
-  width: 0.7rem;
+  width: 0.5rem;
 }
 
 /* Track */
@@ -144,12 +144,12 @@ h2 {
   padding: 1rem;
   font-size: 1.1rem;
   border-radius: 0.3rem;
-  border: 1.5px solid #d5d6b7;
+  border: #d5d6b7 solid 0.094rem;
   transition: 0.5s;
   outline: none;
 }
 .formStyles form input:focus {
-  border: 1.5px solid #919537;
+  border: #919537 solid 0.094rem;
   box-shadow: 0px 2px 18px rgba(145, 149, 55, 0.4);
 }
 .formStyles form button {
@@ -162,7 +162,19 @@ h2 {
 }
 .formStyles form button:hover {
   background-color: transparent;
-  border: 0.099rem solid #743607;
+  border: #743607 solid 0.099rem;
+}
+.formStyles form .invalid {
+  border: red solid 0.15rem;
+}
+.formStyles form .valid {
+  border: #919537 solid 0.15rem;
+}
+.formStyles form .emailError,
+.formStyles form .emptyError,
+.formStyles form .nameError,
+.formStyles form .passError {
+  color: red;
 }
 
 .notes .note {
@@ -282,6 +294,48 @@ header nav ul .user li a:hover {
   transition: 0.3s all;
   box-shadow: 0 1px 20px #3F4E09;
   z-index: 999;
+}
+
+.errorLayout {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+}
+.errorLayout .errorSeite {
+  padding-top: 2rem;
+  position: relative;
+  text-align: center;
+}
+.errorLayout .errorSeite .text {
+  width: 30rem;
+  position: absolute;
+  top: 22rem;
+  left: 48rem;
+  line-height: 1.7rem;
+}
+.errorLayout .errorSeite .text h1 {
+  padding-bottom: 1.2rem;
+  font-size: 1.9rem;
+}
+.errorLayout .errorSeite .text p {
+  padding-bottom: 1.2rem;
+  font-size: 1.1rem;
+}
+.errorLayout .errorSeite .text button {
+  margin-top: 1rem;
+}
+.errorLayout .errorSeite .text button a {
+  padding: 0.8rem 4rem;
+  font-size: 1.2rem;
+  color: white;
+  background-color: #3F4E09;
+  border-radius: 0.3rem;
+}
+.errorLayout .errorSeite .text button a:hover {
+  color: #3F4E09;
+  border: #3F4E09 solid 0.125rem;
+  background-color: transparent;
+  box-shadow: 1px 2px 30px 1px;
 }
 
 .mainDash {
@@ -712,6 +766,9 @@ header nav ul .user li a:hover {
 }
 .mainMenu .ideas .idea p {
   line-height: 1.7rem;
+}
+.mainMenu .ideas .idea span svg {
+  fill: #919537;
 }
 
 .mainNote {

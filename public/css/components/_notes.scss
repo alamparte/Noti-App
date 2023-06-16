@@ -3,8 +3,7 @@
 .notes {
     .note {
         cursor: pointer;
-        width: 17rem;
-        height: 10.5rem;
+        @include measures(17rem, 10.5rem);
         overflow: hidden;
         padding: 1rem;
         background-color: map-get($map: $colors, $key: bg-color-2);

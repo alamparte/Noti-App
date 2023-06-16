@@ -4,8 +4,12 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta http-equiv="Content-Security-Policy" content="default-src 'self'">
-        <title>Anmelden | Noti</title>
+        <meta
+            http-equiv="Content-Security-Policy"
+            content="default-src 'self'"
+        />
+        <meta name="description" content="<%= locals.description %>" />
+        <title><%= locals.title %></title>
         <!-- FAVICON -->
         <link rel="icon" href="../img/favicon.ico" />
         <!-- LINK CSS -->
@@ -13,7 +17,9 @@
     </head>
     <body>
         <main class="loginRegister grid">
-            <div class="back"><img src="../img/arrow.png" alt=""><a href="/">Zurück</a></div>
+            <div class="back">
+                <img src="../img/arrow.png" alt="arrow image" /><a href="/">Zurück</a>
+            </div>
             <section class="formStyles">
                 <div class="head">
                     <div class="logo">
@@ -28,12 +34,24 @@
                     <p>Merke dir alle wichtigen Dinge.</p>
                 </div>
                 <form>
-                    <input type="email" name="email" id="email" placeholder="E-Mail" autocomplete="off">
                     <input
-                        type="password" autocomplete="off"
+                        type="email"
+                        name="email"
+                        id="email"
+                        placeholder="E-Mail"
+                        autocomplete="off"
+                        required
+                    />
+                    <div class="emailError"></div>
+                    <input
+                        type="password"
+                        autocomplete="off"
                         name="password"
                         placeholder="Passwort"
+                        minlength="6"
+                        required
                     />
+                    <div class="passError"></div>
                     <button type="submit" id="login">Weiter</button>
                 </form>
                 <p>
@@ -42,5 +60,7 @@
                 </p>
             </section>
         </main>
+        <!-- JS -->
+        <!-- <script src="../js/users/login.js"></script> -->
     </body>
 </html>
