@@ -34,24 +34,28 @@
                     <p>Merke dir alle wichtigen Dinge.</p>
                 </div>
                 <form>
+                    <div class="emptyError error"></div>
                     <input
                         type="email"
                         name="email"
                         id="email"
                         placeholder="E-Mail"
                         autocomplete="off"
-                        required
+                        
+                        class="allInputs"
                     />
-                    <div class="emailError"></div>
+                    <div class="emailError error"></div>
                     <input
                         type="password"
                         autocomplete="off"
                         name="password"
+                        id="password"
                         placeholder="Passwort"
                         minlength="6"
-                        required
+                        
+                        class="allInputs"
                     />
-                    <div class="passError"></div>
+                    <div class="passError error"></div>
                     <button type="submit" id="login">Weiter</button>
                 </form>
                 <p>
@@ -61,6 +65,6 @@
             </section>
         </main>
         <!-- JS -->
-        <!-- <script src="../js/users/login.js"></script> -->
+        <script src="../js/users/login.js"></script>
     </body>
 </html>

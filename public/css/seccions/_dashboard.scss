@@ -5,61 +5,49 @@
     @include measures(100%, auto);
     @include grid(center);
     padding: 4rem 0;
-    section {
-        @include flex(false, false, 2.5rem, column);
-        max-width: 82rem;
-        padding: 3rem 5rem;
-        border-radius: 0.4rem;
-        box-shadow: inset 0px 2px 50px 2px rgba(145, 149, 55, 0.3);
-        background-color: map-get($map: $colors, $key: bg-color-1);
-        position: relative;
-        &::before,
-        &::after {
-            content: '';
-            position: absolute;
-            left: -2px;
-            top: -2px;
-            border-radius: 0.5rem;
-            background: linear-gradient(
-                45deg,
-                #1caa12,
-                #07774c,
-                #1d6829,
-                #1fcb09,
-                #4cff52,
-                #1caa12,
-                #07774c,
-                #1d6829,
-                #1fcb09,
-                #4cff52
-            );
-            background-size: 400%;
-            width: calc(100% + 4px);
-            height: calc(100% + 4px);
-            z-index: -1;
-            animation: steam 20s linear infinite;
-            @keyframes steam {
-                0% {
-                    background-position: 0 0;
+    .firstNote {
+        max-width: 60rem;
+        .servus {
+            h1 {
+                font-size: 3rem;
+                color: map-get($map: $colors, $key: btn);
+            }
+        }
+        .createNote {
+            text-align: center;
+            @include flex(false, false, 1.5rem, column);
+            figure {
+                img {
+                    @include measures(25rem, auto);
                 }
-                50% {
-                    background-position: 400% 0;
-                }
-                100% {
-                    background-position: 0 0;
+            }
+            h2 {
+                font-size: 2rem;
+            }
+            p {
+                font-size: 1.5rem;
+                font-weight: map-get($map: $font-weight, $key: light);
+                a {
+                    font-size: 1.4rem;
+                    font-weight: map-get($map: $font-weight, $key: regular);
+                    color: map-get($map: $colors, $key: btn);
+                    &:hover {
+                        color: map-get($map: $colors, $key: link);
+                    }
                 }
             }
         }
+    }
+    .renderNotes {
+        max-width: 80rem;
+        box-shadow: inset 0px 2px 50px 2px rgba(145, 149, 55, 0.3);
         &::after {
             filter: blur(2.7rem);
         }
         .head {
             @include flex(space-between);
             button {
-                @include border(
-                    0.123rem,
-                    map-get($map: $colors, $key: btn)
-                );
+                @include border(0.123rem, map-get($map: $colors, $key: btn));
                 padding: 0.5rem 2rem;
                 background-color: map-get($map: $colors, $key: btn);
                 border-radius: 0.2rem;
@@ -70,22 +58,30 @@
                 transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1);
                 &:hover {
                     background-color: transparent;
-                    @include border(
-                        0.123rem,
-                        map-get($map: $colors, $key: btn)
-                    );
+                    @include border(0.123rem, map-get($map: $colors, $key: btn));
                     color: map-get($map: $colors, $key: btn);
                     outline-color: rgba(255, 255, 255, 0);
                     outline-offset: 0.938rem;
                 }
+                a {
+                    color: #ffffff;
+                    &:hover {
+                        color: map-get($map: $colors, $key: btn);
+                    }
+                }
             }
         }
         .notes {
+            @include measures(100%, auto);
             display: grid;
             grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: auto;
             justify-content: center;
             gap: 1.3rem;
-            max-width: 80rem;
+            max-width: 70rem;
         }
+    }
+    section {
+        @include animationDash;
     }
 }

@@ -1,16 +1,11 @@
 import { Router } from 'express';
-import {
-    renderIndex,
-    renderWhy,
-    renderNotFound,
-} from '../controllers/indexController.js';
+import { renderIndex, renderWhy } from '../controllers/indexController.js';
+import { checkNoAuth, checkAuth } from '../middleware/auth.js';
 
 const router = Router();
 // main Seite
-router.get('/', renderIndex);
+router.get('/', checkNoAuth, renderIndex);
 // Warum noti menu link
 router.get('/why-noti', renderWhy);
-// 404 Seite
-router.get('/page-not-found', renderNotFound);
 
 export { router };

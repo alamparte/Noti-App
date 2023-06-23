@@ -2,6 +2,7 @@ const allInputs = document.querySelectorAll('.allInputs');
 const nameError = document.querySelector('.nameError');
 const emailError = document.querySelector('.emailError');
 const emptyError = document.querySelector('.emptyError');
+const passError = document.querySelector('.passError');
 
 const username = document.querySelector('#username');
 const email = document.querySelector('#email');
@@ -26,33 +27,46 @@ const getUserData = async (e) => {
 
         let data = await res.json();
         console.log(data);
-
-        if (data.status === 'success') {
-            console.log(data.status);
-            // window.location.href = '/login';
-        } else if (data.error === 'Benutzername bereits verwendet') {
-            nameError.innerHTML = data.error;
-            username.classList.add('invalid');
-        } else if (data.error === 'E-Mail bereits verwendet') {
-            emailError.textContent = data.error;
-            email.classList.add('invalid');
-        } else {
-            emptyError.textContent = data.error;
-
-            allInputs.forEach((item) => {
-                console.log(item);
-                if (item.value == '') {
-                    item.classList.add('invalid');
-                }
-            });
-        }
+        renderResponse(data);
     } catch (error) {
         throw new Error(error);
     }
 };
+document.querySelector('form').addEventListener('submit', getUserData);
 
-document.querySelector('#register').addEventListener('click', getUserData);
+const renderResponse = (data) => {
+    emptyError.style.color = data.status === 'success' ? '#919537' : 'red';
 
+    if (data.status === 'success') {
+        emptyError.textContent = data.message;
+        allInputs.forEach((item) => {
+            item.classList.add('valid');
+        });
+        setTimeout(() => {
+            window.location.href = '/login';
+        }, 1000);
+    } else if (data.status === 'duplicate-user') {
+        nameError.innerHTML = data.error;
+        username.classList.add('invalid');
+    } else if (data.status === 'duplicate-email') {
+        emailError.textContent = data.error;
+        email.classList.add('invalid');
+    } else if (data.status === 'email format error') {
+        emailError.textContent = data.error;
+        email.classList.add('invalid');
+    } else if (data.status === 'password format error') {
+        passError.textContent = data.error;
+        password.classList.add('invalid');
+    } else {
+        emptyError.textContent = data.error;
+        //add red color to all empty inputs
+        allInputs.forEach((item) => {
+            if (item.value == '') {
+                item.classList.add('invalid');
+            }
+        });
+    }
+};
 // Remove class
 allInputs.forEach((item) => {
     item.addEventListener('focus', () => {

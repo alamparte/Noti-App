@@ -1,8 +1,8 @@
 import fs from 'fs';
 import { nanoid } from 'nanoid';
-import bcrypt from 'bcrypt';
 
 import { encrypt, compare } from '../helpers/handleBcrypt.js';
+import { validateEmail, validatePassword } from '../helpers/validation.js';
 
 // GET register
 export const register = (req, res) => {
@@ -30,61 +30,65 @@ const jsonUsers = async () => {
     }
 };
 // cuando la cuenta se cree, aparece un msj q dice creada, cuando aprieta ok, lo lleva al LOGIN
+// q lo lleve a ptra panatalla q diga verificando cuenta, y luego de unos segundos diga verificada, y lo lleve
+//al login
+// podria ver si los inputs estan completaods, y vuelve atras, preguntar antes de abandonar la pagina
 // POST register
+// ana pass>>> Admin123.
 export const getDataRegister = async (req, res) => {
     try {
         const { username, email, password } = req.body;
-        console.log(
-            '--username, email, password-------------------------------'
-        );
-        console.log(username, email, password);
+        // console.log(
+        //     '--REGISTER = username, email, password-------------------------------'
+        // );
+        // console.log(username, email, password);
         const passwordHashed = await encrypt(password);
-        // console.log(passwordHashed);
-
+        //////-----------------------------------------------
+        // users von JSON lesen
         let users = await jsonUsers();
-        let foundUser = users.find(
-            (user) => user.username === username || user.email === email
-        );
-        console.log('foundUser-------------------------------');
-        console.log(foundUser);
+        let foundUser = users.find((user) => user.username === username || user.email === email);
+        // console.log('foundUser-------------------------------');
+        // console.log(foundUser);
         if (foundUser) {
-            if (foundUser.username === username) {
+            if (foundUser.username === username)
                 return res.send({
-                    status: 'failed',
-                    error: 'Benutzername bereits verwendet',
+                    status: 'duplicate-user',
+                    error: 'Dieser Benutzername wird bereits verwendet.',
                 });
-            }
-            if (foundUser.email === email) {
+
+            if (foundUser.email === email)
                 return res.send({
-                    status: 'failed',
-                    error: 'E-Mail bereits verwendet',
+                    status: 'duplicate-email',
+                    error: 'Diese E-Mail-Adresse wird bereits verwendet.',
                 });
-            }
-        } else if (username != '' && email != '' && password != '') {
+        } else if (username != '' && username && email != '' && email && password != '' && password) {
+            // format password/email validation
+            const emailValidation = await validateEmail(email);
+            if (!emailValidation)
+                return res.send({
+                    status: 'email format error',
+                    error: 'Die E-Mail-Adresse scheint ungültig zu sein.',
+                });
+            const passwordValidation = await validatePassword(password);
+            if (!passwordValidation)
+                return res.send({
+                    status: 'password format error',
+                    error: 'Wähle ein Passwort zwischen 6 and 20 Zeichen lang, bestehend aus Buchstaben(Klein- und Großbuchstaben), Zahlen und Satzzeichen.',
+                });
+            //wenn alles korrekt ist, wird der user erstellt
             users.push({
                 id: nanoid(),
                 username,
                 email,
                 password: passwordHashed,
             });
-            fs.writeFile(
-                'database/users.json',
-                JSON.stringify(users, null, 2),
-                (err) => {
-                    if (err) throw err;
-                    console.log(users);
-                    res.send({
-                        status: 'success',
-                        message: 'Konto erfolgreich erstellt',
-                    });
-                }
-            );
-            // await fs.promises.writeFile(
-            //     'database/users.json',
-            //     JSON.stringify(users, null, 2)
-            // );
+            await fs.promises.writeFile('database/users.json', JSON.stringify(users, null, 2));
+            res.send({
+                status: 'success',
+                message: 'Konto erfolgreich erstellt',
+            });
         } else {
-            return res.send({
+            res.send({
                 status: 'failed',
                 error: 'alle Felder sind erforderlich',
             });
@@ -94,4 +98,52 @@ export const getDataRegister = async (req, res) => {
     }
 };
 // POST login
-export const getDataLogin = async (req, res) => {};
+export const getDataLogin = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        // console.log('---LOGIN == email, password-------------------------------');
+        // console.log(email, password);
+
+        // users von JSON lesen
+        let users = await jsonUsers();
+
+        const userFound = await users.find((item) => item.email === email);
+        if (userFound) {
+            const validPassword = await compare(password, userFound.password);
+            if (validPassword) {
+                req.session.username = userFound.username;
+                console.log(req.session.username);
+                res.send({
+                    status: 'success',
+                    message: 'Erfolgreiche Anmeldung.',
+                });
+            } else {
+                res.send({
+                    status: 'password-error',
+                    error: 'Ungültiges Passwort.',
+                });
+            }
+        } else if (!email || !password) {
+            res.send({
+                status: 'failed',
+                error: 'alle Felder sind erforderlich',
+            });
+        } else {
+            res.send({
+                status: 'email-error',
+                error: 'Es ist kein Konto mit dieser E-Mail-Adresse vorhanden.',
+            });
+        }
+    } catch (error) {
+        throw new Error(error);
+    }
+};
+// GET logout
+export const logout = (req, res) => {
+    req.session.username = '';
+    res.redirect('/');
+};
+// GET checkusername
+export const checkuser = (req, res) => {
+    res.send(req.session.username);
+};

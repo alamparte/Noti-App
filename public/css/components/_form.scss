@@ -75,7 +75,6 @@
             @include border(0.15rem, map-get($map: $colors, $key: link));
         }
         .emailError,
-        .emptyError,
         .nameError,
         .passError {
             color: map-get($map: $colors, $key: error);

@@ -15,11 +15,3 @@ export const renderWhy = (req, res) => {
     };
     res.render('menu', { locals });
 };
-// 404 Seite
-export const renderNotFound = (req, res) => {
-    const locals = {
-        title: 'Seite nicht gefunden | Noti',
-        description: 'Seite nicht gefunden | Noti',
-    };
-    res.status(404).render('404', { locals });
-};

@@ -9,33 +9,72 @@
     section {
         @include measures(50%, auto);
         max-width: 70rem;
-        @include flex(false, false, 1.5rem, column);
+        // @include flex(false, false, 1.5rem, column);
+        display: grid;
+        gap: 1.5rem;
         form {
-            @include flex(false, false, 1.5rem, column);
+            // @include flex(false, false, 1.5rem, column);
+            display: grid;
+            gap: 1.5rem;
             input,
             textarea {
                 @include input;
             }
             button {
                 @include measures(20rem);
+                justify-self: flex-end;
                 padding: 1rem 0;
                 background-color: map-get($map: $colors, $key: link);
                 border-radius: 0.2rem;
                 color: map-get($map: $colors, $key: base-2);
-                transition: all .4s;
-                @include border(
-                        0.123rem,
-                        map-get($map: $colors, $key: link)
-                    );
+                transition: all 0.4s;
+                @include border(0.123rem, map-get($map: $colors, $key: link));
                 &:hover {
                     background-color: transparent;
-                    @include border(
-                        0.123rem,
-                        map-get($map: $colors, $key: link)
-                    );
+                    @include border(0.123rem, map-get($map: $colors, $key: link));
                     color: map-get($map: $colors, $key: link);
                 }
             }
+
+            .categories {
+                label {
+                    margin-left: 0.5rem;
+                }
+                input[type='radio'] {
+                    border: 0px;
+                    width: 1.3rem;
+                    height: 1.2rem;
+                    accent-color: $primary-color-2;
+                }
+                .hohe {
+                    &:hover {
+                        text-decoration: underline;
+                        text-decoration-color: red;
+                    }
+                }
+                .mittlere {
+                    &:hover {
+                        text-decoration: underline;
+                        text-decoration-color: yellow;
+                    }
+                }
+                .niedrige {
+                    &:hover {
+                        text-decoration: underline;
+                        text-decoration-color: green;
+                    }
+                }
+            }
+        }
+        .abbrechen{
+            justify-self: flex-end;
+
+        }
+        .invalid {
+            @include border(0.15rem, map-get($map: $colors, $key: error));
+        }
+        .emptyError {
+            color: map-get($map: $colors, $key: error);
         }
     }
 }
