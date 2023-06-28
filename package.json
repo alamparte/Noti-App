@@ -9,6 +9,7 @@
     "mon": "nodemon -r dotenv/config server.js",
     "start": "node -r dotenv/config server.js"
   },
+  "nodemonConfig": {    "ignore": ["*.json"]  },
   "keywords": [],
   "author": "",
   "license": "ISC",

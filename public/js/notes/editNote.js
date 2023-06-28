@@ -2,18 +2,21 @@ const titel = document.querySelector('#titel');
 const description = document.querySelector('#description');
 const btnDelete = document.querySelector('#btnDelete');
 const getId = document.querySelector('#id').value;
+const select = document.querySelector('select');
 console.log(getId);
 
 // console.log(titel.value, description.value);
 
-const geteditNote = async () => {
+const geteditNote = async (e) => {
+    e.preventDefault();
     try {
-        let res = await fetch(`/view-note/${getId}`, {
+        let res = await fetch(`/dashboard/view-note/${getId}`, {
             method: 'POST',
             headers: { 'Content-type': 'application/json' },
             body: JSON.stringify({
                 titel: titel.value,
                 description: description.value,
+                category: select.options[select.selectedIndex].value,
             }),
         });
         let data = await res.json();
@@ -30,10 +33,10 @@ const geteditNote = async () => {
 
 document.querySelector('form').addEventListener('submit', geteditNote);
 
-    // DELETE
+// DELETE
 document.querySelector('#btnDelete').addEventListener('click', () => {
     // DELETE
-    fetch(`/delete-note/${getId}`)
+    fetch(`/dashboard/delete-note/${getId}`)
         .then((res) => res.json())
         .then((data) => {
             console.log(data);

@@ -17,6 +17,9 @@ header {
                 li {
                     a {
                         font-weight: map-get($map: $font-weight, $key: light);
+                        &:hover {
+                            color: map-get($map: $colors, $key: link);
+                        }
                     }
                 }
             }
@@ -25,6 +28,7 @@ header {
                     a {
                         &:hover {
                             fill: map-get($map: $colors, $key: link);
+                            color: map-get($map: $colors, $key: link);
                         }
                         @include flex(false, center, 0.4rem);
                     }

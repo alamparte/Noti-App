@@ -2,6 +2,7 @@
 @import '../utilities/maps';
 .notes {
     .note {
+        position: relative;
         cursor: pointer;
         @include measures(16rem, 12rem);
         overflow: hidden;

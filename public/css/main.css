@@ -42,9 +42,6 @@ a {
   transition: 0.2s ease-in-out;
   font-size: 1.1rem;
 }
-a:hover {
-  color: #919537;
-}
 
 button {
   cursor: pointer;
@@ -177,6 +174,7 @@ h2 {
 }
 
 .notes .note {
+  position: relative;
   cursor: pointer;
   width: 16rem;
   height: 12rem;
@@ -264,6 +262,7 @@ footer .legalInfo nav ul {
 }
 footer .legalInfo nav ul li a:hover {
   text-decoration: underline;
+  color: #919537;
 }
 
 header {
@@ -288,6 +287,9 @@ header nav ul div {
 header nav ul .menu li a {
   font-weight: 300;
 }
+header nav ul .menu li a:hover {
+  color: #919537;
+}
 header nav ul .user li a {
   display: flex;
   align-items: center;
@@ -295,6 +297,7 @@ header nav ul .user li a {
 }
 header nav ul .user li a:hover {
   fill: #919537;
+  color: #919537;
 }
 
 .is-sticky {

@@ -1,11 +1,12 @@
 const titel = document.querySelector('#titel');
 const description = document.querySelector('#description');
-const category = document.getElementsByName('category');
- // category: document.forms['newNote']['category'].value
+const select = document.querySelector('select');
 const allInputs = document.querySelectorAll('.allInputs');
 const emptyError = document.querySelector('.emptyError');
 
-const createNote = async () => {
+
+const createNote = async (e) => {
+    e.preventDefault();
     try {
         let res = await fetch('/dashboard/noteform', {
             method: 'POST',
@@ -13,6 +14,7 @@ const createNote = async () => {
             body: JSON.stringify({
                 titel: titel.value,
                 description: description.value,
+                category: select.options[select.selectedIndex].value,
             }),
         });
         if (!res.ok) {

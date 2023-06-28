@@ -8,9 +8,9 @@
         <meta name="description" content="<%= locals.description %>" />
         <title><%= locals.title %></title>
         <!-- FAVICON -->
-        <link rel="icon" href="../img/favicon.ico" />
+        <link rel="icon" href="/img/favicon.ico" />
         <!-- LINK CSS -->
-        <link rel="stylesheet" href="../css/main.css" />
+        <link rel="stylesheet" href="/css/main.css" />
     </head>
     <body>
         <!-- START HEADER -->
@@ -22,12 +22,14 @@
             <section>
                 <h1>Notiz hinzufügen</h1>
                 <form name="newNote">
+                    <div class="categories">
+                        <select name="category">
+                            <option value="hohe">hohe Priorität</option>
+                            <option value="mittlere">mittlere Priorität</option>
+                            <option value="niedrige">niedrige Priorität</option>
+                        </select>
+                    </div>
                     <div class="emptyError error"></div>
-                    <!-- <div class="categories">
-                        <label for="hohe" class="hohe"> <input type="radio" name="category" value="hohe" id="hohe" required /> hohe Priorität</label>
-                        <label for="mittlere" class="mittlere"> <input type="radio" name="category" value="mittlere" required /> mittlere Priorität</label>
-                        <label for="niedrige" class="niedrige"> <input type="radio" name="category" value="niedrige" required /> niedrige Priorität</label>
-                    </div> -->
                     <input type="text" id="titel" placeholder="Titel" class="allInputs" />
                     <textarea id="description" cols="30" rows="14" placeholder="Beschreibung. . ." class="allInputs"></textarea>
                     <button type="submit">+ Hinzufügen</button>
@@ -42,7 +44,7 @@
         <!-- END FOOTER -->
 
         <!-- JS LINK -->
-        <script src="../js/headerAnimation.js"></script>
-        <script src="../js/notes/createNote.js"></script>
+        <script src="/js/headerAnimation.js"></script>
+        <script src="/js/notes/createNote.js"></script>
     </body>
 </html>

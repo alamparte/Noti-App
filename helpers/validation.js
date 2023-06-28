@@ -10,8 +10,7 @@ const validateEmail = async (email) => {
 // Password validation
 const validatePassword = async (password) => {
     //Passwort zwischen 6 and 20 Zeichen lang, bestehend aus Buchstaben(Klein- und Großbuchstaben), Zahlen und Satzzeichen
-    const passformat =
-        /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{6,20}$/;
+    const passformat = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{6,20}$/;
     if (passformat.test(await password)) {
         return true;
     } else {
@@ -19,4 +18,27 @@ const validatePassword = async (password) => {
     }
 };
 
-export { validateEmail, validatePassword };
+const getDatum = () => {
+    
+    const months = [
+        'Jan',
+        'Feb',
+        'Mar',
+        'Apr',
+        'May',
+        'Jun',
+        'Jul',
+        'Aug',
+        'Sept',
+        'Oct',
+        'Nov',
+        'Dec',
+    ];
+    let dateObj = new Date(),
+        month = months[dateObj.getMonth()],
+        day = dateObj.getDate(),
+        year = dateObj.getFullYear();
+  return `${month} ${day}, ${year}`
+};
+
+export { validateEmail, validatePassword, getDatum };

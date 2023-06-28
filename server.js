@@ -17,15 +17,7 @@ app.use(
     })
 );
 
-//nicht funktioniert???
-// app.use(function (req, res, next) {
-//     // if (req.session.username && req.session.username != '') {
-//     //     return res.redirect('/dashboard');
-//     // }
-//     // next();
-// });
-
-// Middleware client, wenn URL mit /client beginnt...
+// Middleware
 app.use('/dashboard', (req, res, next) => {
     if (req.session.username && req.session.username != '') {
         next();
@@ -33,7 +25,6 @@ app.use('/dashboard', (req, res, next) => {
         res.redirect('/');
     }
 });
-// Middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.static('public'));
@@ -49,9 +40,6 @@ app.set('view engine', 'ejs');
 app.use('/', indexRoutes);
 app.use('/', notesRoutes);
 app.use('/', userRoutes);
-// app.use(indexRoutes);
-// app.use(notesRoutes);
-// app.use(userRoutes);
 
 // listen
 app.listen(PORT, () => {

@@ -4,16 +4,13 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta
-            http-equiv="Content-Security-Policy"
-            content="default-src 'self'"
-        />
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self'" />
         <meta name="description" content="<%= locals.description %>" />
         <title><%= locals.title %></title>
         <!-- FAVICON -->
-        <link rel="icon" href="../img/favicon.ico" />
+        <link rel="icon" href="/img/favicon.ico" />
         <!-- LINK CSS -->
-        <link rel="stylesheet" href="../css/main.css" />
+        <link rel="stylesheet" href="/css/main.css" />
     </head>
     <body>
         <!-- START HEADER -->
@@ -29,28 +26,16 @@
                     <!-- <a href="/delete-note/<%= foundNote.id %>">Löschen</a> -->
                 </div>
                 <form>
-                    <input
-                        value="<%= foundNote.id %>"
-                        id="id"
-                        name="id"
-                        hidden
-                    />
-                    <input
-                        type="text"
-                        name="titel"
-                        id="titel"
-                        required
-                        value="<%= foundNote.titel %>"
-                    />
-                    <textarea
-                        name="description"
-                        cols="30"
-                        rows="14"
-                        id="description"
-                        required
-                    >
-<%= foundNote.description %></textarea
-                    >
+                    <input value="<%= foundNote.id %>" id="id" name="id" hidden />
+                    <div class="categories">
+                        <select name="category">
+                            <option value="hohe" <%=foundNote.category==='hohe' ? 'selected' : '' %> >hohe Priorität</option>
+                            <option value="mittlere" <%=foundNote.category==='mittlere' ? 'selected' : '' %> >mittlere Priorität</option>
+                            <option value="niedrige" <%=foundNote.category==='niedrige' ? 'selected' : '' %> >niedrige Priorität</option>
+                        </select>
+                    </div>
+                    <input type="text" name="titel" id="titel" required value="<%= foundNote.titel %>" />
+                    <textarea name="description" cols="30" rows="14" id="description" required><%= foundNote.description %></textarea>
                     <button type="submit">Bearbeiten</button>
                     <a href="/dashboard">Abbrechen</a>
                 </form>
@@ -63,7 +48,7 @@
         <!-- END FOOTER -->
 
         <!-- JS LINK -->
-        <script src="../js/headerAnimation.js"></script>
-        <script src="../js/notes/editNote.js"></script>
+        <script src="/js/headerAnimation.js"></script>
+        <script src="/js/notes/editNote.js"></script>
     </body>
 </html>
