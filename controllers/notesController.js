@@ -44,9 +44,12 @@ export const showNotes = async (req, res) => {
     const databaseFolder = './database';
     const file = `${foundUser.id}.json`;
 
+    let notes = JSON.parse(await fs.promises.readFile(`${databaseFolder}/${file}`));
+
+
     fs.access(`${databaseFolder}/${file}`, fs.constants.F_OK, async (err) => {
         console.log(`${file} ${err ? 'does not exist' : 'exists'}`);
-        if (err) {
+        if (err || notes.length < 1) {
             res.send({
                 status: 'failed',
                 message: 'keine Notiz gefunden',
@@ -316,20 +319,6 @@ export const editNote = async (req, res) => {
     //read JSON notes
     let notes = JSON.parse(await fs.promises.readFile(`${databaseFolder}/${file}`));
 
-    // const foundNote = notes.find((note) => note.id === req.params.id);
-
-    // let index = notes.findIndex((e) => e.id === req.params.id);
-    // console.log('index ---- ', index);
-    // let itemRemoved = notes.splice(index, 1);
-
-    // mit notes.MAP()
-
-    // notes.unshift({
-    //     id: nanoid(),
-    //     userId: foundUser.id,
-    //     titel,
-    //     description,
-    // });
     let date = getDatum();
 
     notes = notes.map((note) => {
@@ -353,26 +342,28 @@ export const deleteNote = async (req, res) => {
     //old note
     console.log('id--------- ', req.params.id);
 
+    const users = await jsonUsers();
+    const foundUser = users.find((user) => user.username === req.session.username);
+    const databaseFolder = './database';
+    const file = `${foundUser.id}.json`;
+
     //read JSON notes
-    const notes = await jsonNotes();
+    let notes = JSON.parse(await fs.promises.readFile(`${databaseFolder}/${file}`));
 
     const foundNote = notes.find((note) => note.id === req.params.id);
-    console.log('foundNote to delete-------------------------------------');
-    console.log(foundNote);
-    let index = notes.findIndex((e) => e.id === req.params.id);
-    console.log('index ---- ', index);
-    let itemRemoved = notes.splice(index, 1);
 
-    // let itemRemoved = data.splice(
-    //     data.findIndex((e) => e.id == targetBtnParent.id),
-    //     1
-    // );
+    if (foundNote) {
+        let itemRemoved = notes.splice(
+            notes.findIndex((note) => note.id === req.params.id),
+            1
+        );
+        await fs.promises.writeFile(`${databaseFolder}/${file}`, JSON.stringify(notes, null, 2));
 
-    await fs.promises.writeFile('database/notes.json', JSON.stringify(notes, null, 2));
-    res.send({
-        status: 'success',
-        message: 'nota borrada correctamente',
-    });
+        return res.send({
+            status: 'success',
+            message: 'Notiz erfolgreich gelöscht.',
+        });
+    }
 };
 
 export const sortNotes = async (req, res) => {

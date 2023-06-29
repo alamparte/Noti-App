@@ -6,11 +6,12 @@
     @include grid(center);
     padding: 4rem 0;
     .firstNote {
+        @include animationDash;
+        width: 50%;
         max-width: 60rem;
         .servus {
             h1 {
                 font-size: 3rem;
-                color: map-get($map: $colors, $key: btn);
             }
         }
         .createNote {
@@ -39,6 +40,7 @@
         }
     }
     .renderNotes {
+        @include animationDash;
         max-width: 80rem;
         box-shadow: inset 0px 2px 50px 2px rgba(145, 149, 55, 0.3);
         &::after {
@@ -46,27 +48,72 @@
         }
         .head {
             @include flex(space-between);
-            button {
-                @include border(0.123rem, map-get($map: $colors, $key: btn));
-                padding: 0.5rem 2rem;
-                background-color: map-get($map: $colors, $key: btn);
-                border-radius: 0.2rem;
-                color: #ffffff;
-                outline: 1px solid;
-                outline-color: map-get($map: $colors, $key: btn);
-                outline-offset: 0px;
-                transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1);
-                &:hover {
-                    background-color: transparent;
-                    @include border(0.123rem, map-get($map: $colors, $key: btn));
-                    color: map-get($map: $colors, $key: btn);
-                    outline-color: rgba(255, 255, 255, 0);
-                    outline-offset: 0.938rem;
+            .options {
+                @include flex(false, center, 1.6rem);
+                .dropDownSort{
+                    width: 230px;
+                    height: 160px;
+                    p{
+                        font-size: 1rem;
+                    }
                 }
-                a {
-                    color: #ffffff;
-                    &:hover {
-                        color: map-get($map: $colors, $key: btn);
+                .dropDownFilter{
+                    width: 170px;
+                    height: 190px;
+                    p{
+                        font-size: 1.1rem;
+                    }
+                }
+                .dropDownSort,
+                .dropDownFilter {
+                    display: none;
+                    top: 6.5rem;
+                    padding: 1rem;
+                    position: absolute;
+                    background-color: map-get($map: $colors, $key: bg-color-2);
+                    box-shadow: 0px 2px 10px 2px map-get($map: $colors, $key: link);
+                    border-radius: .5rem;
+                    z-index: 999;
+                    p{
+                        margin-bottom: .9rem;
+                    }
+                    select {
+                        background-color: map-get($map: $colors, $key: bg-color-2);
+                        font-size: 0.9rem;
+                        padding: 0.5rem 0.1rem;
+                        border: none;
+                        outline: none;
+                        border-radius: 0.3rem;
+                        @include border(0.094rem, map-get($map: $colors, $key: bg-color-1));
+                        &:focus {
+                            @include border(0.094rem, map-get($map: $colors, $key: link));
+                            box-shadow: 0px 2px 18px rgba(145, 149, 55, 0.7);
+                        }
+                    }
+                }
+                // .sortGroup, .filterGroup{
+                //     display: flex;
+                //     flex-direction: column;
+                //     gap: .8rem;
+                // }
+                button {
+                    a {
+                        @include border(0.123rem, map-get($map: $colors, $key: btn));
+                        padding: 0.5rem 2rem;
+                        background-color: map-get($map: $colors, $key: btn);
+                        border-radius: 0.2rem;
+                        color: #ffffff;
+                        outline: 1px solid;
+                        outline-color: map-get($map: $colors, $key: btn);
+                        outline-offset: 0px;
+                        transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1);
+                        &:hover {
+                            background-color: transparent;
+                            @include border(0.123rem, map-get($map: $colors, $key: btn));
+                            color: map-get($map: $colors, $key: btn);
+                            outline-color: rgba(255, 255, 255, 0);
+                            outline-offset: 0.938rem;
+                        }
                     }
                 }
             }
@@ -80,8 +127,5 @@
             gap: 1.3rem;
             max-width: 70rem;
         }
-    }
-    section {
-        @include animationDash;
     }
 }

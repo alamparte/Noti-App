@@ -133,54 +133,106 @@ const renderWithoutNotes = () => {
 let divNotesContainer = document.createElement('div');
 divNotesContainer.classList.add('notes');
 
- //section
- const section = document.createElement('section');
- section.classList.add('renderNotes');
- 
+//section
+const section = document.createElement('section');
+section.classList.add('renderNotes');
+
 const renderNotes = async (data) => {
     const { notes } = data;
     // //section
     // const section = document.createElement('section');
     // section.classList.add('renderNotes');
+
     //head div
     const divHead = document.createElement('div');
     divHead.classList.add('head');
 
     divHead.innerHTML = `   
-        <h1>Servus <span id="userName"></span></h1>
-        <select id="sortieren">
-             <option value="">Ergebnisse sortieren</option>
-             <option value="auf">nach Datum (aufsteigend)</option>
-             <option value="ab">nach Datum (absteigend)</option>
-        </select>
-        <select id="filtern">
-             <option value="">Filter hinzufügen</option>
-             <option value="alle">Alle ansehen</option>
-             <option value="hohe">hohe Priorität</option>
-             <option value="mittlere">mittlere Priorität</option>
-             <option value="niedrige">niedrige Priorität</option>
-        </select>
-        <button type="button">
-            <a href="/dashboard/noteform" id="noteForm">+ neue Notiz</a>
-        </button>`;
-
-    // //NotesContainer div
-    // let divNotesContainer = document.createElement('div');
-    // divNotesContainer.classList.add('notes');
+            <h1>Servus <span id="userName"></span></h1>
+            <div class="options">
+                <div class="sortGroup"> 
+                    <svg height="1.5rem" viewBox="0 0 576 512" id="dropDownSortIcon">
+                        <path
+                            d="M151.6 469.6C145.5 476.2 137 480 128 480s-17.5-3.8-23.6-10.4l-88-96c-11.9-13-11.1-33.3 2-45.2s33.3-11.1 45.2 2L96 365.7V64c0-17.7 14.3-32 32-32s32 14.3 32 32V365.7l32.4-35.4c11.9-13 32.2-13.9 45.2-2s13.9 32.2 2 45.2l-88 96zM320 480c-17.7 0-32-14.3-32-32s14.3-32 32-32h32c17.7 0 32 14.3 32 32s-14.3 32-32 32H320zm0-128c-17.7 0-32-14.3-32-32s14.3-32 32-32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H320zm0-128c-17.7 0-32-14.3-32-32s14.3-32 32-32H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H320zm0-128c-17.7 0-32-14.3-32-32s14.3-32 32-32H544c17.7 0 32 14.3 32 32s-14.3 32-32 32H320z"
+                        />
+                    </svg>
+                    <div class="dropDownSort"></div>   
+                </div> 
+    
+                <div class="filterGroup"> 
+                    <svg height="1.5rem" viewBox="0 0 512 512" id="dropDownFilterIcon">
+                        <path
+                            d="M3.9 54.9C10.5 40.9 24.5 32 40 32H472c15.5 0 29.5 8.9 36.1 22.9s4.6 30.5-5.2 42.5L320 320.9V448c0 12.1-6.8 23.2-17.7 28.6s-23.8 4.3-33.5-3l-64-48c-8.1-6-12.8-15.5-12.8-25.6V320.9L9 97.3C-.7 85.4-2.8 68.8 3.9 54.9z"
+                        />
+                    </svg>
+                    <div class="dropDownFilter"></div>
+                </div> 
+    
+                <button type="button">
+                    <a href="/dashboard/noteform" id="noteForm">+ neue Notiz</a>
+                </button>
+            </div> `;
 
     divNotesContainer.innerHTML = `${await notes.map((note) => renderItem(note)).join('')}`;
 
     section.append(divHead, divNotesContainer);
     mainDashboard.append(section);
+
     printName();
 
-    // sortieren
-    const sortieren = document.querySelector('#sortieren');
-    sortieren.addEventListener('change', arrSortiert);
-    // filter
-    const filterNotes = document.querySelector('#filtern');
-    console.log(filterNotes);
-    filterNotes.addEventListener('change', arrFilter);
+    // // sortieren
+    // const sortieren = document.querySelector('#sortieren');
+    // sortieren.addEventListener('change', arrSortiert);
+    // // filter
+    // const filterNotes = document.querySelector('#filtern');
+    // console.log(filterNotes);
+    // filterNotes.addEventListener('change', arrFilter);
+
+    ///////*****************************************************////////////////////////////////// */
+
+    const dropDownSortIcon = document.querySelector('#dropDownSortIcon');
+    const dropDownSort = document.querySelector('.dropDownSort');
+    const showSelectSort = () => {
+        const p = document.createElement('p');
+        p.textContent = 'SORTIEREN NACH';
+        dropDownSort.innerHTML = '';
+        const select = document.createElement('select');
+        select.setAttribute('id', 'sortieren');
+        select.innerHTML = ` <option value="">Ergebnisse sortieren</option>
+      <option value="auf">nach Datum (aufsteigend)</option>
+      <option value="ab">nach Datum (absteigend)</option>`;
+        dropDownSort.append(p, select);
+        dropDownSort.style.display == 'none' ? (dropDownSort.style.display = 'block') : (dropDownSort.style.display = 'none');
+
+        // // sortieren
+        const sortieren = document.querySelector('#sortieren');
+        sortieren.addEventListener('change', arrSortiert);
+    };
+    dropDownSortIcon.addEventListener('click', showSelectSort);
+
+    ///////////////////----------------------------------------------------
+    const dropDownFilterIcon = document.querySelector('#dropDownFilterIcon');
+    const dropDownFilter = document.querySelector('.dropDownFilter');
+    const showSelectFilter = () => {
+        const p = document.createElement('p');
+        p.textContent = 'Filter hinzufügen';
+        dropDownFilter.innerHTML = '';
+        const select = document.createElement('select');
+        select.setAttribute('id', 'filtern');
+        select.innerHTML = `<option value="">Filter hinzufügen</option>
+      <option value="alle">Alle ansehen</option>
+      <option value="hohe">hohe Priorität</option>
+      <option value="mittlere">mittlere Priorität</option>
+      <option value="niedrige">niedrige Priorität</option>`;
+        dropDownFilter.append(p, select);
+        dropDownFilter.style.display == 'none' ? (dropDownFilter.style.display = 'block') : (dropDownFilter.style.display = 'none');
+
+        // // filter
+        const filterNotes = document.querySelector('#filtern');
+        filterNotes.addEventListener('change', arrFilter);
+    };
+
+    dropDownFilterIcon.addEventListener('click', showSelectFilter);
 };
 
 const printName = () => {
@@ -246,20 +298,23 @@ const arrFilter = async () => {
     }
 };
 
-//AGREGAR SINO HAY NOTAS ; UN MSJ DE AVISO  >>> NO HAY NADA EN ESA CATEGORIA
+let p = document.createElement('p');
+p.classList.add('withoutNotes');
+
 const renderFilterNotes = async (data) => {
     divNotesContainer.innerHTML = '';
     if (data.status === 'alle') {
+        p.remove();
         const { notes } = data;
         divNotesContainer.innerHTML = `${await notes.map((note) => renderItem(note)).join('')}`;
     } else {
         const { notesFilteredArr } = data;
 
         if (notesFilteredArr < 1) {
-            let text = document.createElement('p');
-            text.textContent = 'In dieser Kategorie wurden keine Notizen gefunden';
-            section.append(text);
+            p.textContent = 'In dieser Kategorie wurden keine Notizen gefunden';
+            section.append(p);
         } else {
+            p.remove();
             divNotesContainer.innerHTML = `${await notesFilteredArr.map((note) => renderItem(note)).join('')}`;
         }
     }
@@ -267,12 +322,30 @@ const renderFilterNotes = async (data) => {
 
 ///////////////////////---------------------------------------
 
-// await data.notes.forEach(({ id, titel, description, date }) => {
-//     divNotesContainer += ` <a class="link" data-id="${id}" href="/dashboard/view-note/${id}">
-//                                               <div class="note">
-//                                                   <h2>${titel}</h2>
-//                                                   <p>${description}</p>
-//                                                   <div class="datum">${date}</div>
-//                                               </div>
-//                                           </a>`;
-// });
+// const showSelect = () => {
+//     dropDownSort.innerHTML = '';
+
+//     const select = document.createElement('select');
+//     select.setAttribute('id', 'select');
+//     select.innerHTML = ` <option value="">Ergebnisse sortieren</option>
+//     <option value="auf">nach Datum (aufsteigend)</option>
+//     <option value="ab">nach Datum (absteigend)</option>`;
+//     dropDownSort.append(select);
+
+//     // <div class="dropDownSort"></div>
+//     // <select id="sortieren">
+//     //      <option value="">Ergebnisse sortieren</option>
+//     //      <option value="auf">nach Datum (aufsteigend)</option>
+//     //      <option value="ab">nach Datum (absteigend)</option>
+//     // </select>
+//     // </div>
+
+//     dropDownSort.style.display == 'none' ? (dropDownSort.style.display = 'block') : (dropDownSort.style.display = 'none');
+// };
+//     <select id="filtern">
+//     <option value="">Filter hinzufügen</option>
+//     <option value="alle">Alle ansehen</option>
+//     <option value="hohe">hohe Priorität</option>
+//     <option value="mittlere">mittlere Priorität</option>
+//     <option value="niedrige">niedrige Priorität</option>
+// </select>

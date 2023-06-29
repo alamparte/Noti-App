@@ -1,0 +1,51 @@
+*,
+*::after,
+*::before {
+    box-sizing: border-box;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+.spinner {
+    width: 200px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    margin: 10rem auto 0 auto;
+    z-index: 999;
+}
+.spinner::before,
+.spinner::after {
+    content: '';
+    position: absolute;
+    width: 90%;
+    height: 90%;
+    border-radius: 50%;
+    border: 13px solid transparent;
+    mix-blend-mode: overlay;
+    animation: rotate var(--duration) var(--timing) infinite;
+    pointer-events: none;
+    z-index: 999;
+}
+.spinner::before {
+    border-left-color: rgb(7, 80, 35);
+    --duration: 2s;
+    --timing: ease-in;
+    z-index: 999;
+}
+.spinner::after {
+    border-right-color: rgb(39, 198, 39);
+    --duration: 2.5s;
+    --timing: ease-out;
+    z-index: 999;
+}

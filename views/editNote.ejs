@@ -35,9 +35,11 @@
                         </select>
                     </div>
                     <input type="text" name="titel" id="titel" required value="<%= foundNote.titel %>" />
-                    <textarea name="description" cols="30" rows="14" id="description" required><%= foundNote.description %></textarea>
-                    <button type="submit">Bearbeiten</button>
-                    <a href="/dashboard">Abbrechen</a>
+                    <textarea name="description" cols="30" rows="14" id="description" required><%= foundNote.description %></textarea>                    
+                    <div class="btnGroup">
+                        <a href="/dashboard">Abbrechen</a>
+                        <button type="submit">Bearbeiten</button>
+                    </div>
                 </form>
             </section>
         </main>

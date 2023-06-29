@@ -3,9 +3,6 @@ const description = document.querySelector('#description');
 const btnDelete = document.querySelector('#btnDelete');
 const getId = document.querySelector('#id').value;
 const select = document.querySelector('select');
-console.log(getId);
-
-// console.log(titel.value, description.value);
 
 const geteditNote = async (e) => {
     e.preventDefault();
@@ -41,7 +38,6 @@ document.querySelector('#btnDelete').addEventListener('click', () => {
         .then((data) => {
             console.log(data);
             if (data.status === 'success') {
-                console.log(data.status);
                 window.location.href = '/dashboard';
             } else {
                 console.log('Oopppss algo salió mal');

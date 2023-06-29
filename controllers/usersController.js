@@ -112,7 +112,7 @@ export const getDataLogin = async (req, res) => {
             const validPassword = await compare(password, userFound.password);
             if (validPassword) {
                 req.session.username = userFound.username;
-                console.log(req.session.username);
+                // console.log(req.session.username);
                 res.send({
                     status: 'success',
                     message: 'Erfolgreiche Anmeldung.',
@@ -143,6 +143,92 @@ export const logout = (req, res) => {
     req.session.username = '';
     res.redirect('/');
 };
+// GET changePasswordForm
+export const changePasswordForm = (req, res) => {
+    const locals = {
+        title: 'Passwort zurücksetzen | Noti',
+        description: 'Organisiere deine Notizen mit Noti',
+    };
+    res.render('changePassword', { locals });
+};
+// POST checkEmail, um das Passwort zu ändern
+let userFound;
+export const checkEmail = async (req, res) => {
+    const { email } = req.body;
+    // users von JSON lesen
+    let users = await jsonUsers();
+
+    userFound = await users.find((item) => item.email === email);
+
+    if (userFound) {
+        res.send({
+            status: 'success',
+            message: 'Benutzer erfolgreich verifiziert.',
+        });
+    } else if (email == '') {
+        res.send({
+            status: 'failed',
+            error: 'das Felder ist erforderlich.',
+        });
+    } else {
+        res.send({
+            status: 'failed',
+            error: 'Es ist kein Konto mit dieser E-Mail-Adresse vorhanden.',
+        });
+    }
+};
+
+// POST change Password
+export const changePassword = async (req, res) => {
+    console.log(userFound);
+    const { currentPassword, newPassword, confirmPassword } = req.body;
+    console.log(currentPassword, newPassword, confirmPassword);
+
+    const passwordValidation = await validatePassword(newPassword);
+
+    const validPassword = await compare(currentPassword, userFound.password);
+    console.log(validPassword); // true //false
+    if (!validPassword) {
+        res.send({
+            status: 'failed',
+            error: 'Das aktuelle Passwort ist nicht korrekt.',
+        });
+    } else if (newPassword !== confirmPassword) {
+        res.send({
+            status: 'failed',
+            error: 'Das neue Passwort und das Bestätigungspasswort stimmen nicht überein.',
+        });
+    } else if (newPassword == '' || confirmPassword == '' || currentPassword == '') {
+        res.send({
+            status: 'failed',
+            error: 'alle Felder sind erforderlich.',
+        });
+    } else if (!passwordValidation) {
+        return res.send({
+            status: 'password format error',
+            error: 'Wähle ein Passwort zwischen 6 and 20 Zeichen lang, bestehend aus Buchstaben(Klein- und Großbuchstaben), Zahlen und Satzzeichen.',
+        });
+    } else {
+        const passwordHashed = await encrypt(newPassword);
+        // users von JSON lesen
+        let users = await jsonUsers();
+
+        users = users.map((user) => {
+            if (user.id === userFound.id) {
+                return { ...user, password: passwordHashed };
+            }
+            return user;
+        });
+
+        await fs.promises.writeFile('database/users.json', JSON.stringify(users, null, 2));
+
+        res.send({
+            status: 'success',
+            message: 'das Passwort wurde erfolgreich geändert.',
+        });
+    }
+};
+
 // GET checkusername
 export const checkuser = (req, res) => {
     res.send(req.session.username);
