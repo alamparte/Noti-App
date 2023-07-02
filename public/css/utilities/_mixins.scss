@@ -1,3 +1,5 @@
+@import './variables';
+
 // width - height
 @mixin measures($width, $height: false) {
     width: $width;
@@ -53,8 +55,9 @@
 //Animation dashboard
 @mixin animationDash {
     @include measures(100%, auto);
-    @include flex(false, false, 3rem, column);
-    padding: 3rem 5rem;
+    @include grid(center, center, 3rem);
+    // padding: 3rem 5rem;
+    padding: 3rem 0;
     border-radius: 0.4rem;
     background-color: map-get($map: $colors, $key: bg-color-1);
     position: relative;
@@ -82,5 +85,45 @@
                 background-position: 0 0;
             }
         }
+    }
+}
+// main Button
+@mixin mainBtn {
+    font-size: $fsize-mainBtn;
+    color: map-get($map: $colors, $key: base-2);
+    background-color: map-get($map: $colors, $key: btn);
+    border-radius: 0.3rem;
+    &:hover {
+        color: map-get($map: $colors, $key: btn);
+        @include border(0.125rem, map-get($map: $colors, $key: btn));
+        background-color: transparent;
+        box-shadow: 1px 2px 30px 1px;
+    }
+}
+// // form Button Group
+@mixin BtnGroups {
+    color: map-get($map: $colors, $key: base-2);
+    background-color: map-get($map: $colors, $key: btn);
+    padding: 0.8rem 2rem;
+    transition: all 0.4s;
+    border-radius: 0.2rem;
+    &:hover {
+        background-color: transparent;
+        @include border(0.099rem, map-get($map: $colors, $key: btn));
+        color: map-get($map: $colors, $key: btn);
+    }
+}
+
+@mixin btnModal {
+    @include border(0.106rem, map-get($map: $colors, $key: delete));
+    padding: 0.5rem 2rem;
+    background-color: map-get($map: $colors, $key: delete);
+    border-radius: 0.2rem;
+    color: map-get($map: $colors, $key: base-2);
+    transition: all 0.5s;
+    &:hover {
+        background-color: transparent;
+        @include border(0.106rem, map-get($map: $colors, $key: delete));
+        color: map-get($map: $colors, $key: delete);
     }
 }

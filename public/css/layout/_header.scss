@@ -7,13 +7,20 @@ header {
     .logo {
         @include measures(8rem);
     }
+    svg {
+        fill: map-get($map: $colors, $key: btn);
+        &:hover {
+            fill: map-get($map: $colors, $key: link);
+        }
+    }
     nav {
         ul {
             @include flex(false, false, 1.3rem, column);
             div {
-                @include flex(flex-end, false, 1.3rem);
+                @include flex(flex-end, center, 1.3rem);
             }
-            .menu {
+            .menu,
+            .menuDash {
                 li {
                     a {
                         font-weight: map-get($map: $font-weight, $key: light);
@@ -23,16 +30,57 @@ header {
                     }
                 }
             }
-            .user {
+            .user,
+            .logout {
                 li {
                     a {
+                        @include flex(false, center, 0.4rem);
                         &:hover {
                             fill: map-get($map: $colors, $key: link);
                             color: map-get($map: $colors, $key: link);
                         }
-                        @include flex(false, center, 0.4rem);
                     }
                 }
+            }
+        }
+    }
+    #menuBars {
+        display: none;
+    }
+    @media only screen and (max-width: 56rem) {
+        padding: 2rem;
+        #menuBars {
+            display: block;
+        }
+        .noneUser {
+            display: none;
+        }
+        .menu {
+            position: fixed;
+            flex-direction: column;
+            top: -280px;
+            left: 5%;
+            width: 90%;
+            transition: all 0.5s;
+            background-color: map-get($map: $colors, $key: bg-color-1);
+            box-shadow: 0 1px 20px map-get($map: $colors, $key: btn);
+            padding: 2rem 0;
+            border-radius: 0.2rem;
+            li {
+                width: 80%;
+                border-bottom: 1px solid map-get($map: $colors, $key: link);
+                @include flex(center, false);
+                padding-bottom: 0.8rem;
+            }
+        }
+        .menu.show {
+            transform: translateY(170%);
+        }
+        .menuDash{
+            flex-direction: column;
+            li{
+                width: 100%;
+                @include flex(flex-end, false);
             }
         }
     }

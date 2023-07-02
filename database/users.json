@@ -3,24 +3,14 @@
     "id": "TsTL4Ah4aDoweGvO-y6d3",
     "username": "ana",
     "email": "anacaro@gmail.com",
-    "password": "$2b$10$m/Ay0H2zQPTV9vEajSr8N.scI7CIIKQQ8ypsuF9fk1y3edBYrVuBG"
+    "password": "$2b$10$m/Ay0H2zQPTV9vEajSr8N.scI7CIIKQQ8ypsuF9fk1y3edBYrVuBG",
+    "verifyCode": 12345
   },
   {
     "id": "uGjMfLxSHKORnhK62g4sb",
     "username": "paulo",
     "email": "paulohola@hotmail.com",
-    "password": "$2b$10$hZj3CVomN9dQKeMDcT04Fe3CHOU1r2Z5KgerGXpqIGdp/ZHr8Ov/."
-  },
-  {
-    "id": "F8dPgS8ZvJ0ea3Mk6xRXU",
-    "username": "Carlota",
-    "email": "holaCarlota@gmail.com",
-    "password": "$2b$10$aYRx6P1stBTYdTBbtAybvuN/Z.Dv.dksxE8jmpv6RDGi82D2Dckue"
-  },
-  {
-    "id": "dcl71fQii6-30fKqfafN4",
-    "username": "dfdfdf",
-    "email": "sdsd@sd.co",
-    "password": "$2b$10$wZRWilekKg3XEGdvOf/m8.qSgdyBtYowjwdKYnCiV5nbO.mafY72."
+    "password": "$2b$10$VJ0Ay25zVpx0ptiD7qJl7O8eTiolYHg8KhGFa5hYeDfxUBFWegQqi",
+    "verifyCode": 12345
   }
 ]

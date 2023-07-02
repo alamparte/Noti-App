@@ -21,8 +21,7 @@ const createNote = async (e) => {
             return;
         }
         let data = await res.json();
-        console.log(data);
-        console.log(data.status);
+ 
         if (data.status === 'success') {
             window.location.href = '/dashboard';
         } else {

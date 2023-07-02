@@ -45,7 +45,7 @@ app.use('/', userRoutes);
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });
-
+// alle unbekannten URL auf 404 umleiten
 app.get('*', (req, res) => {
     const locals = {
         title: 'Seite nicht gefunden | Noti',
@@ -53,5 +53,3 @@ app.get('*', (req, res) => {
     };
     res.status(404).render('404', { locals });
 });
-
-//status von server 200, cuando mando un error al front, le respondo con el status 200? porque la rta del server fue correcta informando algo malo

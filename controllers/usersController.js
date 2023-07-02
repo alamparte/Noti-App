@@ -1,25 +1,8 @@
 import fs from 'fs';
 import { nanoid } from 'nanoid';
-
 import { encrypt, compare } from '../helpers/handleBcrypt.js';
 import { validateEmail, validatePassword } from '../helpers/validation.js';
 
-// GET register
-export const register = (req, res) => {
-    const locals = {
-        title: 'Konto erstellen | Noti',
-        description: 'Organisiere deine Notizen mit Noti',
-    };
-    res.render('register', { locals });
-};
-// GET login
-export const login = (req, res) => {
-    const locals = {
-        title: 'Willkommen zurück | Noti',
-        description: 'Organisiere deine Notizen mit Noti',
-    };
-    res.render('login', { locals });
-};
 // read JSON users
 const jsonUsers = async () => {
     try {
@@ -29,26 +12,38 @@ const jsonUsers = async () => {
         return [];
     }
 };
-// cuando la cuenta se cree, aparece un msj q dice creada, cuando aprieta ok, lo lleva al LOGIN
-// q lo lleve a ptra panatalla q diga verificando cuenta, y luego de unos segundos diga verificada, y lo lleve
-//al login
-// podria ver si los inputs estan completaods, y vuelve atras, preguntar antes de abandonar la pagina
+// GET checkusername
+export const checkuser = (req, res) => {
+    res.send(req.session.username);
+};
+// GET register form
+export const register = (req, res) => {
+    const locals = {
+        title: 'Konto erstellen | Noti',
+        description: 'Organisiere deine Notizen mit Noti',
+    };
+    res.render('register', { locals });
+};
+// GET login form
+export const login = (req, res) => {
+    const locals = {
+        title: 'Willkommen zurück | Noti',
+        description: 'Organisiere deine Notizen mit Noti',
+    };
+    res.render('login', { locals });
+};
 // POST register
-// ana pass>>> Admin123.
 export const getDataRegister = async (req, res) => {
     try {
         const { username, email, password } = req.body;
-        // console.log(
-        //     '--REGISTER = username, email, password-------------------------------'
-        // );
-        // console.log(username, email, password);
+
         const passwordHashed = await encrypt(password);
         //////-----------------------------------------------
         // users von JSON lesen
         let users = await jsonUsers();
+        // user already exists?
         let foundUser = users.find((user) => user.username === username || user.email === email);
-        // console.log('foundUser-------------------------------');
-        // console.log(foundUser);
+
         if (foundUser) {
             if (foundUser.username === username)
                 return res.send({
@@ -58,7 +53,7 @@ export const getDataRegister = async (req, res) => {
 
             if (foundUser.email === email)
                 return res.send({
-                    status: 'duplicate-email',
+                    status: 'email error',
                     error: 'Diese E-Mail-Adresse wird bereits verwendet.',
                 });
         } else if (username != '' && username && email != '' && email && password != '' && password) {
@@ -66,7 +61,7 @@ export const getDataRegister = async (req, res) => {
             const emailValidation = await validateEmail(email);
             if (!emailValidation)
                 return res.send({
-                    status: 'email format error',
+                    status: 'email error',
                     error: 'Die E-Mail-Adresse scheint ungültig zu sein.',
                 });
             const passwordValidation = await validatePassword(password);
@@ -81,6 +76,7 @@ export const getDataRegister = async (req, res) => {
                 username,
                 email,
                 password: passwordHashed,
+                verifyCode: 12345
             });
             await fs.promises.writeFile('database/users.json', JSON.stringify(users, null, 2));
             res.send({
@@ -101,18 +97,16 @@ export const getDataRegister = async (req, res) => {
 export const getDataLogin = async (req, res) => {
     try {
         const { email, password } = req.body;
-        // console.log('---LOGIN == email, password-------------------------------');
-        // console.log(email, password);
 
         // users von JSON lesen
         let users = await jsonUsers();
-
+        // user exists?
         const userFound = await users.find((item) => item.email === email);
+
         if (userFound) {
             const validPassword = await compare(password, userFound.password);
             if (validPassword) {
                 req.session.username = userFound.username;
-                // console.log(req.session.username);
                 res.send({
                     status: 'success',
                     message: 'Erfolgreiche Anmeldung.',
@@ -138,18 +132,18 @@ export const getDataLogin = async (req, res) => {
         throw new Error(error);
     }
 };
-// GET logout
+// logout
 export const logout = (req, res) => {
     req.session.username = '';
     res.redirect('/');
 };
-// GET changePasswordForm
-export const changePasswordForm = (req, res) => {
+// GET forgotPassword Form
+export const forgotPasswordForm = (req, res) => {
     const locals = {
         title: 'Passwort zurücksetzen | Noti',
         description: 'Organisiere deine Notizen mit Noti',
     };
-    res.render('changePassword', { locals });
+    res.render('forgotPassword', { locals });
 };
 // POST checkEmail, um das Passwort zu ändern
 let userFound;
@@ -157,12 +151,12 @@ export const checkEmail = async (req, res) => {
     const { email } = req.body;
     // users von JSON lesen
     let users = await jsonUsers();
-
+    // validate user, it exists?
     userFound = await users.find((item) => item.email === email);
 
     if (userFound) {
         res.send({
-            status: 'success',
+            status: 'successEmail',
             message: 'Benutzer erfolgreich verifiziert.',
         });
     } else if (email == '') {
@@ -177,34 +171,24 @@ export const checkEmail = async (req, res) => {
         });
     }
 };
-
-// POST change Password
-export const changePassword = async (req, res) => {
-    console.log(userFound);
-    const { currentPassword, newPassword, confirmPassword } = req.body;
-    console.log(currentPassword, newPassword, confirmPassword);
+// POST Password forgot
+export const forgotPassword = async (req, res) => {
+    const { newPassword, confirmPassword } = req.body;
 
     const passwordValidation = await validatePassword(newPassword);
 
-    const validPassword = await compare(currentPassword, userFound.password);
-    console.log(validPassword); // true //false
-    if (!validPassword) {
-        res.send({
-            status: 'failed',
-            error: 'Das aktuelle Passwort ist nicht korrekt.',
-        });
-    } else if (newPassword !== confirmPassword) {
-        res.send({
-            status: 'failed',
-            error: 'Das neue Passwort und das Bestätigungspasswort stimmen nicht überein.',
-        });
-    } else if (newPassword == '' || confirmPassword == '' || currentPassword == '') {
+    if ((newPassword == '' && confirmPassword == '') || newPassword == '' || confirmPassword == '') {
         res.send({
             status: 'failed',
             error: 'alle Felder sind erforderlich.',
         });
+    } else if (newPassword !== confirmPassword) {
+        res.send({
+            status: 'failed-stimmen',
+            error: 'Das neue Passwort und das Bestätigungspasswort stimmen nicht überein.',
+        });
     } else if (!passwordValidation) {
-        return res.send({
+        res.send({
             status: 'password format error',
             error: 'Wähle ein Passwort zwischen 6 and 20 Zeichen lang, bestehend aus Buchstaben(Klein- und Großbuchstaben), Zahlen und Satzzeichen.',
         });
@@ -229,7 +213,84 @@ export const changePassword = async (req, res) => {
     }
 };
 
-// GET checkusername
-export const checkuser = (req, res) => {
-    res.send(req.session.username);
+// GET changePasswordForm
+export const changePasswordForm = (req, res) => {
+    const locals = {
+        title: 'Passwort ändern | Noti',
+        description: 'Organisiere deine Notizen mit Noti',
+    };
+    res.render('changePassword', { locals });
+};
+
+// // POST change Password
+export const changePassword = async (req, res) => {
+    const { currentPassword, newPassword, confirmPassword } = req.body;
+    // format validate
+    const passwordValidation = await validatePassword(newPassword);
+
+    const users = await jsonUsers();
+    const foundUser = users.find((user) => user.username === req.session.username);
+
+    const validPassword = await compare(currentPassword, foundUser.password);
+
+    if (!validPassword) {
+        return res.send({
+            status: 'failed-gleich',
+            error: 'Das aktuelle Passwort ist nicht korrekt.',
+        });
+    }
+    if (validPassword) {
+        if (newPassword !== confirmPassword) {
+            res.send({
+                status: 'failed-stimmen',
+                error: 'Das neue Passwort und das Bestätigungspasswort stimmen nicht überein.',
+            });
+        } else if ((newPassword == '' && confirmPassword == '') || newPassword == '' || confirmPassword == '') {
+            res.send({
+                status: 'failed',
+                error: 'alle Felder sind erforderlich.',
+            });
+        } else if (!passwordValidation) {
+            res.send({
+                status: 'password format error',
+                error: 'Wähle ein Passwort zwischen 6 and 20 Zeichen lang, bestehend aus Buchstaben(Klein- und Großbuchstaben), Zahlen und Satzzeichen.',
+            });
+        } else {
+            const passwordHashed = await encrypt(newPassword);
+            // users von JSON lesen
+            let users = await jsonUsers();
+
+            users = users.map((user) => {
+                if (user.id === foundUser.id) {
+                    return { ...user, password: passwordHashed };
+                }
+                return user;
+            });
+
+            await fs.promises.writeFile('database/users.json', JSON.stringify(users, null, 2));
+            //borro para q se loguee de nuevo
+            req.session.username = '';
+
+            res.send({
+                status: 'success',
+                message: 'das Passwort wurde erfolgreich geändert. Bitte melden Sie sich erneut an.',
+            });
+        }
+    }
+};
+// POST check code
+export const checkCode = (req, res) => {
+    const { code } = req.body;
+
+    if (Number(userFound.verifyCode) === Number(code)) {
+        res.send({
+            status: 'successCode',
+            message: 'Code erfolgreich verifiziert.',
+        });
+    } else {
+       res.send({
+            status: 'failed',
+            error: 'Der Code ist nicht korrekt.',
+        });
+    }
 };

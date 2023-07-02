@@ -48,7 +48,7 @@ footer {
         padding: 3rem 0;
         nav {
             ul {
-                @include flex(false, false, 2.5rem);
+                @include flex(center, center, 2.5rem);
                 li {
                     a {
                         &:hover {
@@ -58,6 +58,22 @@ footer {
                     }
                 }
             }
+        }
+    }
+    @media only screen and (max-width: 67rem) {
+        .legalInfo {
+            @include flex(center, center, 2.5rem, column);
+        }
+    }
+
+    @media only screen and (max-width: 44rem) {
+    padding: 0 1.5rem;
+    
+        section {
+            @include flex(center, center, 2.5rem, column);
+        }
+        .legalInfo {
+            text-align: center;
         }
     }
 }

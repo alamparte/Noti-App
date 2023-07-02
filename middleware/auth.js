@@ -5,12 +5,4 @@ const checkNoAuth = (req, res, next) => {
     next();
 };
 
-const checkAuth = (req, res, next) => {
-    if (req.session.username && req.session.username != '') {
-        next();
-    } else {
-        res.redirect('/');
-    }
-};
-
-export { checkNoAuth, checkAuth };
+export { checkNoAuth };

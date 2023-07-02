@@ -169,7 +169,7 @@ const renderNotes = async (data) => {
                 </div> 
     
                 <button type="button">
-                    <a href="/dashboard/noteform" id="noteForm">+ neue Notiz</a>
+                    <a href="/dashboard/noteform" id="noteForm">+ <span id="newNoteText">neue Notiz</span></a>
                 </button>
             </div> `;
 

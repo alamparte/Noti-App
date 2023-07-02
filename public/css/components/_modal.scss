@@ -1,0 +1,90 @@
+@import '../utilities/mixins';
+@import '../utilities/maps';
+
+/*Modal*/
+.modal {
+    display: none;
+    @include measures(100%, 100%);
+    z-index: 1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    .modalContent {
+        padding: 0 1.5rem 1rem 1.5rem;
+        @include grid(center, center, 1.5rem);
+        @include measures(28rem, auto);
+        border-radius: 0.2rem;
+        background-color: map-get($map: $colors, $key: bg-color-2);
+        margin: 13rem auto 0 auto;
+        box-shadow: inset 0px 2px 50px 2px rgba(145, 149, 55, 0.3);
+        .modalClose {
+            justify-self: flex-end;
+            color: map-get($map: $colors, $key: btn);
+            font-size: 3.5rem;
+            cursor: pointer;
+            &:hover {
+                color: map-get($map: $colors, $key: link);
+            }
+        }
+        p {
+            text-align: center;
+        }
+        .h1Modal {
+            font-size: 1.7rem;
+            text-align: center;
+        }
+        .groupBtn {
+            @include measures(100%);
+            @include flex(flex-end, center, 1.2rem);
+            button {
+                @include btnModal;
+            }
+        }
+    }
+    @media only screen and (max-width: 37rem) {
+        .modalContent {
+            @include measures(90%, auto);
+        }
+    }
+}
+/*animate modal transition*/
+.modalAnimation {
+    animation: fadeIn 0.5s;
+}
+/*keyframe for modal animation*/
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.1;
+    }
+    20% {
+        opacity: 0.2;
+    }
+    30% {
+        opacity: 0.3;
+    }
+    40% {
+        opacity: 0.4;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    60% {
+        opacity: 0.6;
+    }
+    70% {
+        opacity: 0.7;
+    }
+    80% {
+        opacity: 0.8;
+    }
+    90% {
+        opacity: 0.9;
+    }
+    100% {
+        opacity: 1;
+    }
+}

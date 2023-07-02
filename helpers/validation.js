@@ -18,27 +18,4 @@ const validatePassword = async (password) => {
     }
 };
 
-const getDatum = () => {
-    
-    const months = [
-        'Jan',
-        'Feb',
-        'Mar',
-        'Apr',
-        'May',
-        'Jun',
-        'Jul',
-        'Aug',
-        'Sept',
-        'Oct',
-        'Nov',
-        'Dec',
-    ];
-    let dateObj = new Date(),
-        month = months[dateObj.getMonth()],
-        day = dateObj.getDate(),
-        year = dateObj.getFullYear();
-  return `${month} ${day}, ${year}`
-};
-
-export { validateEmail, validatePassword, getDatum };
+export { validateEmail, validatePassword };

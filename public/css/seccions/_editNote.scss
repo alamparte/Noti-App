@@ -8,21 +8,14 @@
     section {
         @include flex(false, false, 1.5rem, column);
         @include measures(50%);
-        max-width: 70rem;
+        max-width: 50rem;
         div {
-            @include flex(space-between);
+            @include flex(space-between, center);
             button {
-                @include border(0.106rem, map-get($map: $colors, $key: delete));
-                padding: 0.5rem 2rem;
-                background-color: #743607;
-                border-radius: 0.2rem;
-                color: map-get($map: $colors, $key: base-2);
-                transition: all 0.5s;
-                &:hover {
-                    background-color: transparent;
-                    @include border(0.106rem, map-get($map: $colors, $key: delete));
-                    color: map-get($map: $colors, $key: delete);
-                }
+                @include btnModal;
+            }
+            .trash {
+                display: none;
             }
         }
         form {
@@ -31,21 +24,11 @@
             textarea {
                 @include input;
             }
-
+            button {
+                @include BtnGroups;
+            }
             .btnGroup {
                 @include flex(flex-end, center, 1.2rem);
-            }
-            button {
-                color: map-get($map: $colors, $key: base-2);
-                background-color: map-get($map: $colors, $key: btn);
-                padding: 0.8rem 2rem;
-                transition: all 0.4s;
-                border-radius: 0.2rem;
-                &:hover {
-                    background-color: transparent;
-                    @include border(0.099rem, map-get($map: $colors, $key: btn));
-                    color: map-get($map: $colors, $key: btn);
-                }
             }
             .categories {
                 select {
@@ -57,6 +40,27 @@
                     @include border(0.094rem, map-get($map: $colors, $key: bg-color-1));
                     &:focus {
                         @include border(0.094rem, map-get($map: $colors, $key: link));
+                        box-shadow: 0px 2px 18px rgba(145, 149, 55, 0.7);
+                    }
+                }
+            }
+        }
+    }
+    @media only screen and (max-width: 70rem) {
+        section {
+            @include measures(80%, auto);
+        }
+    }
+    @media only screen and (max-width: 37rem) {
+        section {
+            div {
+                .remover {
+                    display: none;
+                }
+                .trash {
+                    display: inline-block;
+                    fill: map-get($map: $colors, $key: delete);
+                    &:hover {
                         box-shadow: 0px 2px 18px rgba(145, 149, 55, 0.7);
                     }
                 }

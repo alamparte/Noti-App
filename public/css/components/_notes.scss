@@ -21,7 +21,6 @@
         &:hover {
             box-shadow: 0px 2px 10px 2px map-get($map: $colors, $key: btn);
         }
-        //agregar fecha
         .datum {
             font-size: 1rem;
             position: absolute;
@@ -34,4 +33,5 @@
             box-shadow: 0px 2px 10px 2px map-get($map: $colors, $key: link);
         }
     }
+   
 }

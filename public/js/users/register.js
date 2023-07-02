@@ -1,3 +1,5 @@
+import { renderLinkIcon } from '../helpers.js';
+
 const allInputs = document.querySelectorAll('.allInputs');
 const nameError = document.querySelector('.nameError');
 const emailError = document.querySelector('.emailError');
@@ -8,6 +10,9 @@ const username = document.querySelector('#username');
 const email = document.querySelector('#email');
 const password = document.querySelector('#password');
 
+const main = document.querySelector('main');
+
+let parentElem = password.parentElement;
 
 // register
 const getUserData = async (e) => {
@@ -36,37 +41,60 @@ const getUserData = async (e) => {
 document.querySelector('form').addEventListener('submit', getUserData);
 
 const renderResponse = (data) => {
-    emptyError.style.color = data.status === 'success' ? '#919537' : 'red';
+    switch (data.status) {
+        case 'success':
+            redirectNext();
+            break;
+        case 'email error':
+            emailError.textContent = data.error;
+            email.classList.add('invalid');
 
-    if (data.status === 'success') {
-        emptyError.textContent = data.message;
-        allInputs.forEach((item) => {
-            item.classList.add('valid');
-        });
-        setTimeout(() => {
-            window.location.href = '/login';
-        }, 1000);
-    } else if (data.status === 'duplicate-user') {
-        nameError.innerHTML = data.error;
-        username.classList.add('invalid');
-    } else if (data.status === 'duplicate-email') {
-        emailError.textContent = data.error;
-        email.classList.add('invalid');
-    } else if (data.status === 'email format error') {
-        emailError.textContent = data.error;
-        email.classList.add('invalid');
-    } else if (data.status === 'password format error') {
-        passError.textContent = data.error;
-        password.classList.add('invalid');
-    } else {
-        emptyError.textContent = data.error;
-        //add red color to all empty inputs
-        allInputs.forEach((item) => {
-            if (item.value == '') {
-                item.classList.add('invalid');
+            break;
+        case 'duplicate-user':
+            nameError.innerHTML = data.error;
+            username.classList.add('invalid');
+
+            break;
+
+        case 'password format error':
+            passError.textContent = data.error;
+            password.classList.add('invalid');
+
+            break;
+
+        default:
+            emptyError.textContent = data.error;
+            //add red color to all empty inputs
+            allInputs.forEach((item) => {
+                if (item.value == '') {
+                    item.classList.add('invalid');
+                }
+            });
+            if (password.value == '') {
+                parentElem.classList.add('invalid');
             }
-        });
+            break;
     }
+};
+// Spinner render und redirect
+const redirectNext = () => {
+    // hide main
+    main.style.display = 'none';
+
+    const div = document.createElement('div');
+    div.setAttribute('id', 'spin');
+    div.classList.add('spinner');
+    const svg = renderLinkIcon();
+    div.append(svg);
+
+    document.querySelector('body').prepend(div);
+    div.style.visibility = 'visible';
+
+    setTimeout(() => {
+        div.remove();
+        main.style.display = 'grid';
+        window.location.href = '/login';
+    }, 4000);
 };
 // Remove class
 allInputs.forEach((item) => {
@@ -79,9 +107,10 @@ allInputs.forEach((item) => {
         });
     });
 });
-
-
-
+// Remove class from the div parent
+password.addEventListener('focus', () => {
+    parentElem.classList.remove('invalid');
+});
 // show/hide password
 const svg = document.querySelector('svg');
 svg.addEventListener('click', () => {

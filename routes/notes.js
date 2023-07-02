@@ -1,31 +1,23 @@
 import { Router } from 'express';
 import { dashboard, showNotes, createNoteForm, createNote, viewNoteForm, editNote, deleteNote, sortNotes, filterNotes } from '../controllers/notesController.js';
 
-import { checkNoAuth, checkAuth } from '../middleware/auth.js';
-
 const router = Router();
-//checkAuth hace lo mismo q el middleware q hice en server
 
-// GET dashboard
+// dashboard route
 router.get('/dashboard', dashboard);
-// GET notes or empty notes dashboard
+// notes or empty message in dashboard route
 router.get('/dashboard/notes', showNotes);
-// // GET note Form
+// create note route
 router.get('/dashboard/noteform', createNoteForm);
-// // POST create a new note
 router.post('/dashboard/noteform', createNote);
-///----------------------------------------------------------
-// // GET note Form edit
+// edit note route
 router.get('/dashboard/view-note/:id', viewNoteForm);
-// // POST note Form edit
 router.post('/dashboard/view-note/:id', editNote);
+// delete note route
 router.get('/dashboard/delete-note/:id', deleteNote);
-
-//sortieren
+// note sort route
 router.post('/dashboard/sort-notes', sortNotes);
-//filtern
+// note filter route
 router.post('/dashboard/filter-notes', filterNotes);
-
-
 
 export { router };

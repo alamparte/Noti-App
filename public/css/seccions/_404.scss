@@ -4,14 +4,9 @@
 .errorLayout {
     @include grid(center, center);
     .errorSeite {
-        padding-top: 2rem;
-        position: relative;
         text-align: center;
         .text {
             @include measures(30rem);
-            position: absolute;
-            top: 22rem;
-            left: 48rem;
             line-height: 1.7rem;
             h1 {
                 padding-bottom: 1.2rem;
@@ -25,19 +20,43 @@
                 margin-top: 1rem;
                 a {
                     padding: 0.8rem 4rem;
-                    font-size: 1.2rem;
-                    color: map-get($map: $colors, $key: base-2);
-                    background-color: map-get($map: $colors, $key: btn);
-                    border-radius: 0.3rem;
-                    &:hover {
-                        color: map-get($map: $colors, $key: btn);
-                        @include border(
-                            0.125rem,
-                            map-get($map: $colors, $key: btn)
-                        );
-                        background-color: transparent;
-                        box-shadow: 1px 2px 30px 1px;
-                    }
+                    @include mainBtn;
+                }
+            }
+        }
+    }
+    @media only screen and (max-width: 79rem) {
+        .errorSeite {
+            @include grid(center, center, 1.3rem);
+            width: 100%;
+            text-align: center;
+            figure {
+                width: 100%;
+                img {
+                    width: 100%;
+                }
+            }
+            .text {
+                margin-bottom: 3rem;
+                p {
+                    padding: 0 1.2rem;
+                }
+                button {
+                    margin-top: 1.7rem;
+                }
+            }
+        }
+    }
+    @media only screen and (min-width: 79.01rem) {
+        .errorSeite {
+            padding-top: 2rem;
+            position: relative;
+            .text {
+                position: absolute;
+                top: 22rem;
+                left: 48rem;
+                button {
+                    margin-top: 1rem;
                 }
             }
         }

@@ -1,7 +1,8 @@
 import fs from 'fs';
 import { nanoid } from 'nanoid';
-import { getDatum } from '../helpers/validation.js';
+import { getDatum } from '../helpers/helpers.js';
 
+const databaseFolder = './database';
 // // read JSON notes
 // const jsonNotes = async () => {
 //     try {
@@ -19,6 +20,12 @@ const jsonUsers = async () => {
         console.log(error);
         return [];
     }
+};
+//
+const fileName = async (req) => {
+    const users = await jsonUsers();
+    const foundUser = users.find((user) => user.username === req.session.username);
+    return `${foundUser.id}.json`;
 };
 
 // // GET dashboard
@@ -39,84 +46,33 @@ export const createNoteForm = (req, res) => {
 };
 // // GET notes
 export const showNotes = async (req, res) => {
-    const users = await jsonUsers();
-    const foundUser = users.find((user) => user.username === req.session.username);
-    const databaseFolder = './database';
-    const file = `${foundUser.id}.json`;
+    // const users = await jsonUsers();
+    // const foundUser = users.find((user) => user.username === req.session.username);
+    // const file = `${foundUser.id}.json`;
+    // const databaseFolder = './database';
 
-    let notes = JSON.parse(await fs.promises.readFile(`${databaseFolder}/${file}`));
+    try {
+        let file = await fileName(req);
 
+        let notes = JSON.parse(await fs.promises.readFile(`${databaseFolder}/${file}`));
 
-    fs.access(`${databaseFolder}/${file}`, fs.constants.F_OK, async (err) => {
-        console.log(`${file} ${err ? 'does not exist' : 'exists'}`);
-        if (err || notes.length < 1) {
+        if (notes.length < 1) {
             res.send({
                 status: 'failed',
                 message: 'keine Notiz gefunden',
             });
         } else {
-            let notes = JSON.parse(await fs.promises.readFile(`${databaseFolder}/${file}`));
             res.send({ status: 'success', notes });
         }
-    });
-
-    // try {
-    //     const users = await jsonUsers();
-    //     const foundUser = users.find((user) => user.username === req.session.username);
-    //     const databaseFolder = './database';
-    //     let files = await fs.promises.readdir(databaseFolder);
-    //     console.log(files);
-    //     console.log('------------foundUser.id');
-    //     console.log(foundUser.id);
-
-    //     const checkFile = async () => {
-    //         console.log(files);
-    //         for (const file of files) {
-    //             if (file === `${foundUser.id}.json`) {
-    //                 return true;
-    //             } else {
-    //                 return false;
-    //             }
-    //         }
-    //     };
-
-    //     let fileExist = await checkFile();
-    //     console.log(fileExist);
-
-    //     if (fileExist) {
-    //         let notes = JSON.parse(await fs.promises.readFile(`${databaseFolder}/${foundUser.id}.json`));
-    //         res.send({ status: 'success', notes });
-    //     } else {
-    //         res.send({
-    //             status: 'failed',
-    //             message: 'keine Notiz gefunden',
-    //         });
-    //     }
-
-    //  else {
-    //     res.send({
-    //         status: 'failed',
-    //         message: 'Datenbank nicht gefunden',
-    //     });
-    // }
-
-    // const users = await jsonUsers();
-    // const foundUser = users.find((user) => user.username === req.session.username);
-    // const notes = await jsonNotes();
-    // const notesFiltered = notes.filter((item) => item.userId === foundUser.id);
-    // console.log(notesFiltered);
-    // if (notesFiltered.length > 0) {
-    //     res.send({ status: 'success', notesFiltered });
-    // } else {
-    //     res.send({
-    //         status: 'failed',
-    //         message: 'keine Notiz gefunden',
-    //     });
-    // }
-    // } catch (error) {
-    //     console.log(error);
-    //     throw new Error();
-    // }
+    } catch (err) {
+        if (err) {
+            res.send({
+                status: 'failed',
+                message: 'keine Notiz gefunden',
+            });
+        }
+        console.error(err.message);
+    }
 };
 
 // // // POST notes
@@ -157,132 +113,49 @@ export const showNotes = async (req, res) => {
 // // POST notes
 export const createNote = async (req, res) => {
     const { titel, description, category } = req.body;
-    console.log(titel, description, category);
+    let file = await fileName(req);
+    try {
+        if (titel !== '' && titel && description !== '' && description) {
+            let notes = JSON.parse(await fs.promises.readFile(`${databaseFolder}/${file}`));
+            let date = getDatum();
+            notes.unshift({
+                id: nanoid(),
+                titel,
+                description,
+                category,
+                date,
+            });
+            await fs.promises.writeFile(`${databaseFolder}/${file}`, JSON.stringify(notes, null, 2));
+            res.send({
+                status: 'success',
+                message: 'Notiz erfolgreich erstellt',
+            });
+        } else {
+            res.send({
+                status: 'failed',
+                error: 'alle Felder sind erforderlich',
+            });
+        }
+    } catch (err) {
+        if (err) {
+            let notes = [];
 
-    const users = await jsonUsers();
-    const foundUser = users.find((user) => user.username === req.session.username);
-    const databaseFolder = './database';
-    const file = `${foundUser.id}.json`;
-
-    if (titel !== '' && titel && description !== '' && description) {
-        fs.access(`${databaseFolder}/${file}`, fs.constants.F_OK, async (err) => {
-            console.log(`${file} ${err ? 'does not exist' : 'exists'}`);
-            if (err) {
-                console.error('File does not exist');
-                // Create the file
-                await fs.promises.writeFile(`${databaseFolder}/${file}`, '[]');
-                // Test the if the file exists again
-                fs.access(`${databaseFolder}/${file}`, fs.constants.F_OK, async (err) => {
-                    if (!err) {
-                        console.log('File does exist');
-                        let notes = JSON.parse(await fs.promises.readFile(`${databaseFolder}/${file}`));
-                        let date = getDatum();
-                        notes.unshift({
-                            id: nanoid(),
-                            titel,
-                            description,
-                            category,
-                            date,
-                        });
-                        await fs.promises.writeFile(`${databaseFolder}/${file}`, JSON.stringify(notes, null, 2));
-                        res.send({
-                            status: 'success',
-                            message: 'Notiz und Datei erfolgreich erstellt',
-                        });
-                    }
-                });
-            } else {
-                let notes = JSON.parse(await fs.promises.readFile(`${databaseFolder}/${file}`));
-                let date = getDatum();
-                notes.unshift({
-                    id: nanoid(),
-                    titel,
-                    description,
-                    category,
-                    date,
-                });
-                await fs.promises.writeFile(`${databaseFolder}/${file}`, JSON.stringify(notes, null, 2));
-                res.send({
-                    status: 'success',
-                    message: 'Notiz erfolgreich erstellt',
-                });
-            }
-        });
-    } else {
-        res.send({
-            status: 'failed',
-            error: 'alle Felder sind erforderlich',
-        });
+            let date = getDatum();
+            notes.unshift({
+                id: nanoid(),
+                titel,
+                description,
+                category,
+                date,
+            });
+            await fs.promises.writeFile(`${databaseFolder}/${file}`, JSON.stringify(notes, null, 2));
+            res.send({
+                status: 'success',
+                message: 'Notiz und Datei erfolgreich erstellt',
+            });
+        }
     }
-
-    // try {
-    //     // read JSON users
-    //     const users = await jsonUsers();
-    //     const foundUser = users.find((user) => user.username === req.session.username);
-
-    //     if (foundUser && titel !== '' && titel && description !== '' && description) {
-    //         const databaseFolder = './database';
-    //         let files = await fs.promises.readdir(databaseFolder);
-
-    //         const checkFile = async () => {
-    //             console.log(files);
-    //             for (const file of files) {
-    //                 console.log(files);
-    //                 if (file === `${foundUser.id}.json`) {
-    //                     return true;
-    //                 } else {
-    //                     return false;
-    //                 }
-    //             }
-    //         };
-
-    //         let fileExist = await checkFile();
-
-    //         if (fileExist) {
-    //             let notes = JSON.parse(await fs.promises.readFile(`${databaseFolder}/${foundUser.id}.json`));
-
-    //             notes.push({
-    //                 id: nanoid(),
-    //                 titel,
-    //                 description,
-    //                 category,
-    //             });
-    //             await fs.promises.writeFile(`${databaseFolder}/${foundUser.id}.json`, JSON.stringify(notes, null, 2));
-
-    //             res.send({
-    //                 status: 'success',
-    //                 message: 'Notiz erfolgreich erstellt',
-    //             });
-    //         } else {
-    //             await fs.promises.writeFile(`${databaseFolder}/${foundUser.id}.json`, '[]');
-
-    //             let notes = JSON.parse(await fs.promises.readFile(`${databaseFolder}/${foundUser.id}.json`));
-
-    //             notes.push({
-    //                 id: nanoid(),
-    //                 titel,
-    //                 description,
-    //                 category,
-    //             });
-    //             await fs.promises.writeFile(`${databaseFolder}/${foundUser.id}.json`, JSON.stringify(notes, null, 2));
-    //             res.send({
-    //                 status: 'success',
-    //                 message: 'Notiz erfolgreich erstellt',
-    //             });
-    //         }
-    //     } else {
-    //         res.send({
-    //             status: 'failed',
-    //             error: 'alle Felder sind erforderlich',
-    //         });
-    //     }
-    // } catch (error) {
-    //     console.log(error);
-    //     throw new Error();
-    // }
 };
-// // // PUT notes
-// // export const editNote = async (req,res)=>{}
 
 // GET verFormEdit
 export const viewNoteForm = async (req, res) => {
