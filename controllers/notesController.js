@@ -4,14 +4,15 @@ import { getDatum } from '../helpers/helpers.js';
 
 const databaseFolder = './database';
 // // read JSON notes
-// const jsonNotes = async () => {
-//     try {
-//         return JSON.parse(await fs.promises.readFile('database/notes.json'));
-//     } catch (error) {
-//         console.log(error);
-//         return [];
-//     }
-// };
+const jsonNotes = async (req) => {
+    try {
+        let file = await fileName(req);
+        return JSON.parse(await fs.promises.readFile(`${databaseFolder}/${file}`));
+    } catch (error) {
+        console.log(error);
+        return [];
+    }
+};
 // read JSON users
 const jsonUsers = async () => {
     try {
@@ -21,7 +22,7 @@ const jsonUsers = async () => {
         return [];
     }
 };
-//
+// file name per user ID
 const fileName = async (req) => {
     const users = await jsonUsers();
     const foundUser = users.find((user) => user.username === req.session.username);
@@ -46,15 +47,10 @@ export const createNoteForm = (req, res) => {
 };
 // // GET notes
 export const showNotes = async (req, res) => {
-    // const users = await jsonUsers();
-    // const foundUser = users.find((user) => user.username === req.session.username);
-    // const file = `${foundUser.id}.json`;
-    // const databaseFolder = './database';
-
     try {
         let file = await fileName(req);
-
-        let notes = JSON.parse(await fs.promises.readFile(`${databaseFolder}/${file}`));
+        //read JSON notes
+        let notes = await jsonNotes(req);
 
         if (notes.length < 1) {
             res.send({
@@ -116,7 +112,9 @@ export const createNote = async (req, res) => {
     let file = await fileName(req);
     try {
         if (titel !== '' && titel && description !== '' && description) {
-            let notes = JSON.parse(await fs.promises.readFile(`${databaseFolder}/${file}`));
+            //read JSON notes
+            let notes = await jsonNotes(req);
+
             let date = getDatum();
             notes.unshift({
                 id: nanoid(),
@@ -159,177 +157,140 @@ export const createNote = async (req, res) => {
 
 // GET verFormEdit
 export const viewNoteForm = async (req, res) => {
-    console.log('id--------- ', req.params.id);
+    try {
+        let file = await fileName(req);
+        //read JSON notes
+        let notes = await jsonNotes(req);
 
-    const users = await jsonUsers();
-    const foundUser = users.find((user) => user.username === req.session.username);
-    const databaseFolder = './database';
-    const file = `${foundUser.id}.json`;
-    //read JSON notes
-    let notes = JSON.parse(await fs.promises.readFile(`${databaseFolder}/${file}`));
+        const foundNote = notes.find((note) => note.id === req.params.id);
 
-    const foundNote = notes.find((note) => note.id === req.params.id);
-
-    if (foundNote) {
-        res.render('editNote', { foundNote });
-    } else {
-        res.send({ status: 'failed' });
+        if (foundNote) {
+            res.render('editNote', { foundNote });
+        } else {
+            res.send({ status: 'failed' });
+        }
+    } catch (error) {
+        throw new Error();
     }
 };
 
 // //EDIT notes
 export const editNote = async (req, res) => {
-    //old note
-    console.log('id--------- ', req.params.id);
-    //new note
     const { titel, description, category } = req.body;
+    try {
+        let file = await fileName(req);
+        //read JSON notes
+        let notes = await jsonNotes(req);
 
-    const users = await jsonUsers();
-    const foundUser = users.find((user) => user.username === req.session.username);
-    const databaseFolder = './database';
-    const file = `${foundUser.id}.json`;
+        let date = getDatum();
 
-    //read JSON notes
-    let notes = JSON.parse(await fs.promises.readFile(`${databaseFolder}/${file}`));
+        notes = notes.map((note) => {
+            if (note.id === req.params.id) {
+                return { ...note, titel, description, category, date };
+            }
+            return note;
+        });
 
-    let date = getDatum();
+        await fs.promises.writeFile(`${databaseFolder}/${file}`, JSON.stringify(notes, null, 2));
 
-    notes = notes.map((note) => {
-        if (note.id === req.params.id) {
-            return { ...note, titel, description, category, date };
-        }
-        return note;
-    });
-
-    await fs.promises.writeFile(`${databaseFolder}/${file}`, JSON.stringify(notes, null, 2));
-
-    res.send({
-        status: 'success',
-        message: 'nota cambiada correctamente',
-    });
-    // }
+        res.send({
+            status: 'success',
+            message: 'Notiz erfolgreich ausgetauscht',
+        });
+    } catch (error) {
+        throw new Error();
+    }
 };
 
 // // // DELETE notes
 export const deleteNote = async (req, res) => {
-    //old note
-    console.log('id--------- ', req.params.id);
+    try {
+        let file = await fileName(req);
+        //read JSON notes
+        let notes = await jsonNotes(req);
 
-    const users = await jsonUsers();
-    const foundUser = users.find((user) => user.username === req.session.username);
-    const databaseFolder = './database';
-    const file = `${foundUser.id}.json`;
+        const foundNote = notes.find((note) => note.id === req.params.id);
 
-    //read JSON notes
-    let notes = JSON.parse(await fs.promises.readFile(`${databaseFolder}/${file}`));
+        if (foundNote) {
+            let itemRemoved = notes.splice(
+                notes.findIndex((note) => note.id === req.params.id),
+                1
+            );
+            await fs.promises.writeFile(`${databaseFolder}/${file}`, JSON.stringify(notes, null, 2));
 
-    const foundNote = notes.find((note) => note.id === req.params.id);
-
-    if (foundNote) {
-        let itemRemoved = notes.splice(
-            notes.findIndex((note) => note.id === req.params.id),
-            1
-        );
-        await fs.promises.writeFile(`${databaseFolder}/${file}`, JSON.stringify(notes, null, 2));
-
-        return res.send({
-            status: 'success',
-            message: 'Notiz erfolgreich gelöscht.',
-        });
+            return res.send({
+                status: 'success',
+                message: 'Notiz erfolgreich gelöscht.',
+            });
+        }
+    } catch (error) {
+        throw new Error();
     }
 };
 
 export const sortNotes = async (req, res) => {
-    // SI ANDA, tengo q llamnar al addeventlistener en la funcion q se crea el html,
-    //sino no funciona
     const { selected } = req.body;
 
-    const users = await jsonUsers();
-    const foundUser = users.find((user) => user.username === req.session.username);
-    const databaseFolder = './database';
-    const file = `${foundUser.id}.json`;
+    try {
+        let file = await fileName(req);
 
-    if (selected === 'auf' || selected === 'ab') {
-        //read JSON notes
-        let notes = JSON.parse(await fs.promises.readFile(`${databaseFolder}/${file}`));
+        if (selected === 'auf' || selected === 'ab') {
+            //read JSON notes
+            let notes = await jsonNotes(req);
 
-        // sortiert nach Datum (aufsteigend / absteigend)
-        selected === 'auf' ? notes.sort((a, b) => new Date(b.date) - new Date(a.date)) : notes.sort((a, b) => new Date(a.date) - new Date(b.date));
+            // sortiert nach Datum (aufsteigend / absteigend)
+            selected === 'ab' ? notes.sort((a, b) => new Date(b.date) - new Date(a.date)) : notes.sort((a, b) => new Date(a.date) - new Date(b.date));
 
-        await fs.promises.writeFile(`${databaseFolder}/${file}`, JSON.stringify(notes, null, 2));
-        return res.send({
-            status: selected === 'auf' ? 'auf' : 'ab',
-            message: 'Notiz erfolgreich sortiert',
-            notes,
-        });
+            await fs.promises.writeFile(`${databaseFolder}/${file}`, JSON.stringify(notes, null, 2));
+            return res.send({
+                status: selected === 'auf' ? 'auf' : 'ab',
+                message: 'Notiz erfolgreich sortiert',
+                notes,
+            });
+        }
+    } catch (error) {
+        throw new Error();
     }
-
-    // if (selected === 'auf') {
-    //     //read JSON notes
-    //     let notes = JSON.parse(await fs.promises.readFile(`${databaseFolder}/${file}`));
-
-    //     notes.sort((a, b) => new Date(b.date) - new Date(a.date));
-
-    //     await fs.promises.writeFile(`${databaseFolder}/${file}`, JSON.stringify(notes, null, 2));
-    //     res.send({
-    //         status: 'auf',
-    //         message: 'Notiz erfolgreich sortiert',
-    //         notes,
-    //     });
-    // } else if (selected === 'ab') {
-    //     //read JSON notes
-    //     let notes = JSON.parse(await fs.promises.readFile(`${databaseFolder}/${file}`));
-    //     notes.sort((a, b) => new Date(a.date) - new Date(b.date));
-
-    //     await fs.promises.writeFile(`${databaseFolder}/${file}`, JSON.stringify(notes, null, 2));
-    //     res.send({
-    //         status: 'ab',
-    //         message: 'Notiz erfolgreich sortiert',
-    //         notes,
-    //     });
-    // }
 };
 
 export const filterNotes = async (req, res) => {
     const { filtered } = req.body;
 
-    const users = await jsonUsers();
-    const foundUser = users.find((user) => user.username === req.session.username);
-    const databaseFolder = './database';
-    const file = `${foundUser.id}.json`;
+    try {
+        let file = await fileName(req);
 
-    if (filtered === 'hohe' || filtered === 'mittlere' || filtered === 'niedrige') {
-        //read JSON notes
-        let notes = JSON.parse(await fs.promises.readFile(`${databaseFolder}/${file}`));
+        if (filtered === 'hohe' || filtered === 'mittlere' || filtered === 'niedrige') {
+            //read JSON notes
+            let notes = await jsonNotes(req);
 
-        let notesFilteredArr = [...notes];
+            // array copied
+            let notesFilteredArr = [...notes];
 
-        console.log('--------notesFilteredArr');
-        console.log(notesFilteredArr);
+            // sortiert nach Datum (aufsteigend / absteigend)
+            filtered === 'hohe'
+                ? (notesFilteredArr = notesFilteredArr.filter((note) => note.category === filtered))
+                : filtered === 'mittlere'
+                ? (notesFilteredArr = notesFilteredArr.filter((note) => note.category === filtered))
+                : (notesFilteredArr = notesFilteredArr.filter((note) => note.category === filtered));
 
-        // notesFilteredArr.filter((note) => note.category === filtered);
+            return res.send({
+                status: filtered === 'hohe' ? 'hohe' : filtered === 'mittlere' ? 'mittlere' : 'niedrige',
+                message: 'Notiz erfolgreich ausgefiltert',
+                notesFilteredArr,
+            });
+        }
 
-        // sortiert nach Datum (aufsteigend / absteigend)
-        filtered === 'hohe'
-            ? (notesFilteredArr = notesFilteredArr.filter((note) => note.category === filtered))
-            : filtered === 'mittlere'
-            ? (notesFilteredArr = notesFilteredArr.filter((note) => note.category === filtered))
-            : (notesFilteredArr = notesFilteredArr.filter((note) => note.category === filtered));
+        if (filtered === 'alle') {
+            //read JSON notes
+            let notes = await jsonNotes(req);
 
-        return res.send({
-            status: filtered === 'hohe' ? 'hohe' : filtered === 'mittlere' ? 'mittlere' : 'niedrige',
-            message: 'Notiz erfolgreich sortiert',
-            notesFilteredArr,
-        });
-    }
-
-    if (filtered === 'alle') {
-        //read JSON notes
-        let notes = JSON.parse(await fs.promises.readFile(`${databaseFolder}/${file}`));
-        return res.send({
-            status: 'alle',
-            message: 'Notiz erfolgreich sortiert',
-            notes,
-        });
+            return res.send({
+                status: 'alle',
+                message: 'Notiz erfolgreich ausgefiltert',
+                notes,
+            });
+        }
+    } catch (error) {
+        throw new Error();
     }
 };

@@ -33,5 +33,10 @@
             box-shadow: 0px 2px 10px 2px map-get($map: $colors, $key: link);
         }
     }
-   
+
+    @media only screen and (max-width: 47rem) {
+        .note {
+            @include measures(18rem, 16rem);
+        }
+    }
 }

@@ -48,7 +48,7 @@
         }
         .head {
             @include measures(86%, auto);
-            @include grid(false, center);
+            @include grid(false, center, 1rem);
             h1{
                 justify-self: start;
             }

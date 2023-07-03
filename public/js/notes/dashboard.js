@@ -10,8 +10,7 @@ const renderItem = (note) => {
         <p>${description}</p>
         <div class="datum">${date}</div>
     </div>
-</a>
-    `;
+</a> `;
 };
 
 //////////////////////////////////--------------------------------------------------
@@ -260,7 +259,6 @@ const arrSortiert = async () => {
         if (!res.ok) return;
 
         let data = await res.json();
-        console.log(data);
 
         if (data.status === 'auf' || data.status === 'ab') {
             renderSortNotes(data);
@@ -289,8 +287,6 @@ const arrFilter = async () => {
         if (!res.ok) return;
 
         let data = await res.json();
-        console.log(data);
-        console.log(data.status);
 
         if (data.status === 'hohe' || data.status === 'mittlere' || data.status === 'niedrige' || data.status === 'alle') {
             renderFilterNotes(data);
