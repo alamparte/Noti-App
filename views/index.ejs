@@ -4,11 +4,8 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta
-            http-equiv="Content-Security-Policy"
-            content="default-src 'self'"
-        />
-        <meta name="description" content="<%= locals.description %>">
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self'" />
+        <meta name="description" content="<%= locals.description %>" />
         <title><%= locals.title %></title>
         <!-- FAVICON -->
         <link rel="icon" href="/img/favicon.ico" />
@@ -24,10 +21,7 @@
         <main class="mainIndex">
             <div class="mainContent">
                 <h1>Zähme deine Arbeit, organisiere dein Leben</h1>
-                <p>
-                    Merke dir alles und bewältige jedes Projekt – mit deinen
-                    Notizen, Aufgaben und Terminen an einem gemeinsamen Ort.
-                </p>
+                <p>Merke dir alles und bewältige jedes Projekt – mit deinen Notizen, Aufgaben und Terminen an einem gemeinsamen Ort.</p>
                 <button type="button">
                     <a href="/register">Kostenlos registrieren</a>
                 </button>
@@ -38,82 +32,68 @@
             <!-- FAQ -->
             <section class="faq">
                 <figure>
-                    <img src="img/faq.png" alt="faq vector">
+                    <img src="img/faq.png" alt="faq vector" />
                 </figure>
                 <div class="accordion">
                     <h2>FAQ</h2>
                     <div class="accorItem">
                         <button id="accorBtn1" aria-expanded="false">
-                            <span class="accorTitle">
-                                Muss ich zuerst ein Konto erstellen, um Noti
-                                online nutzen zu können?
-                            </span>
+                            <span class="accorTitle"> Muss ich zuerst ein Konto erstellen, um Noti online nutzen zu können? </span>
                             <span class="icon" aria-hidden="true"></span>
                         </button>
                         <div class="accorContent">
                             <p>
-                                Ja! Um unseren virtuellen Notizblock nutzen zu
-                                können, müssen Sie sich registrieren oder
-                                anmelden. Die Registrierung/Anmeldung ist
-                                in wenigen Schritten erledigt.
+                                Ja! Um unseren virtuellen Notizblock nutzen zu können, müssen Sie sich registrieren oder anmelden. Die Registrierung/Anmeldung
+                                ist in wenigen Schritten erledigt.
                             </p>
                         </div>
                     </div>
                     <div class="accorItem">
                         <button id="accorBtn2" aria-expanded="false">
-                            <span class="accorTitle">
-                                Alle Funktionen sind kostenlos?
-                            </span>
+                            <span class="accorTitle"> Alle Funktionen sind kostenlos? </span>
                             <span class="icon" aria-hidden="true"></span>
                         </button>
                         <div class="accorContent">
                             <p>
-                                Ja! Vom Schreiben bis zum Online-Bearbeiten von
-                                Texten sind alle Funktionen dieses
-                                Online-Notizblocks absolut kostenlos. Wir
-                                schränken die Verwendungsmöglichkeiten nicht
-                                ein.
+                                Ja! Vom Schreiben bis zum Online-Bearbeiten von Texten sind alle Funktionen dieses Online-Notizblocks absolut kostenlos. Wir
+                                schränken die Verwendungsmöglichkeiten nicht ein.
                             </p>
                         </div>
                     </div>
                     <div class="accorItem">
                         <button id="accorBtn3" aria-expanded="false">
-                            <span class="accorTitle">
-                                Sind meine Notizen hier sicher?
-                            </span>
+                            <span class="accorTitle"> Sind meine Notizen hier sicher? </span>
                             <span class="icon" aria-hidden="true"></span>
                         </button>
                         <div class="accorContent">
                             <p>
-                                Nun, da es sich um einen Online-Notizblock
-                                handelt, bei dem alle Vorgänge in der Cloud
-                                erfolgen, haben wir keinen direkten Zugriff auf
-                                Ihre Dateien und speichern oder bewahren Ihre
-                                Daten auch nicht bei uns auf. Ihre Dateien sind
-                                also absolut sicher.
+                                Nun, da es sich um einen Online-Notizblock handelt, bei dem alle Vorgänge in der Cloud erfolgen, haben wir keinen direkten
+                                Zugriff auf Ihre Dateien und speichern oder bewahren Ihre Daten auch nicht bei uns auf. Ihre Dateien sind also absolut sicher.
                             </p>
                         </div>
                     </div>
                     <div class="accorItem">
                         <button id="accorBtn4" aria-expanded="false">
-                            <span class="accorTitle">
-                                Kann ich in diesem Online-Notizblock mehrere
-                                Notizen gleichzeitig verwalten?
-                            </span>
+                            <span class="accorTitle"> Kann ich in diesem Online-Notizblock mehrere Notizen gleichzeitig verwalten? </span>
                             <span class="icon" aria-hidden="true"></span>
                         </button>
                         <div class="accorContent">
                             <p>
-                                Ja! Mit unserem Online-Notizblock können Sie
-                                mehrere Dateien gleichzeitig schreiben,
-                                bearbeiten und verwalten und haben gleichzeitig
-                                einen vollständigen Überblick über alle Ihre
-                                anderen Dateien.
+                                Ja! Mit unserem Online-Notizblock können Sie mehrere Dateien gleichzeitig schreiben, bearbeiten und verwalten und haben
+                                gleichzeitig einen vollständigen Überblick über alle Ihre anderen Dateien.
                             </p>
                         </div>
                     </div>
                 </div>
             </section>
+            <!-- arrow up icon -->
+            <div class="arrowUp" id="scrollToTop">
+                <svg height="1.1rem" viewBox="0 0 384 512">
+                    <path
+                        d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"
+                    />
+                </svg>
+            </div>
         </main>
         <!-- END MAIN -->
 
@@ -123,6 +103,7 @@
 
         <!-- JS LINK -->
         <script src="/js/headerAnimation.js"></script>
+        <script src="/js/scrollToTop.js"></script>
         <script src="/js/faqAccordion.js"></script>
     </body>
 </html>

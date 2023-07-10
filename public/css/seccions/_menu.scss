@@ -3,53 +3,37 @@
 
 .mainMenu {
     @include measures(100%, auto);
-    @include grid(center, center, 4rem);
     padding: 3rem 0;
     text-align: center;
     .header {
+        margin: 0 auto;
         max-width: 60rem;
         h1 {
             font-size: 3rem;
-            padding-bottom: 1.2rem;
         }
         p {
-            font-size: 1.6rem;
             line-height: 2.3rem;
+            margin: 2rem;
+            font-size: 1.6rem;
         }
         button {
             margin: 2.3rem;
             a {
+                @include mainBtn;
                 padding: 1rem 4rem;
-                font-size: 1.2rem;
-                color: map-get($map: $colors, $key: base-2);
-                background-color: map-get($map: $colors, $key: btn);
-                border-radius: 0.3rem;
-                font-weight: map-get($map: $font-weight, $key: regular);
-                &:hover {
-                    color: map-get($map: $colors, $key: btn);
-                    @include border(
-                        0.125rem,
-                        map-get($map: $colors, $key: btn)
-                    );
-                    background-color: transparent;
-                    box-shadow: 1px 2px 30px 1px;
-                }
             }
         }
     }
     .cards,
     .ideas {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        justify-content: center;
-        gap: 1.4rem;
-        max-width: 80rem;
-    }
-    .card,
-    .idea {
-        @include flex(flex-start, false, 1.3rem, column);
+        @include grid(center, center, 1rem);
+        grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+        padding: 0 1.5rem;
     }
     .cards {
+        margin: 3rem auto 5rem auto;
+        max-width: 80rem;
+        grid-auto-rows: 26rem;
         .card {
             background-color: #f0f1ec;
             text-align: left;
@@ -57,10 +41,11 @@
             padding: 1.9rem 1.3rem;
             border-radius: 0.4rem;
             @include border(0.123rem, map-get($map: $colors, $key: link));
-            @include measures(19rem, 26rem);
+            @include measures(auto, 26rem);
             h2,
             h3 {
                 font-size: 1.7rem;
+                margin-top: 1.3rem;
             }
             p {
                 font-size: 1.3rem;
@@ -73,30 +58,60 @@
             }
         }
     }
-    .header2 {
-        max-width: 60rem;
-        margin-top: 1.5rem;
-        h3 {
-            font-size: 2.6rem;
-            padding-bottom: 1.2rem;
-        }
-        p {
-            font-size: 1.5rem;
-            line-height: 2.3rem;
-        }
-    }
     .ideas {
+        margin: 0 auto;
+        max-width: 82rem;
+        grid-auto-rows: 15rem;
         .idea {
             h4,
             h5 {
                 font-size: 1.3rem;
             }
             p {
+                margin: 0 auto;
                 line-height: 1.7rem;
+                width: 90%;
             }
             span {
                 svg {
                     fill: map-get($map: $colors, $key: link);
+                }
+            }
+        }
+    }
+    .card,
+    .idea {
+        @include flex(flex-start, false, 1.3rem, column);
+    }
+    .header2 {
+        margin: 0 auto;
+        max-width: 60rem;
+        h3 {
+            font-size: 2.6rem;
+        }
+
+        p {
+            font-size: 1.5rem;
+            line-height: 2.3rem;
+            margin: 2rem;
+        }
+    }
+    @media only screen and (max-width: 39.99rem) {
+        .header h1,
+        .header2 h3 {
+            padding: 0 1rem;
+        }
+        .cards {
+            .card {
+                @include measures(20rem, 26rem);
+            }
+        }
+    }
+    @media only screen and (max-width: 77.5rem) {
+        .cards {
+            .card {
+                p {
+                    line-height: 1.8rem;
                 }
             }
         }

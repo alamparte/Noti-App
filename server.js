@@ -16,6 +16,11 @@ app.use(
         cookie: {},
     })
 );
+//  disable cache
+app.use((req, res, next) => {
+    res.set('Cache-Control', 'no-store');
+    next();
+});
 
 // Middleware
 app.use('/dashboard', (req, res, next) => {

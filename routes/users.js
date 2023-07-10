@@ -12,6 +12,7 @@ import {
     changePassword,
     checkEmail,
     checkCode,
+    checkEmailCode,
 } from '../controllers/usersController.js';
 import { checkNoAuth } from '../middleware/auth.js';
 
@@ -27,6 +28,7 @@ router.post('/login', getDataLogin);
 // forgot password route
 router.get('/forgot-password', checkNoAuth, forgotPasswordForm);
 router.post('/check-email', checkEmail);
+router.get('/checkEmailCode', checkEmailCode);
 router.post('/check-code', checkCode);
 router.post('/forgot-password', forgotPassword);
 // change password route
@@ -34,5 +36,6 @@ router.get('/dashboard/change-password', changePasswordForm);
 router.post('/dashboard/change-password', changePassword);
 // logout route
 router.get('/dashboard/logout', logout);
+
 
 export { router };

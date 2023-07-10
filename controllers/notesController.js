@@ -1,33 +1,7 @@
 import fs from 'fs';
 import { nanoid } from 'nanoid';
-import { getDatum } from '../helpers/helpers.js';
-
+import { getDatum, jsonNotes, fileName } from '../helpers/helpers.js';
 const databaseFolder = './database';
-// // read JSON notes
-const jsonNotes = async (req) => {
-    try {
-        let file = await fileName(req);
-        return JSON.parse(await fs.promises.readFile(`${databaseFolder}/${file}`));
-    } catch (error) {
-        console.log(error);
-        return [];
-    }
-};
-// read JSON users
-const jsonUsers = async () => {
-    try {
-        return JSON.parse(await fs.promises.readFile('database/users.json'));
-    } catch (error) {
-        console.log(error);
-        return [];
-    }
-};
-// file name per user ID
-const fileName = async (req) => {
-    const users = await jsonUsers();
-    const foundUser = users.find((user) => user.username === req.session.username);
-    return `${foundUser.id}.json`;
-};
 
 // // GET dashboard
 export const dashboard = (req, res) => {
@@ -202,7 +176,7 @@ export const editNote = async (req, res) => {
     }
 };
 
-// // // DELETE notes
+// DELETE notes
 export const deleteNote = async (req, res) => {
     try {
         let file = await fileName(req);
@@ -227,24 +201,68 @@ export const deleteNote = async (req, res) => {
         throw new Error();
     }
 };
-
+// SORT notes
 export const sortNotes = async (req, res) => {
-    const { selected } = req.body;
+    const { sort } = req.query;
 
     try {
         let file = await fileName(req);
 
-        if (selected === 'auf' || selected === 'ab') {
+        if (sort === 'auf' || sort === 'ab') {
             //read JSON notes
             let notes = await jsonNotes(req);
 
             // sortiert nach Datum (aufsteigend / absteigend)
-            selected === 'ab' ? notes.sort((a, b) => new Date(b.date) - new Date(a.date)) : notes.sort((a, b) => new Date(a.date) - new Date(b.date));
+            sort === 'ab' ? notes.sort((a, b) => new Date(b.date) - new Date(a.date)) : notes.sort((a, b) => new Date(a.date) - new Date(b.date));
 
             await fs.promises.writeFile(`${databaseFolder}/${file}`, JSON.stringify(notes, null, 2));
             return res.send({
-                status: selected === 'auf' ? 'auf' : 'ab',
+                status: 'success',
                 message: 'Notiz erfolgreich sortiert',
+                notes,
+            });
+        }
+    } catch (error) {
+        console.log(error);
+        throw new Error();
+    }
+};
+// FILTER notes
+export const filterNotes = async (req, res) => {
+    const { filter } = req.query;
+
+    //read JSON notes
+    let notes = await jsonNotes(req);
+
+    try {
+        let file = await fileName(req);
+
+        if (filter === 'hohe' || filter === 'mittlere' || filter === 'niedrige') {
+            // array copied
+            let notesFilteredArr = [...notes];
+
+            // sortiert nach Datum (aufsteigend / absteigend)
+            filter === 'hohe'
+                ? (notesFilteredArr = notesFilteredArr.filter((note) => note.category === filter))
+                : filter === 'mittlere'
+                ? (notesFilteredArr = notesFilteredArr.filter((note) => note.category === filter))
+                : (notesFilteredArr = notesFilteredArr.filter((note) => note.category === filter));
+
+            if (!notesFilteredArr.length < 1) {
+                return res.send({
+                    status: 'success',
+                    message: 'Notiz erfolgreich ausgefiltert',
+                    notesFilteredArr,
+                });
+            } else {
+                res.send({ status: 'failed', error: 'In dieser Kategorie wurden keine Notizen gefunden.' });
+            }
+        }
+
+        if (filter === 'alle') {
+            return res.send({
+                status: 'allNotes',
+                message: 'Notiz erfolgreich ausgefiltert',
                 notes,
             });
         }
@@ -252,45 +270,29 @@ export const sortNotes = async (req, res) => {
         throw new Error();
     }
 };
+// SEARCH notes
+export const sucheNotes = async (req, res) => {
+    const { search } = req.query;
 
-export const filterNotes = async (req, res) => {
-    const { filtered } = req.body;
+    let file = await fileName(req);
 
-    try {
-        let file = await fileName(req);
+    //read JSON notes
+    let notes = await jsonNotes(req);
 
-        if (filtered === 'hohe' || filtered === 'mittlere' || filtered === 'niedrige') {
-            //read JSON notes
-            let notes = await jsonNotes(req);
+    const results = notes.filter((note) => note.titel.toLowerCase().includes(search.toLowerCase()));
 
-            // array copied
-            let notesFilteredArr = [...notes];
-
-            // sortiert nach Datum (aufsteigend / absteigend)
-            filtered === 'hohe'
-                ? (notesFilteredArr = notesFilteredArr.filter((note) => note.category === filtered))
-                : filtered === 'mittlere'
-                ? (notesFilteredArr = notesFilteredArr.filter((note) => note.category === filtered))
-                : (notesFilteredArr = notesFilteredArr.filter((note) => note.category === filtered));
-
-            return res.send({
-                status: filtered === 'hohe' ? 'hohe' : filtered === 'mittlere' ? 'mittlere' : 'niedrige',
-                message: 'Notiz erfolgreich ausgefiltert',
-                notesFilteredArr,
-            });
-        }
-
-        if (filtered === 'alle') {
-            //read JSON notes
-            let notes = await jsonNotes(req);
-
-            return res.send({
-                status: 'alle',
-                message: 'Notiz erfolgreich ausgefiltert',
-                notes,
-            });
-        }
-    } catch (error) {
-        throw new Error();
+    if (!results.length < 1) {
+        res.send({ status: 'success', results });
+    } else {
+        res.send({ status: 'failed', error: 'keine Übereinstimmung gefunden.' });
     }
+};
+
+// resetFilter
+
+export const resetFilter = async (req, res) => {
+    //read JSON notes
+    let notes = await jsonNotes(req);
+
+    res.send({ status: 'success', notes });
 };

@@ -1,4 +1,4 @@
-// Email validation
+// E-Mail validation
 const validateEmail = async (email) => {
     const mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     if (mailformat.test(await email)) {

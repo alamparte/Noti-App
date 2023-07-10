@@ -13,9 +13,11 @@
         transition: 0.5s ease-in-out;
         p {
             line-height: 1.5rem;
+            overflow: hidden;
         }
         h2 {
-            padding-bottom: 0.5rem;
+            overflow: hidden;
+            padding-bottom: 0.6rem;
             color: map-get($map: $colors, $key: btn);
         }
         &:hover {
@@ -34,7 +36,7 @@
         }
     }
 
-    @media only screen and (max-width: 47rem) {
+    @media only screen and (max-width: 41.1rem) {
         .note {
             @include measures(18rem, 16rem);
         }

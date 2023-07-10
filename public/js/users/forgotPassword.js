@@ -36,6 +36,35 @@ const checkEmail = async (e) => {
 document.querySelector('#formEmailValidate').addEventListener('submit', checkEmail);
 //zweiter Teil >> die Form "Code-überprüfen" erstellen
 const renderCodeForm = () => {
+    const checkEmailCodeBtn = document.createElement('button');
+    checkEmailCodeBtn.classList.add('checkCodeBtn');
+    checkEmailCodeBtn.textContent = 'Check deine E-Mail';
+    checkEmailCodeBtn.classList.add('bliknEffect');
+    checkEmailCodeBtn.style.animation = "glowing 1300ms infinite";
+    checkEmailCodeBtn.disabled = false;
+    changePassContainer.prepend(checkEmailCodeBtn);
+
+    checkEmailCodeBtn.addEventListener('click', () => {
+        const div = document.createElement('div');
+        div.classList.add('spinner2');
+        checkEmailCodeBtn.disabled = true;
+        changePassContainer.prepend(div);
+
+        fetch('/checkEmailCode')
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                const { emailPreviewURL } = data;
+                window.open(`${emailPreviewURL}`, '_blank');
+                div.remove();
+                checkEmailCodeBtn.classList.remove('bliknEffect');
+                checkEmailCodeBtn.style.animation = 'none'
+            })
+            .catch((error) => {
+                throw error;
+            });
+    });
+
     containerForm.innerHTML = '';
     containerForm.innerHTML = `<p class="textChange">Bitte gib den Bestätigungscode ein, den wir dir per E-Mail gesendet haben, um dein Passwort zurückzusetzen.</p>
                                 <form id="codeValidate">
@@ -43,6 +72,7 @@ const renderCodeForm = () => {
                                     <div class="codeMessage"></div>
                                     <button type="submit" id="btnCode">Code überprüfen</button>
                                 </form> `;
+
     document.querySelector('#codeValidate').addEventListener('submit', checkCode);
 };
 //dritter Teil >> Code hinzufügen und verifizieren
@@ -204,7 +234,7 @@ const redirectNext = (data, codeMessage) => {
         }, 2000);
     }
 };
-// Attribute löschen 
+// Attribute löschen
 const resetAttr = () => {
     document.querySelector('#btnChangePass').disabled = false;
     codeInput.disabled = false;

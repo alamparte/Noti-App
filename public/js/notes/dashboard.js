@@ -1,239 +1,9 @@
+import { renderLupeIcon, renderItem, renderHeadDashboard } from '../helpers.js';
+
 const noteForm = document.querySelector('#noteForm');
 const mainDashboard = document.querySelector('#mainDashboard');
-///////////////----------------------------------------------------------------
-const renderItem = (note) => {
-    const { id, titel, description, date } = note;
-    return `
-    <a class="link" data-id="${id}" href="/dashboard/view-note/${id}">
-    <div class="note">
-        <h2>${titel}</h2>
-        <p>${description}</p>
-        <div class="datum">${date}</div>
-    </div>
-</a> `;
-};
 
-//////////////////////////////////--------------------------------------------------
-
-fetch('/dashboard/notes')
-    .then((res) => res.json())
-    .then((data) => {
-        console.log(data);
-        if (data.status === 'success') {
-            renderNotes(data);
-        } else {
-            renderWithoutNotes();
-        }
-    })
-    .catch((error) => {
-        throw error;
-    });
-
-//     // Element sortieren
-// const arrSortiert = async () => {
-//     const sortieren = document.querySelector('#sortieren');
-//     console.log(sortieren);
-//     // original Array kopieren
-
-//     if (sortieren.value !== '') {
-
-//         let res = await fetch(`/dashboard/sort-notes`, {
-//             method: 'POST',
-//             headers: { 'Content-type': 'application/json' },
-//             body: JSON.stringify({
-//                 selected: sortieren.value,
-//             }),
-//         });
-
-//         if (!res.ok) return;
-
-//         let data = await res.json();
-//         console.log(data);
-
-//         if (data.status === 'auf') {
-//             // renderNotes(data);
-//         console.log(data.notes);
-
-//         } else {
-//             // renderNotes(data);
-//         console.log(data.notes);
-
-//         }
-//     }
-// };
-
-// const renderNotes = async (data) => {
-//     mainDashboard.innerHTML = ''
-//     const section = document.createElement('section');
-//     section.classList.add('renderNotes');
-
-//     section.innerHTML = `
-//     <div class="head">
-//         <h1>Servus <span id="userName"></span></h1>
-//         <select id="sortieren">
-//              <option value="">Ergebnisse sortieren</option>
-//              <option value="auf">nach Datum (aufsteigend)</option>
-//              <option value="ab">nach Datum (absteigend)</option>
-//         </select>
-//         <select id="filter">
-//              <option value="">Filter hinzufügen</option>
-//              <option value="alle">Alle ansehen</option>
-//              <option value="hohe">hohe Priorität</option>
-//              <option value="mittlere">mittlere Priorität</option>
-//              <option value="niedrige">niedrige Priorität</option>
-//         </select>
-//         <button type="button">
-//             <a href="/dashboard/noteform" id="noteForm">+ neue Notiz</a>
-//         </button>
-//     </div>
-//     <div class="notes" id="notesContainer">
-//     ${await data.notes
-//         .map(
-//             ({ id, titel, description, date }) => `
-//                                         <a class="link" data-id="${id}" href="/dashboard/view-note/${id}">
-//                                                <div class="note">
-//                                                    <h2>${titel}</h2>
-//                                                    <p>${description}</p>
-//                                                    <div class="datum">${date}</div>
-//                                                </div>
-//                                            </a>`
-//         )
-//         .join('')}
-//     </div>
-// </section>`;
-//     mainDashboard.append(section);
-//     printName();
-//     const sortieren = document.querySelector('#sortieren');
-
-//     sortieren.addEventListener('change', arrSortiert);
-// };
-
-const renderWithoutNotes = () => {
-    const section = document.createElement('section');
-    section.classList.add('firstNote');
-
-    section.innerHTML = `
-                <div class="servus">
-                    <h1>Servus <span id="userName"></span></h1>
-                </div>
-                <div class="createNote">
-                    <figure>
-                        <img src="../img/notiz.svg" alt="note image" />
-                    </figure>
-                    <h2>Erstelle deine erste Notiz</h2>
-                    <p>Klicke <a href="/dashboard/noteform">here</a> um loszulegen.</p>
-                </div>     
-    `;
-
-    mainDashboard.append(section);
-    printName();
-};
-//NotesContainer div
-let divNotesContainer = document.createElement('div');
-divNotesContainer.classList.add('notes');
-
-//section
-const section = document.createElement('section');
-section.classList.add('renderNotes');
-
-const renderNotes = async (data) => {
-    const { notes } = data;
-    // //section
-    // const section = document.createElement('section');
-    // section.classList.add('renderNotes');
-
-    //head div
-    const divHead = document.createElement('div');
-    divHead.classList.add('head');
-
-    divHead.innerHTML = `   
-            <h1>Servus <span id="userName"></span></h1>
-            <div class="options">
-                <div class="sortGroup"> 
-                    <svg height="1.5rem" viewBox="0 0 576 512" id="dropDownSortIcon">
-                        <path
-                            d="M151.6 469.6C145.5 476.2 137 480 128 480s-17.5-3.8-23.6-10.4l-88-96c-11.9-13-11.1-33.3 2-45.2s33.3-11.1 45.2 2L96 365.7V64c0-17.7 14.3-32 32-32s32 14.3 32 32V365.7l32.4-35.4c11.9-13 32.2-13.9 45.2-2s13.9 32.2 2 45.2l-88 96zM320 480c-17.7 0-32-14.3-32-32s14.3-32 32-32h32c17.7 0 32 14.3 32 32s-14.3 32-32 32H320zm0-128c-17.7 0-32-14.3-32-32s14.3-32 32-32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H320zm0-128c-17.7 0-32-14.3-32-32s14.3-32 32-32H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H320zm0-128c-17.7 0-32-14.3-32-32s14.3-32 32-32H544c17.7 0 32 14.3 32 32s-14.3 32-32 32H320z"
-                        />
-                    </svg>
-                    <div class="dropDownSort"></div>   
-                </div> 
-    
-                <div class="filterGroup"> 
-                    <svg height="1.5rem" viewBox="0 0 512 512" id="dropDownFilterIcon">
-                        <path
-                            d="M3.9 54.9C10.5 40.9 24.5 32 40 32H472c15.5 0 29.5 8.9 36.1 22.9s4.6 30.5-5.2 42.5L320 320.9V448c0 12.1-6.8 23.2-17.7 28.6s-23.8 4.3-33.5-3l-64-48c-8.1-6-12.8-15.5-12.8-25.6V320.9L9 97.3C-.7 85.4-2.8 68.8 3.9 54.9z"
-                        />
-                    </svg>
-                    <div class="dropDownFilter"></div>
-                </div> 
-    
-                <button type="button">
-                    <a href="/dashboard/noteform" id="noteForm">+ <span id="newNoteText">neue Notiz</span></a>
-                </button>
-            </div> `;
-
-    divNotesContainer.innerHTML = `${await notes.map((note) => renderItem(note)).join('')}`;
-
-    section.append(divHead, divNotesContainer);
-    mainDashboard.append(section);
-
-    printName();
-
-    // // sortieren
-    // const sortieren = document.querySelector('#sortieren');
-    // sortieren.addEventListener('change', arrSortiert);
-    // // filter
-    // const filterNotes = document.querySelector('#filtern');
-    // console.log(filterNotes);
-    // filterNotes.addEventListener('change', arrFilter);
-
-    ///////*****************************************************////////////////////////////////// */
-
-    const dropDownSortIcon = document.querySelector('#dropDownSortIcon');
-    const dropDownSort = document.querySelector('.dropDownSort');
-    const showSelectSort = () => {
-        const p = document.createElement('p');
-        p.textContent = 'SORTIEREN NACH';
-        dropDownSort.innerHTML = '';
-        const select = document.createElement('select');
-        select.setAttribute('id', 'sortieren');
-        select.innerHTML = ` <option value="">Ergebnisse sortieren</option>
-      <option value="auf">nach Datum (aufsteigend)</option>
-      <option value="ab">nach Datum (absteigend)</option>`;
-        dropDownSort.append(p, select);
-        dropDownSort.style.display == 'none' ? (dropDownSort.style.display = 'block') : (dropDownSort.style.display = 'none');
-
-        // // sortieren
-        const sortieren = document.querySelector('#sortieren');
-        sortieren.addEventListener('change', arrSortiert);
-    };
-    dropDownSortIcon.addEventListener('click', showSelectSort);
-
-    ///////////////////----------------------------------------------------
-    const dropDownFilterIcon = document.querySelector('#dropDownFilterIcon');
-    const dropDownFilter = document.querySelector('.dropDownFilter');
-    const showSelectFilter = () => {
-        const p = document.createElement('p');
-        p.textContent = 'Filter hinzufügen';
-        dropDownFilter.innerHTML = '';
-        const select = document.createElement('select');
-        select.setAttribute('id', 'filtern');
-        select.innerHTML = `<option value="">Filter hinzufügen</option>
-      <option value="alle">Alle ansehen</option>
-      <option value="hohe">hohe Priorität</option>
-      <option value="mittlere">mittlere Priorität</option>
-      <option value="niedrige">niedrige Priorität</option>`;
-        dropDownFilter.append(p, select);
-        dropDownFilter.style.display == 'none' ? (dropDownFilter.style.display = 'block') : (dropDownFilter.style.display = 'none');
-
-        // // filter
-        const filterNotes = document.querySelector('#filtern');
-        filterNotes.addEventListener('change', arrFilter);
-    };
-
-    dropDownFilterIcon.addEventListener('click', showSelectFilter);
-};
-
+// get data username from req.session.username
 const printName = () => {
     fetch('/signed_in')
         .then((res) => res.text())
@@ -245,103 +15,359 @@ const printName = () => {
         });
 };
 
-// Element sortieren
-const arrSortiert = async () => {
-    if (sortieren.value !== '') {
-        let res = await fetch(`/dashboard/sort-notes`, {
-            method: 'POST',
-            headers: { 'Content-type': 'application/json' },
-            body: JSON.stringify({
-                selected: sortieren.value,
-            }),
-        });
-
-        if (!res.ok) return;
-
-        let data = await res.json();
-
-        if (data.status === 'auf' || data.status === 'ab') {
-            renderSortNotes(data);
+// render notes or when notes.length == 0
+fetch('/dashboard/notes')
+    .then((res) => res.json())
+    .then((data) => {
+        if (data.status === 'success') {
+            renderNotes(data);
+        } else {
+            renderWithoutNotes();
         }
-    }
+    })
+    .catch((error) => {
+        throw error;
+    });
+
+// render notes.length == 0
+const renderWithoutNotes = () => {
+    // create section
+    const section = document.createElement('section');
+    section.classList.add('firstNote');
+    // create div for User Name
+    const divUserName = document.createElement('div');
+    divUserName.classList.add('servus');
+    // content of div for User Name
+    const h1 = document.createElement('h1');
+    h1.textContent = 'Servus ';
+    const userName = document.createElement('span');
+    userName.id = 'userName';
+    // append elements
+    h1.append(userName);
+    divUserName.append(h1);
+    // create div for create a Note
+    const createNote = document.createElement('div');
+    createNote.classList.add('createNote');
+    // content of div for create a Note
+    const figure = document.createElement('figure');
+    const img = document.createElement('img');
+    img.src = '/img/notiz.svg';
+    img.alt = 'a vector a big note without color';
+    const h2 = document.createElement('h2');
+    h2.textContent = 'Erstelle deine erste Notiz';
+    const p = document.createElement('p');
+    const link = document.createElement('a');
+    link.href = '/dashboard/noteform';
+    link.textContent = 'here';
+    // append elements to p
+    p.append(document.createTextNode('Klicke '));
+    p.append(link);
+    p.append(document.createTextNode(' um loszulegen.'));
+    // append elements
+    figure.append(img);
+    createNote.append(figure, h2, p);
+    // append elements to section / main
+    section.append(divUserName, createNote);
+    mainDashboard.append(section);
+    // get username
+    printName();
 };
 
-const renderSortNotes = async (data) => {
+// render notes
+const renderNotes = async (data) => {
     const { notes } = data;
-    divNotesContainer.innerHTML = '';
+
+    // section in dashboard with notes
+    const section = document.createElement('section');
+    section.classList.add('renderNotes');
+
+    // create Notes Container
+    let divNotesContainer = document.createElement('div');
+    divNotesContainer.classList.add('notes');
+
+    // create search input container
+    const lupeContainer = document.createElement('div');
+    lupeContainer.classList.add('divPadre');
+    //create search input
+    const searchContainer = document.createElement('div');
+    searchContainer.classList.add('searchContainer');
+    lupeContainer.append(searchContainer);
+    // input
+    const searchInput = document.createElement('input');
+    searchInput.type = 'text';
+    searchInput.classList.add('inputSearch');
+    // magnifying glass icon
+    const searchBtn = document.createElement('span');
+    searchBtn.classList.add('btnSearch');
+    let lupe = renderLupeIcon();
+    searchBtn.append(lupe);
+    searchContainer.append(searchInput, searchBtn);
+
+    // div Head in Dashboard
+    const divHead = document.createElement('div');
+    divHead.classList.add('head');
+    // div Head in Dashboard data
+    divHead.innerHTML = renderHeadDashboard();
+    // render notes
     divNotesContainer.innerHTML = `${await notes.map((note) => renderItem(note)).join('')}`;
+    // append section / main
+    section.append(divHead, divNotesContainer);
+    mainDashboard.append(lupeContainer, section);
+    // create events
+    setEvents();
+    // get username
+    printName();
 };
 
-// Element filtern
-const arrFilter = async () => {
-    const filterNotes = document.querySelector('#filtern');
-    if (filterNotes.value !== '') {
-        let res = await fetch(`/dashboard/filter-notes`, {
-            method: 'POST',
-            headers: { 'Content-type': 'application/json' },
-            body: JSON.stringify({
-                filtered: filterNotes.value,
-            }),
-        });
+// create sort&filter container / set search&reset events
+const setEvents = () => {
+    // hide dropDown elements
+    // sort options container
+    const dropDownSort = document.querySelector('.dropDownSort');
+    dropDownSort.style.display = 'none';
+    // filter options container
+    const dropDownFilter = document.querySelector('.dropDownFilter');
+    dropDownFilter.style.display = 'none';
 
-        if (!res.ok) return;
+    // create and display sort options container
+    const dropDownSortIcon = document.querySelector('#dropDownSortIcon');
+    dropDownSortIcon.addEventListener('click', createSelectSort);
+    // create and display filter options container
+    const dropDownFilterIcon = document.querySelector('#dropDownFilterIcon');
+    dropDownFilterIcon.addEventListener('click', createSelectFilter);
+    // fetch search notes
+    const btnSearch = document.querySelector('.btnSearch');
+    btnSearch.addEventListener('click', searchNotes);
+    // fetch reset filter notes
+    const resetFilterBtn = document.querySelector('.resetFilter');
+    resetFilterBtn.addEventListener('click', resetFilter);
+};
 
-        let data = await res.json();
+// create Select Sort
+const createSelectSort = () => {
+    const dropDownSort = document.querySelector('.dropDownSort');
 
-        if (data.status === 'hohe' || data.status === 'mittlere' || data.status === 'niedrige' || data.status === 'alle') {
-            renderFilterNotes(data);
+    // create 'sort options container' elements
+    const p = document.createElement('p');
+    p.textContent = 'SORTIEREN NACH';
+    // empty Container
+    dropDownSort.innerHTML = '';
+
+    const select = document.createElement('select');
+    select.setAttribute('id', 'sortieren');
+
+    select.innerHTML = ` <option value="">Ergebnisse sortieren</option>
+                        <option value="auf">nach Datum (aufsteigend)</option>
+                        <option value="ab">nach Datum (absteigend)</option>`;
+
+    dropDownSort.append(p, select);
+    // show/hide sort container
+    dropDownSort.style.display == 'none' ? (dropDownSort.style.display = 'block') : (dropDownSort.style.display = 'none');
+
+    // select value
+    document.querySelector('#sortieren').addEventListener('change', arrSortiert);
+};
+
+// create Select Filter
+const createSelectFilter = () => {
+    const dropDownFilter = document.querySelector('.dropDownFilter');
+    // create 'filter options container' elements
+    const p = document.createElement('p');
+    p.textContent = 'Filter hinzufügen';
+    // create select
+    const select = document.createElement('select');
+    select.setAttribute('id', 'filtern');
+
+    const selectArray = [
+        ['', 'Filter hinzufügen'],
+        ['alle', 'Alle ansehen'],
+        ['hohe', 'hohe Priorität'],
+        ['mittlere', 'mittlere Priorität'],
+        ['niedrige', 'niedrige Priorität'],
+    ];
+    // empty Container
+    dropDownFilter.innerHTML = '';
+    select.innerHTML = '';
+
+    selectArray.forEach((option) => {
+        select.innerHTML += `
+        <option value="${option[0]}">${option[1]}</option>         
+        `;
+    });
+
+    dropDownFilter.append(p, select);
+    // show/hide filter container
+    dropDownFilter.style.display == 'none' ? (dropDownFilter.style.display = 'block') : (dropDownFilter.style.display = 'none');
+
+    // select value
+    document.querySelector('#filtern').addEventListener('change', arrFilter);
+};
+
+// sort elements
+const arrSortiert = async () => {
+    try {
+        // // sort select
+        const sortieren = document.querySelector('#sortieren');
+        if (sortieren.value !== '') {
+            let res = await fetch(`/dashboard/sort-notes?sort=${sortieren.value}`);
+
+            if (!res.ok) return;
+
+            let data = await res.json();
+
+            if (data.status === 'success') {
+                renderSortedNotes(data);
+            }
         }
+    } catch (error) {
+        throw new Error();
     }
 };
 
-let p = document.createElement('p');
-p.classList.add('withoutNotes');
+// render sorted Notes
+const renderSortedNotes = async (data) => {
+    // check if p element with error text exists
+    if (document.querySelector('.withoutNotes')) {
+        deleteTextInfo();
+    }
+    const { notes } = data;
+    // show the sorted notes in divNotesContainer
+    // empty Notes Container
+    document.querySelector('.notes').innerHTML = '';
+    // render the sort option
+    document.querySelector('.notes').innerHTML = `${await notes.map((note) => renderItem(note)).join('')}`;
+};
 
+// filter elements
+const arrFilter = async () => {
+    try {
+        // grab filter select
+        const filterNote = document.querySelector('#filtern');
+
+        if (filterNote.value !== '') {
+            let res = await fetch(`/dashboard/filter-notes?filter=${filterNote.value}`);
+
+            if (!res.ok) return;
+
+            let data = await res.json();
+            console.log(data);
+
+            if (data.status === 'success' || data.status === 'allNotes') {
+                renderFilterNotes(data);
+            } else {
+                if (!document.querySelector('.withoutNotes')) {
+                    renderInfoText(data);
+                }
+            }
+        }
+    } catch (error) {
+        throw new Error();
+    }
+};
+
+// render filtered Notes
 const renderFilterNotes = async (data) => {
-    divNotesContainer.innerHTML = '';
-    if (data.status === 'alle') {
-        p.remove();
+    // empty Notes Container
+    document.querySelector('.notes').innerHTML = '';
+
+    if (data.status === 'allNotes') {
         const { notes } = data;
-        divNotesContainer.innerHTML = `${await notes.map((note) => renderItem(note)).join('')}`;
+        // check if p element with error text exists
+        if (document.querySelector('.withoutNotes')) {
+            deleteTextInfo();
+        }
+        // render the filter option
+        document.querySelector('.notes').innerHTML = `${await notes.map((note) => renderItem(note)).join('')}`;
     } else {
         const { notesFilteredArr } = data;
-
-        if (notesFilteredArr < 1) {
-            p.textContent = 'In dieser Kategorie wurden keine Notizen gefunden';
-            section.append(p);
-        } else {
-            p.remove();
-            divNotesContainer.innerHTML = `${await notesFilteredArr.map((note) => renderItem(note)).join('')}`;
+        // check if p element with error text exists
+        if (document.querySelector('.withoutNotes')) {
+            deleteTextInfo();
         }
+        // render the filter option
+        document.querySelector('.notes').innerHTML = `${await notesFilteredArr.map((note) => renderItem(note)).join('')}`;
     }
 };
 
-///////////////////////---------------------------------------
+// fetch search notes
+const searchNotes = async () => {
+    try {
+        let inputValue = document.querySelector('.inputSearch');
 
-// const showSelect = () => {
-//     dropDownSort.innerHTML = '';
+        if (inputValue.value !== '') {
+            let res = await fetch(`/dashboard/search-notes?search=${inputValue.value}`);
 
-//     const select = document.createElement('select');
-//     select.setAttribute('id', 'select');
-//     select.innerHTML = ` <option value="">Ergebnisse sortieren</option>
-//     <option value="auf">nach Datum (aufsteigend)</option>
-//     <option value="ab">nach Datum (absteigend)</option>`;
-//     dropDownSort.append(select);
+            if (!res.ok) return;
 
-//     // <div class="dropDownSort"></div>
-//     // <select id="sortieren">
-//     //      <option value="">Ergebnisse sortieren</option>
-//     //      <option value="auf">nach Datum (aufsteigend)</option>
-//     //      <option value="ab">nach Datum (absteigend)</option>
-//     // </select>
-//     // </div>
+            let data = await res.json();
+            if (data.status === 'success') {
+                renderSearchNotes(data);
+            } else {
+                renderInfoText(data);
+            }
+        }
+    } catch (error) {
+        throw new Error();
+    }
+};
+// fetch reset filter notes
+const resetFilter = async () => {
+    try {
+        let res = await fetch(`/dashboard/reset-filter`);
 
-//     dropDownSort.style.display == 'none' ? (dropDownSort.style.display = 'block') : (dropDownSort.style.display = 'none');
-// };
-//     <select id="filtern">
-//     <option value="">Filter hinzufügen</option>
-//     <option value="alle">Alle ansehen</option>
-//     <option value="hohe">hohe Priorität</option>
-//     <option value="mittlere">mittlere Priorität</option>
-//     <option value="niedrige">niedrige Priorität</option>
-// </select>
+        if (!res.ok) return;
+
+        let data = await res.json();
+
+        renderResetFilter(data);
+    } catch (error) {
+        throw new Error();
+    }
+};
+// render reset notes
+const renderResetFilter = async (data) => {
+    // reset input search
+    document.querySelector('.inputSearch').value = '';
+    // check if p element with error text exists
+    if (document.querySelector('.withoutNotes')) {
+        deleteTextInfo();
+    }
+    const { notes } = data;
+    // show the reset filter notes in divNotesContainer
+    // empty Notes Container
+    document.querySelector('.notes').innerHTML = '';
+    // render the reset options filter
+    document.querySelector('.notes').innerHTML = `${await notes.map((note) => renderItem(note)).join('')}`;
+};
+// render result Search Notes
+const renderSearchNotes = async (data) => {
+    // check if p element with error text exists
+    if (document.querySelector('.withoutNotes')) {
+        deleteTextInfo();
+    }
+    const { results } = data;
+    // show the match notes in divNotesContainer
+    // empty Notes Container
+    document.querySelector('.notes').innerHTML = '';
+    // render the search option
+    document.querySelector('.notes').innerHTML = `${await results.map((note) => renderItem(note)).join('')}`;
+};
+// create p element with error text
+const renderInfoText = (data) => {
+    // empty Notes Container
+    document.querySelector('.notes').innerHTML = '';
+
+    let p = document.createElement('p');
+    p.classList.add('withoutNotes');
+    const text = document.querySelector('.withoutNotes');
+
+    if (!text) {
+        p.textContent = data.error;
+        // append in section
+        document.querySelector('.renderNotes').append(p);
+    }
+};
+// remove p element with error text
+const deleteTextInfo = () => {
+    document.querySelector('.withoutNotes').remove();
+};

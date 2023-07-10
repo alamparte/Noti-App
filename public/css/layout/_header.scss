@@ -5,22 +5,22 @@ header {
     @include flex(space-between, center);
     padding: 2rem 6rem;
     .logo {
-        @include measures(8rem);
+        @include measures(6rem);
     }
     svg {
-        fill: map-get($map: $colors, $key: btn);
+        color: map-get($map: $colors, $key: btn);
         &:hover {
             fill: map-get($map: $colors, $key: link);
         }
     }
+
     nav {
         ul {
             @include flex(false, false, 1.3rem, column);
             div {
                 @include flex(flex-end, center, 1.3rem);
             }
-            .menu,
-            .menuDash {
+            .menu {
                 li {
                     a {
                         font-weight: map-get($map: $font-weight, $key: light);
@@ -30,19 +30,35 @@ header {
                     }
                 }
             }
-            .user,
-            .logout {
-                li {
-                    a {
-                        @include flex(false, center, 0.4rem);
-                        &:hover {
-                            fill: map-get($map: $colors, $key: link);
-                            color: map-get($map: $colors, $key: link);
-                        }
+        }
+    }
+    .user,
+    .navDash {
+        li {
+            a {
+                @include flex(false, center, 0.3rem);
+                &:hover {
+                    color: map-get($map: $colors, $key: link);
+                    svg {
+                        fill: map-get($map: $colors, $key: link);
                     }
                 }
             }
         }
+    }
+    .navDash {
+        position: absolute;
+        display: none;
+        @include measures(13rem, 9rem);
+        top: 8.56rem;
+        right: 0;
+        background-color: map-get($map: $colors, $key: bg-color-1);
+        box-shadow: 0 1px 20px map-get($map: $colors, $key: btn);
+        border-radius: 0.3rem;
+        padding: 1rem;
+    }
+    .navDash.active {
+        display: block;
     }
     #menuBars {
         display: none;
@@ -74,16 +90,17 @@ header {
             }
         }
         .menu.show {
-            transform: translateY(170%);
-        }
-        .menuDash{
-            flex-direction: column;
-            li{
-                width: 100%;
-                @include flex(flex-end, false);
-            }
+            transform: translateY(164%);
         }
     }
+}
+.headerDash {
+    box-shadow: 0 1px 20px map-get($map: $colors, $key: btn);
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background-color: map-get($map: $colors, $key: bg-color-1);
+    padding-right: 3rem;
 }
 .is-sticky {
     position: sticky;
@@ -91,5 +108,5 @@ header {
     background-color: map-get($map: $colors, $key: bg-color-1);
     transition: 0.3s all;
     box-shadow: 0 1px 20px map-get($map: $colors, $key: btn);
-    z-index: 999;
+    z-index: 2;
 }

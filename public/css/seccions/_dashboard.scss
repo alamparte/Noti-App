@@ -3,21 +3,27 @@
 
 .mainDash {
     @include measures(100%, auto);
-    @include grid(center);
     padding: 4rem 0;
+    margin: 0 auto;
+    max-width: 85rem;
     .firstNote {
+        margin: 0 auto;
         @include animationDash;
-        width: 50%;
-        max-width: 60rem;
+        @include measures(80%, auto);
+        max-width: 45rem;
+        padding: 3rem 1.5rem;
         .servus {
+            justify-self: start;
             h1 {
-                font-size: 3rem;
+                font-size: 2.5rem;
             }
         }
         .createNote {
+            margin-top: 2rem;
             text-align: center;
             @include flex(false, false, 1.5rem, column);
             figure {
+                @include measures(100%, auto);
                 img {
                     @include measures(25rem, auto);
                 }
@@ -39,19 +45,39 @@
             }
         }
     }
-    .renderNotes {
-        @include animationDash;
+    .divPadre {
+        @include measures(88%, auto);
+        @include flex(flex-end, center);
+        margin: 0 auto 2rem auto;
         max-width: 80rem;
-        box-shadow: inset 0px 2px 50px 2px rgba(145, 149, 55, 0.3);
-        &::after {
-            filter: blur(2.7rem);
-        }
-        .head {
-            @include measures(86%, auto);
-            @include grid(false, center, 1rem);
-            h1{
-                justify-self: start;
+        .searchContainer {
+            @include flex(space-between, center);
+            @include measures(25rem);
+            box-shadow: 0px 2px 5px 2px rgba(100, 151, 43, 0.3);
+            padding: 0.6rem 1.2rem;
+            border-radius: 0.3rem;
+            background-color: map-get($map: $colors, $key: bg-color-2);
+            input {
+                @include measures(90%, auto);
+                background-color: map-get($map: $colors, $key: bg-color-2);
+                outline: none;
+                border: none;
             }
+            span {
+                border-radius: 10rem;
+            }
+        }
+    }
+    .renderNotes {
+        margin: 0 auto;
+        @include animationDash;
+        @include measures(90%, auto);
+        padding: 4rem;
+        max-width: 80rem;
+        box-shadow: 0px 2px 50px 2px rgba(145, 149, 55, 0.3);
+        .head {
+            margin-bottom: 3rem;
+            @include grid(false, center, 1.5rem);
             .options {
                 justify-self: end;
                 @include flex(false, center, 1.6rem);
@@ -61,30 +87,34 @@
                         fill: map-get($map: $colors, $key: link);
                     }
                 }
+                .sortGroup,
+                .filterGroup,
+                .resetFilter {
+                    position: relative;
+                }
                 .dropDownSort {
-                    width: 230px;
-                    height: 160px;
+                    width: 14.3rem;
+                    height: 10rem;
                     p {
                         font-size: 1rem;
                     }
                 }
                 .dropDownFilter {
-                    width: 170px;
-                    height: 190px;
+                    width: 10.6rem;
+                    height: 11.8rem;
                     p {
                         font-size: 1.1rem;
                     }
                 }
                 .dropDownSort,
                 .dropDownFilter {
-                    display: none;
-                    top: 6.5rem;
+                    top: 3.3rem;
                     padding: 1rem;
                     position: absolute;
                     background-color: map-get($map: $colors, $key: bg-color-2);
                     box-shadow: 0px 2px 10px 2px map-get($map: $colors, $key: link);
                     border-radius: 0.5rem;
-                    z-index: 999;
+                    z-index: 1;
                     p {
                         margin-bottom: 0.9rem;
                     }
@@ -104,76 +134,115 @@
                 }
                 button {
                     a {
-                        @include border(0.123rem, map-get($map: $colors, $key: btn));
+                        @include mainBtn;
+                        @include border(0.125rem, map-get($map: $colors, $key: btn));
                         padding: 0.5rem 2rem;
-                        background-color: map-get($map: $colors, $key: btn);
-                        border-radius: 0.2rem;
-                        color: #ffffff;
                         outline: 1px solid;
                         outline-color: map-get($map: $colors, $key: btn);
                         outline-offset: 0px;
                         transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1);
                         &:hover {
-                            background-color: transparent;
-                            @include border(0.123rem, map-get($map: $colors, $key: btn));
-                            color: map-get($map: $colors, $key: btn);
+                            box-shadow: none;
                             outline-color: rgba(255, 255, 255, 0);
                             outline-offset: 0.938rem;
                         }
                     }
                 }
             }
+            .hoverDiv {
+                position: relative;
+                &:hover {
+                    .hover {
+                        opacity: 1;
+                        visibility: visible;
+                        transition: all 0.25s;
+                    }
+                }
+                .hover {
+                    background: map-get($map: $colors, $key: base);
+                    color: map-get($map: $colors, $key: base-2);
+                    cursor: pointer;
+                    opacity: 0;
+                    padding: 0.7rem 0.3rem;
+                    position: absolute;
+                    visibility: hidden;
+                    border-radius: 0.3rem;
+                    transition: all 0.25s;
+                }
+                .divPosition {
+                    text-align: center;
+                    bottom: 165%;
+                    left: -261%;
+                    width: 10.3rem;
+                }
+                .divPosition,
+                .hover {
+                    &::after {
+                        border: 8px solid transparent;
+                        border-top-color: map-get($map: $colors, $key: base);
+                        bottom: -15px;
+                        content: '';
+                        height: 0px;
+                        left: 0;
+                        margin: 0 auto;
+                        position: absolute;
+                        right: 0;
+                        width: 0px;
+                    }
+                }
+            }
         }
         .notes {
-            display: grid;
-            grid-auto-rows: auto;
-            justify-items: center;
-            align-items: center;
-            gap: 1.3rem;
+            @include grid(center, center, 1rem);
+            grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+            grid-template-rows: auto;
+            row-gap: 1.6rem;
+            margin: 0 auto;
             max-width: 70rem;
         }
     }
-    @media only screen and (max-width: 47rem) {
+    @media only screen and (max-width: 52rem) {
+        .firstNote {
+            @include measures(90%, auto);
+            .createNote {
+                figure {
+                    @include measures(100%, auto);
+                    img {
+                        @include measures(20rem, auto);
+                    }
+                }
+                h2 {
+                    font-size: 1.6rem;
+                }
+            }
+        }
         .renderNotes {
-            width: 90%;
-        }
-        .notes {
-            grid-template-columns: 1fr;
-        }
-        .head {
-            @include measures(93%, auto);        
-            .options {
-                button {
-                    a {
-                        #newNoteText {
-                            display: none;
+            padding: 3rem 1.5rem;
+            .head {
+                .options {
+                    button {
+                        a {
+                            #newNoteText {
+                                display: none;
+                            }
                         }
                     }
                 }
             }
         }
     }
-    @media only screen and (min-width: 47rem) {
-        .renderNotes {
-            width: 90%;
-        }
-        .notes {
-            @include measures(80%, auto);
-        }
-        .head , .notes {
-            grid-template-columns: repeat(2, 1fr);
-        }
-    }
-    @media only screen and (min-width: 60rem) {
-        .notes {
-            grid-template-columns: repeat(3, 1fr);
-            @include measures(90%, auto);
-        }
-    }
-    @media only screen and (min-width: 79rem) {
-        .notes {
-            grid-template-columns: repeat(4, 1fr);
-            @include measures(100%, auto);
+    @media only screen and (max-width: 25rem) {
+        .firstNote {
+            .createNote {
+                figure {
+                    img {
+                        @include measures(16rem, auto);
+                    }
+                }
+                h2 {
+                    font-size: 1.3rem;
+                }
+            }
         }
     }
 }

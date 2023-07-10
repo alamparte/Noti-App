@@ -1,17 +1,10 @@
 import fs from 'fs';
 import { nanoid } from 'nanoid';
+import nodemailer from 'nodemailer';
 import { encrypt, compare } from '../helpers/handleBcrypt.js';
 import { validateEmail, validatePassword } from '../helpers/validation.js';
+import { generateNumericCode, jsonUsers } from '../helpers/helpers.js';
 
-// read JSON users
-const jsonUsers = async () => {
-    try {
-        return JSON.parse(await fs.promises.readFile('database/users.json'));
-    } catch (error) {
-        console.log(error);
-        return [];
-    }
-};
 // GET checkusername
 export const checkuser = (req, res) => {
     res.send(req.session.username);
@@ -76,7 +69,6 @@ export const getDataRegister = async (req, res) => {
                 username,
                 email,
                 password: passwordHashed,
-                verifyCode: 12345
             });
             await fs.promises.writeFile('database/users.json', JSON.stringify(users, null, 2));
             res.send({
@@ -145,10 +137,13 @@ export const forgotPasswordForm = (req, res) => {
     };
     res.render('forgotPassword', { locals });
 };
-// POST checkEmail, um das Passwort zu ändern
 let userFound;
+let emailFound;
+let numericCode;
+// POST checkEmail, um das Passwort zu ändern
 export const checkEmail = async (req, res) => {
     const { email } = req.body;
+    emailFound = email;
     // users von JSON lesen
     let users = await jsonUsers();
     // validate user, it exists?
@@ -278,17 +273,57 @@ export const changePassword = async (req, res) => {
         }
     }
 };
+
+export const checkEmailCode = async (req, res) => {
+    numericCode = generateNumericCode();
+    try {
+        // ein Testkonto in Ethereal.email erstellen
+        const testAccount = await nodemailer.createTestAccount();
+        // mit dem Testkonto ein Transportobjekt erstellen
+        const transporter = nodemailer.createTransport({
+            host: 'smtp.ethereal.email',
+            port: 587,
+            secure: false,
+            auth: {
+                user: 'patrick40@ethereal.email',
+                pass: 'uZ6XHNNDdyA8SS6cM5',
+            },
+        });
+        // E-Mail Optionen
+        const mailOptions = {
+            from: '"Noti" <noreply@noti.com>',
+            to: emailFound,
+            subject: 'Passwortzurücksetzungscode',
+            text: `Hallo ${userFound.username},
+                   Wir haben eine Anfrage zun Zürucksetzen deines Noti-Passworts erhalten.
+                   Gib den folgenden Code zum Zürucksetzen des Passworts ein:
+                   ${numericCode}`,
+            html: ` <p>Hallo ${userFound.username},</p>
+            <p>Wir haben eine Anfrage zun Zürucksetzen deines Noti-Passworts erhalten.</p>
+            <p>Gib den folgenden Code zum Zürucksetzen des Passworts ein:</p>
+            <strong>${numericCode}</strong></p>`,
+        };
+        // E-Mail senden
+        const info = await transporter.sendMail(mailOptions);
+        let emailPreviewURL = nodemailer.getTestMessageUrl(info);
+
+        res.send({ emailPreviewURL, numericCode });
+    } catch (error) {
+        console.error('Error sending email:', error);
+    }
+};
+
 // POST check code
 export const checkCode = (req, res) => {
     const { code } = req.body;
 
-    if (Number(userFound.verifyCode) === Number(code)) {
+    if (Number(numericCode) === Number(code)) {
         res.send({
             status: 'successCode',
             message: 'Code erfolgreich verifiziert.',
         });
     } else {
-       res.send({
+        res.send({
             status: 'failed',
             error: 'Der Code ist nicht korrekt.',
         });

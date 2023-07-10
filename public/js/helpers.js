@@ -1,5 +1,5 @@
 //create SVGs pinner
-export const renderLinkIcon =() => {
+export const renderLinkIcon = () => {
     const iconSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     const iconPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
     const pathValue =
@@ -61,6 +61,7 @@ export const showHidePassword = (svg) => {
         item.addEventListener('click', (event) => {
             const svgElem = event.currentTarget;
             const inputElem = svgElem.previousElementSibling;
+            console.log(inputElem);
 
             if (inputElem.type === 'password') {
                 inputElem.type = 'text';
@@ -77,3 +78,72 @@ export const showHidePassword = (svg) => {
     });
 };
 
+//create SVGs Lupe
+export const renderLupeIcon = () => {
+    const iconSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    const iconPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    const pathValue =
+        'M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z';
+
+    iconSvg.setAttribute('viewBox', '0 0 512 512');
+    iconSvg.setAttribute('height', '1rem');
+    iconSvg.setAttribute('fill', '#3F4E09');
+
+    iconPath.setAttribute('d', pathValue);
+
+    iconSvg.appendChild(iconPath);
+
+    return iconSvg;
+};
+
+// create a note item
+export const renderItem = (note) => {
+    const { id, titel, description, date } = note;
+    return `
+    <a class="link" data-id="${id}" href="/dashboard/view-note/${id}">
+    <div class="note">
+        <h2>${titel}</h2>
+        <p>${description}</p>
+        <div class="datum">${date}</div>
+    </div>
+</a> `;
+};
+
+// create div Head in Dashboard
+export const renderHeadDashboard = () => {
+    return `   
+            <h1>Servus <span id="userName"></span></h1>
+            <div class="options">
+                <div class="sortGroup"> 
+                    <div class="hoverDiv">  
+                        <div class="hover divPosition">Sortieroptionen</div>
+                        <svg height="1.5rem" viewBox="0 0 576 512" id="dropDownSortIcon">
+                            <path d="M151.6 469.6C145.5 476.2 137 480 128 480s-17.5-3.8-23.6-10.4l-88-96c-11.9-13-11.1-33.3 2-45.2s33.3-11.1 45.2 2L96 365.7V64c0-17.7 14.3-32 32-32s32 14.3 32 32V365.7l32.4-35.4c11.9-13 32.2-13.9 45.2-2s13.9 32.2 2 45.2l-88 96zM320 480c-17.7 0-32-14.3-32-32s14.3-32 32-32h32c17.7 0 32 14.3 32 32s-14.3 32-32 32H320zm0-128c-17.7 0-32-14.3-32-32s14.3-32 32-32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H320zm0-128c-17.7 0-32-14.3-32-32s14.3-32 32-32H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H320zm0-128c-17.7 0-32-14.3-32-32s14.3-32 32-32H544c17.7 0 32 14.3 32 32s-14.3 32-32 32H320z"/>
+                        </svg>
+                    </div>  
+                    <div class="dropDownSort"></div>   
+                </div> 
+
+                <div class="filterGroup"> 
+                    <div class="hoverDiv"> 
+                        <div class="hover divPosition">Filter hinzufügen</div>
+                        <svg height="1.5rem" viewBox="0 0 512 512" id="dropDownFilterIcon">
+                            <path d="M3.9 54.9C10.5 40.9 24.5 32 40 32H472c15.5 0 29.5 8.9 36.1 22.9s4.6 30.5-5.2 42.5L320 320.9V448c0 12.1-6.8 23.2-17.7 28.6s-23.8 4.3-33.5-3l-64-48c-8.1-6-12.8-15.5-12.8-25.6V320.9L9 97.3C-.7 85.4-2.8 68.8 3.9 54.9z"/>
+                        </svg>
+                    </div>
+                    <div class="dropDownFilter"></div>
+                </div> 
+                <span class="resetFilter">
+                <div class="hoverDiv"> 
+                    <div class="hover divPosition">Filter zurücksetzen</div>
+                    <svg height="1.5rem" viewBox="0 0 576 512">
+                        <path d="M3.9 22.9C10.5 8.9 24.5 0 40 0H472c15.5 0 29.5 8.9 36.1 22.9s4.6 30.5-5.2 42.5L396.4 195.6C316.2 212.1 256 283 256 368c0 27.4 6.3 53.4 17.5 76.5c-1.6-.8-3.2-1.8-4.7-2.9l-64-48c-8.1-6-12.8-15.5-12.8-25.6V288.9L9 65.3C-.7 53.4-2.8 36.8 3.9 22.9zM432 224a144 144 0 1 1 0 288 144 144 0 1 1 0-288zm59.3 107.3c6.2-6.2 6.2-16.4 0-22.6s-16.4-6.2-22.6 0L432 345.4l-36.7-36.7c-6.2-6.2-16.4-6.2-22.6 0s-6.2 16.4 0 22.6L409.4 368l-36.7 36.7c-6.2 6.2-6.2 16.4 0 22.6s16.4 6.2 22.6 0L432 390.6l36.7 36.7c6.2 6.2 16.4 6.2 22.6 0s6.2-16.4 0-22.6L454.6 368l36.7-36.7z"/>
+                    </svg>
+                </div>
+                </span>
+
+                <button type="button">
+                    <a href="/dashboard/noteform" id="noteForm">+ <span id="newNoteText">neue Notiz</span></a>
+                </button>
+            </div> `;
+};

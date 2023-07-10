@@ -4,7 +4,7 @@ const toggleClass = 'is-sticky';
 const sticky = header.offsetTop;
 
 window.addEventListener('scroll', () => {
-    if (window.pageYOffset > sticky) {
+    if (window.scrollY > sticky) {
         header.classList.add(toggleClass);
     } else {
         header.classList.remove(toggleClass);

@@ -94,6 +94,22 @@ h2 {
   background: #919537;
 }
 
+.arrowUp {
+  display: none;
+  position: fixed;
+  bottom: 4rem;
+  right: 2rem;
+  border: none;
+  border-radius: 50%;
+  outline: 1px solid;
+  outline-color: #3F4E09;
+  box-shadow: 0px 2px 5px 2px rgba(100, 151, 43, 0.3);
+  padding: 0.4rem 0.6rem;
+}
+.arrowUp svg {
+  fill: #3F4E09;
+}
+
 .formStyles {
   display: grid;
   justify-items: center;
@@ -133,6 +149,7 @@ h2 {
 }
 .formStyles .head .logo {
   text-align: center;
+  padding-bottom: 1.2rem;
 }
 .formStyles .head .logo figure {
   padding-bottom: 0.7rem;
@@ -148,6 +165,44 @@ h2 {
 .formStyles .head .h1ChangePass {
   font-size: 2rem;
   text-align: center;
+}
+.formStyles .checkCodeBtn {
+  color: #3F4E09;
+  border-radius: 10rem;
+  padding: 0.7rem 2rem;
+  box-shadow: 0px 2px 18px rgba(145, 149, 55, 0.4);
+  margin-right: 1.5rem;
+}
+.formStyles .checkCodeBtn:hover {
+  background-color: #d5d6b7;
+}
+.formStyles .checkCodeBtn:disabled {
+  color: rgb(151, 149, 149);
+  box-shadow: none;
+}
+.formStyles .checkCodeBtn:disabled:hover {
+  background-color: transparent;
+}
+.formStyles .spinner2,
+.formStyles .checkCodeBtn {
+  justify-self: end;
+}
+@keyframes glowing {
+  0% {
+    box-shadow: 0 0 5px #688011;
+  }
+  50% {
+    box-shadow: 0 0 20px #919537;
+  }
+  100% {
+    box-shadow: 0 0 5px #688011;
+  }
+}
+.formStyles .resetPass a {
+  color: #3F4E09;
+}
+.formStyles .resetPass a:hover {
+  color: #919537;
 }
 .formStyles form {
   display: flex;
@@ -259,7 +314,7 @@ h2 {
   display: none;
   width: 100%;
   height: 100%;
-  z-index: 1;
+  z-index: 2;
   position: fixed;
   top: 0;
   left: 0;
@@ -279,7 +334,7 @@ h2 {
   box-shadow: inset 0px 2px 50px 2px rgba(145, 149, 55, 0.3);
 }
 .modal .modalContent .modalClose {
-  justify-self: flex-end;
+  justify-self: end;
   color: #3F4E09;
   font-size: 3.5rem;
   cursor: pointer;
@@ -376,9 +431,11 @@ h2 {
 }
 .notes .note p {
   line-height: 1.5rem;
+  overflow: hidden;
 }
 .notes .note h2 {
-  padding-bottom: 0.5rem;
+  overflow: hidden;
+  padding-bottom: 0.6rem;
   color: #3F4E09;
 }
 .notes .note:hover {
@@ -395,7 +452,7 @@ h2 {
   border-top: 1px solid #919537;
   box-shadow: 0px 2px 10px 2px #919537;
 }
-@media only screen and (max-width: 47rem) {
+@media only screen and (max-width: 41.1rem) {
   .notes .note {
     width: 18rem;
     height: 16rem;
@@ -453,6 +510,49 @@ h2 {
 }
 
 .spinner::after {
+  border-right-color: rgb(39, 198, 39);
+  --duration: 2.5s;
+  --timing: ease-out;
+  z-index: 999;
+}
+
+.spinner2 {
+  width: 2.7rem;
+  height: 2.7rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  z-index: 999;
+  margin-right: 5rem;
+}
+.spinner2 svg {
+  cursor: auto;
+}
+
+.spinner2::before,
+.spinner2::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 0.3rem solid transparent;
+  mix-blend-mode: overlay;
+  animation: rotate var(--duration) var(--timing) infinite;
+  pointer-events: none;
+  z-index: 999;
+}
+
+.spinner2::before {
+  border-left-color: rgb(7, 80, 35);
+  --duration: 2s;
+  --timing: ease-in;
+  z-index: 999;
+}
+
+.spinner2::after {
   border-right-color: rgb(39, 198, 39);
   --duration: 2.5s;
   --timing: ease-out;
@@ -550,10 +650,10 @@ header {
   padding: 2rem 6rem;
 }
 header .logo {
-  width: 8rem;
+  width: 6rem;
 }
 header svg {
-  fill: #3F4E09;
+  color: #3F4E09;
 }
 header svg:hover {
   fill: #919537;
@@ -569,24 +669,40 @@ header nav ul div {
   align-items: center;
   gap: 1.3rem;
 }
-header nav ul .menu li a,
-header nav ul .menuDash li a {
+header nav ul .menu li a {
   font-weight: 300;
 }
-header nav ul .menu li a:hover,
-header nav ul .menuDash li a:hover {
+header nav ul .menu li a:hover {
   color: #919537;
 }
-header nav ul .user li a,
-header nav ul .logout li a {
+header .user li a,
+header .navDash li a {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.3rem;
 }
-header nav ul .user li a:hover,
-header nav ul .logout li a:hover {
-  fill: #919537;
+header .user li a:hover,
+header .navDash li a:hover {
   color: #919537;
+}
+header .user li a:hover svg,
+header .navDash li a:hover svg {
+  fill: #919537;
+}
+header .navDash {
+  position: absolute;
+  display: none;
+  width: 13rem;
+  height: 9rem;
+  top: 8.56rem;
+  right: 0;
+  background-color: #d5d6b7;
+  box-shadow: 0 1px 20px #3F4E09;
+  border-radius: 0.3rem;
+  padding: 1rem;
+}
+header .navDash.active {
+  display: block;
 }
 header #menuBars {
   display: none;
@@ -621,16 +737,17 @@ header #menuBars {
     padding-bottom: 0.8rem;
   }
   header .menu.show {
-    transform: translateY(170%);
+    transform: translateY(164%);
   }
-  header .menuDash {
-    flex-direction: column;
-  }
-  header .menuDash li {
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-  }
+}
+
+.headerDash {
+  box-shadow: 0 1px 20px #3F4E09;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background-color: #d5d6b7;
+  padding-right: 3rem;
 }
 
 .is-sticky {
@@ -639,7 +756,7 @@ header #menuBars {
   background-color: #d5d6b7;
   transition: 0.3s all;
   box-shadow: 0 1px 20px #3F4E09;
-  z-index: 999;
+  z-index: 2;
 }
 
 .errorLayout {
@@ -721,23 +838,19 @@ header #menuBars {
 .mainDash {
   width: 100%;
   height: auto;
-  display: grid;
-  justify-items: center;
   padding: 4rem 0;
+  margin: 0 auto;
+  max-width: 85rem;
 }
 .mainDash .firstNote {
-  width: 100%;
-  height: auto;
-  display: grid;
-  justify-items: center;
-  align-items: center;
-  gap: 3rem;
-  padding: 3rem 0;
+  margin: 0 auto;
   border-radius: 0.4rem;
   background-color: #d5d6b7;
   position: relative;
-  width: 50%;
-  max-width: 60rem;
+  width: 80%;
+  height: auto;
+  max-width: 45rem;
+  padding: 3rem 1.5rem;
 }
 .mainDash .firstNote::before, .mainDash .firstNote::after {
   content: "";
@@ -763,14 +876,22 @@ header #menuBars {
     background-position: 0 0;
   }
 }
+.mainDash .firstNote .servus {
+  justify-self: start;
+}
 .mainDash .firstNote .servus h1 {
-  font-size: 3rem;
+  font-size: 2.5rem;
 }
 .mainDash .firstNote .createNote {
+  margin-top: 2rem;
   text-align: center;
   display: flex;
   gap: 1.5rem;
   flex-direction: column;
+}
+.mainDash .firstNote .createNote figure {
+  width: 100%;
+  height: auto;
 }
 .mainDash .firstNote .createNote figure img {
   width: 25rem;
@@ -791,19 +912,45 @@ header #menuBars {
 .mainDash .firstNote .createNote p a:hover {
   color: #919537;
 }
-.mainDash .renderNotes {
-  width: 100%;
+.mainDash .divPadre {
+  width: 88%;
   height: auto;
-  display: grid;
-  justify-items: center;
+  display: flex;
+  justify-content: flex-end;
   align-items: center;
-  gap: 3rem;
-  padding: 3rem 0;
+  margin: 0 auto 2rem auto;
+  max-width: 80rem;
+}
+.mainDash .divPadre .searchContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 25rem;
+  box-shadow: 0px 2px 5px 2px rgba(100, 151, 43, 0.3);
+  padding: 0.6rem 1.2rem;
+  border-radius: 0.3rem;
+  background-color: #F0F1EC;
+}
+.mainDash .divPadre .searchContainer input {
+  width: 90%;
+  height: auto;
+  background-color: #F0F1EC;
+  outline: none;
+  border: none;
+}
+.mainDash .divPadre .searchContainer span {
+  border-radius: 10rem;
+}
+.mainDash .renderNotes {
+  margin: 0 auto;
   border-radius: 0.4rem;
   background-color: #d5d6b7;
   position: relative;
+  width: 90%;
+  height: auto;
+  padding: 4rem;
   max-width: 80rem;
-  box-shadow: inset 0px 2px 50px 2px rgba(145, 149, 55, 0.3);
+  box-shadow: 0px 2px 50px 2px rgba(145, 149, 55, 0.3);
 }
 .mainDash .renderNotes::before, .mainDash .renderNotes::after {
   content: "";
@@ -829,18 +976,11 @@ header #menuBars {
     background-position: 0 0;
   }
 }
-.mainDash .renderNotes::after {
-  filter: blur(2.7rem);
-}
 .mainDash .renderNotes .head {
-  width: 86%;
-  height: auto;
+  margin-bottom: 3rem;
   display: grid;
   align-items: center;
-  gap: 1rem;
-}
-.mainDash .renderNotes .head h1 {
-  justify-self: start;
+  gap: 1.5rem;
 }
 .mainDash .renderNotes .head .options {
   justify-self: end;
@@ -854,30 +994,34 @@ header #menuBars {
 .mainDash .renderNotes .head .options svg:hover {
   fill: #919537;
 }
+.mainDash .renderNotes .head .options .sortGroup,
+.mainDash .renderNotes .head .options .filterGroup,
+.mainDash .renderNotes .head .options .resetFilter {
+  position: relative;
+}
 .mainDash .renderNotes .head .options .dropDownSort {
-  width: 230px;
-  height: 160px;
+  width: 14.3rem;
+  height: 10rem;
 }
 .mainDash .renderNotes .head .options .dropDownSort p {
   font-size: 1rem;
 }
 .mainDash .renderNotes .head .options .dropDownFilter {
-  width: 170px;
-  height: 190px;
+  width: 10.6rem;
+  height: 11.8rem;
 }
 .mainDash .renderNotes .head .options .dropDownFilter p {
   font-size: 1.1rem;
 }
 .mainDash .renderNotes .head .options .dropDownSort,
 .mainDash .renderNotes .head .options .dropDownFilter {
-  display: none;
-  top: 6.5rem;
+  top: 3.3rem;
   padding: 1rem;
   position: absolute;
   background-color: #F0F1EC;
   box-shadow: 0px 2px 10px 2px #919537;
   border-radius: 0.5rem;
-  z-index: 999;
+  z-index: 1;
 }
 .mainDash .renderNotes .head .options .dropDownSort p,
 .mainDash .renderNotes .head .options .dropDownFilter p {
@@ -899,70 +1043,107 @@ header #menuBars {
   box-shadow: 0px 2px 18px rgba(145, 149, 55, 0.7);
 }
 .mainDash .renderNotes .head .options button a {
-  border: #3F4E09 solid 0.123rem;
-  padding: 0.5rem 2rem;
+  font-size: 1.2rem;
+  color: white;
   background-color: #3F4E09;
-  border-radius: 0.2rem;
-  color: #ffffff;
+  border-radius: 0.3rem;
+  border: #3F4E09 solid 0.125rem;
+  padding: 0.5rem 2rem;
   outline: 1px solid;
   outline-color: #3F4E09;
   outline-offset: 0px;
   transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1);
 }
 .mainDash .renderNotes .head .options button a:hover {
-  background-color: transparent;
-  border: #3F4E09 solid 0.123rem;
   color: #3F4E09;
+  border: #3F4E09 solid 0.125rem;
+  background-color: transparent;
+  box-shadow: 1px 2px 30px 1px;
+}
+.mainDash .renderNotes .head .options button a:hover {
+  box-shadow: none;
   outline-color: rgba(255, 255, 255, 0);
   outline-offset: 0.938rem;
 }
+.mainDash .renderNotes .head .hoverDiv {
+  position: relative;
+}
+.mainDash .renderNotes .head .hoverDiv:hover .hover {
+  opacity: 1;
+  visibility: visible;
+  transition: all 0.25s;
+}
+.mainDash .renderNotes .head .hoverDiv .hover {
+  background: black;
+  color: white;
+  cursor: pointer;
+  opacity: 0;
+  padding: 0.7rem 0.3rem;
+  position: absolute;
+  visibility: hidden;
+  border-radius: 0.3rem;
+  transition: all 0.25s;
+}
+.mainDash .renderNotes .head .hoverDiv .divPosition {
+  text-align: center;
+  bottom: 165%;
+  left: -261%;
+  width: 10.3rem;
+}
+.mainDash .renderNotes .head .hoverDiv .divPosition::after,
+.mainDash .renderNotes .head .hoverDiv .hover::after {
+  border: 8px solid transparent;
+  border-top-color: black;
+  bottom: -15px;
+  content: "";
+  height: 0px;
+  left: 0;
+  margin: 0 auto;
+  position: absolute;
+  right: 0;
+  width: 0px;
+}
 .mainDash .renderNotes .notes {
   display: grid;
-  grid-auto-rows: auto;
   justify-items: center;
   align-items: center;
-  gap: 1.3rem;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+  grid-template-rows: auto;
+  row-gap: 1.6rem;
+  margin: 0 auto;
   max-width: 70rem;
 }
-@media only screen and (max-width: 47rem) {
-  .mainDash .renderNotes {
+@media only screen and (max-width: 52rem) {
+  .mainDash .firstNote {
     width: 90%;
-  }
-  .mainDash .notes {
-    grid-template-columns: 1fr;
-  }
-  .mainDash .head {
-    width: 93%;
     height: auto;
   }
-  .mainDash .head .options button a #newNoteText {
+  .mainDash .firstNote .createNote figure {
+    width: 100%;
+    height: auto;
+  }
+  .mainDash .firstNote .createNote figure img {
+    width: 20rem;
+    height: auto;
+  }
+  .mainDash .firstNote .createNote h2 {
+    font-size: 1.6rem;
+  }
+  .mainDash .renderNotes {
+    padding: 3rem 1.5rem;
+  }
+  .mainDash .renderNotes .head .options button a #newNoteText {
     display: none;
   }
 }
-@media only screen and (min-width: 47rem) {
-  .mainDash .renderNotes {
-    width: 90%;
-  }
-  .mainDash .notes {
-    width: 80%;
+@media only screen and (max-width: 25rem) {
+  .mainDash .firstNote .createNote figure img {
+    width: 16rem;
     height: auto;
   }
-  .mainDash .head, .mainDash .notes {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-@media only screen and (min-width: 60rem) {
-  .mainDash .notes {
-    grid-template-columns: repeat(3, 1fr);
-    width: 90%;
-    height: auto;
-  }
-}
-@media only screen and (min-width: 79rem) {
-  .mainDash .notes {
-    grid-template-columns: repeat(4, 1fr);
-    width: 100%;
-    height: auto;
+  .mainDash .firstNote .createNote h2 {
+    font-size: 1.3rem;
   }
 }
 
@@ -1274,34 +1455,30 @@ header #menuBars {
 .mainMenu {
   width: 100%;
   height: auto;
-  display: grid;
-  justify-items: center;
-  align-items: center;
-  gap: 4rem;
   padding: 3rem 0;
   text-align: center;
 }
 .mainMenu .header {
+  margin: 0 auto;
   max-width: 60rem;
 }
 .mainMenu .header h1 {
   font-size: 3rem;
-  padding-bottom: 1.2rem;
 }
 .mainMenu .header p {
-  font-size: 1.6rem;
   line-height: 2.3rem;
+  margin: 2rem;
+  font-size: 1.6rem;
 }
 .mainMenu .header button {
   margin: 2.3rem;
 }
 .mainMenu .header button a {
-  padding: 1rem 4rem;
   font-size: 1.2rem;
   color: white;
   background-color: #3F4E09;
   border-radius: 0.3rem;
-  font-weight: 400;
+  padding: 1rem 4rem;
 }
 .mainMenu .header button a:hover {
   color: #3F4E09;
@@ -1312,17 +1489,16 @@ header #menuBars {
 .mainMenu .cards,
 .mainMenu .ideas {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  justify-content: center;
-  gap: 1.4rem;
-  max-width: 80rem;
+  justify-items: center;
+  align-items: center;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+  padding: 0 1.5rem;
 }
-.mainMenu .card,
-.mainMenu .idea {
-  display: flex;
-  justify-content: flex-start;
-  gap: 1.3rem;
-  flex-direction: column;
+.mainMenu .cards {
+  margin: 3rem auto 5rem auto;
+  max-width: 80rem;
+  grid-auto-rows: 26rem;
 }
 .mainMenu .cards .card {
   background-color: #f0f1ec;
@@ -1331,12 +1507,13 @@ header #menuBars {
   padding: 1.9rem 1.3rem;
   border-radius: 0.4rem;
   border: #919537 solid 0.123rem;
-  width: 19rem;
+  width: auto;
   height: 26rem;
 }
 .mainMenu .cards .card h2,
 .mainMenu .cards .card h3 {
   font-size: 1.7rem;
+  margin-top: 1.3rem;
 }
 .mainMenu .cards .card p {
   font-size: 1.3rem;
@@ -1345,27 +1522,56 @@ header #menuBars {
 .mainMenu .cards .card span svg {
   fill: #3F4E09;
 }
-.mainMenu .header2 {
-  max-width: 60rem;
-  margin-top: 1.5rem;
-}
-.mainMenu .header2 h3 {
-  font-size: 2.6rem;
-  padding-bottom: 1.2rem;
-}
-.mainMenu .header2 p {
-  font-size: 1.5rem;
-  line-height: 2.3rem;
+.mainMenu .ideas {
+  margin: 0 auto;
+  max-width: 82rem;
+  grid-auto-rows: 15rem;
 }
 .mainMenu .ideas .idea h4,
 .mainMenu .ideas .idea h5 {
   font-size: 1.3rem;
 }
 .mainMenu .ideas .idea p {
+  margin: 0 auto;
   line-height: 1.7rem;
+  width: 90%;
 }
 .mainMenu .ideas .idea span svg {
   fill: #919537;
+}
+.mainMenu .card,
+.mainMenu .idea {
+  display: flex;
+  justify-content: flex-start;
+  gap: 1.3rem;
+  flex-direction: column;
+}
+.mainMenu .header2 {
+  margin: 0 auto;
+  max-width: 60rem;
+}
+.mainMenu .header2 h3 {
+  font-size: 2.6rem;
+}
+.mainMenu .header2 p {
+  font-size: 1.5rem;
+  line-height: 2.3rem;
+  margin: 2rem;
+}
+@media only screen and (max-width: 39.99rem) {
+  .mainMenu .header h1,
+  .mainMenu .header2 h3 {
+    padding: 0 1rem;
+  }
+  .mainMenu .cards .card {
+    width: 20rem;
+    height: 26rem;
+  }
+}
+@media only screen and (max-width: 77.5rem) {
+  .mainMenu .cards .card p {
+    line-height: 1.8rem;
+  }
 }
 
 .mainNote {
