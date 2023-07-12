@@ -221,13 +221,11 @@ const redirectNext = (data, codeMessage) => {
             div.remove();
             // reset main display
             main.style.display = 'grid';
-            //
+            // render coder form & chekc code btn
             renderCodeForm();
-        }, 2000);
-        //cambiar a 5000 despues
+        }, 3000);
     } else {
         // response from the third part
-
         // spinner zeigen
         div.style.margin = '0 auto';
         changePassContainer.append(div);
@@ -239,9 +237,9 @@ const redirectNext = (data, codeMessage) => {
             codeInput.classList.add('valid');
             // remove spinner
             div.remove();
-            //
+            // render password input
             renderInputPassword();
-        }, 2000);
+        }, 3000);
     }
 };
 // Attribute löschen
