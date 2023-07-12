@@ -1,4 +1,3 @@
-const emailValidate = document.querySelector('#emailValidate');
 const allInputs = document.querySelectorAll('.allInputs');
 const svg = document.querySelectorAll('svg');
 const message = document.querySelector('.emptyError');
@@ -9,8 +8,78 @@ const confirmPassError = document.querySelector('.confirmPassError');
 const currentPassword = document.querySelector('#currentPassword');
 const newPassword = document.querySelector('#newPassword');
 const confirmPassword = document.querySelector('#confirmPassword');
-// // show/hide password
 
+// change-password
+const changePassword = async (e) => {
+    e.preventDefault();
+    try {
+        let res = await fetch('/dashboard/change-password', {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                currentPassword: currentPassword.value,
+                newPassword: newPassword.value,
+                confirmPassword: confirmPassword.value,
+            }),
+        });
+        if (!res.ok) return;
+
+        let data = await res.json();
+
+        if (data.status) {
+            document.querySelector('button').disabled = false;
+            renderResponse(data);
+        }
+    } catch (error) {
+        throw new Error(error);
+    }
+};
+document.querySelector('form').addEventListener('submit', changePassword);
+
+// render response
+const renderResponse = (data) => {
+    message.style.color = data.status === 'success' ? '#919537' : 'red';
+
+    switch (data.status) {
+        case 'success':
+            document.querySelector('button').disabled = true;
+            message.textContent = data.message;
+            allInputs.forEach((item) => {
+                item.parentElement.classList.add('valid');
+            });
+            setTimeout(() => {
+                window.location.href = '/login';
+            }, 3000);
+            break;
+        case 'failed-gleich':
+            currentPassError.textContent = data.error;
+            currentPassword.parentElement.classList.add('invalid');
+            break;
+
+        case 'password format error':
+            newPassError.textContent = data.error;
+            newPassword.parentElement.classList.add('invalid');
+            break;
+
+        case 'failed-stimmen':
+            confirmPassError.textContent = data.error;
+            confirmPassword.parentElement.classList.add('invalid');
+            break;
+
+        default:
+            message.textContent = data.error;
+            allInputs.forEach((item) => {
+                if (item.value == '') {
+                    item.parentElement.classList.add('invalid');
+                }
+            });
+            break;
+    }
+};
+
+// show/hide password
 svg.forEach((item) => {
     item.addEventListener('click', (event) => {
         const svgElem = event.currentTarget;
@@ -30,68 +99,8 @@ svg.forEach((item) => {
     });
 });
 
-const changePassword = async (e) => {
-    e.preventDefault();
-    try {
-        let res = await fetch('/dashboard/change-password', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                currentPassword: currentPassword.value,
-                newPassword: newPassword.value,
-                confirmPassword: confirmPassword.value,
-            }),
-        });
-        if (!res.ok) return;
-
-        let data = await res.json();
-
-        if (data.status) {
-            renderResponse(data);
-            console.log(data);
-        }
-    } catch (error) {
-        throw new Error(error);
-    }
-};
-document.querySelector('form').addEventListener('submit', changePassword);
-
-const renderResponse = (data) => {
-    message.style.color = data.status === 'success' ? '#919537' : 'red';
-
-    switch (data.status) {
-        case 'success':
-            message.textContent = data.message;
-            setTimeout(() => {
-                window.location.href = '/login';
-            }, 1500);
-            break;
-        case 'failed-gleich':
-            currentPassError.textContent = data.error;
-            currentPassword.parentElement.classList.add('invalid');
-            break;
-
-        case 'password format error':
-            newPassError.textContent = data.error;
-            newPassword.parentElement.classList.add('invalid');
-            break;
-
-        case 'failed-stimmen':
-            confirmPassError.textContent = data.error;
-            confirmPassword.parentElement.classList.add('invalid');
-            break;
-
-        default:
-            message.textContent = data.error;
-            break;
-    }
-};
-
 // // Remove class
 allInputs.forEach((item) => {
-    console.log(item);
     item.addEventListener('focus', () => {
         item.parentElement.classList.remove('invalid');
         item.parentElement.classList.remove('valid');

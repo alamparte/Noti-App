@@ -1,4 +1,5 @@
 // E-Mail validation
+// Invalid E-Mail >> mysite123@gmail.b / .mysite@mysite.org / mysite..1234@yahoo.com / mysite()*@gmail.com / mysite.ourearth.com
 const validateEmail = async (email) => {
     const mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     if (mailformat.test(await email)) {

@@ -1,15 +1,14 @@
 import { renderLinkIcon } from '../helpers.js';
-
+const main = document.querySelector('main');
+// variables for show msg
 const allInputs = document.querySelectorAll('.allInputs');
-const nameError = document.querySelector('.nameError');
 const emailError = document.querySelector('.emailError');
 const emptyError = document.querySelector('.emptyError');
 const passError = document.querySelector('.passError');
-const inputBox = document.querySelector('.inputBox');
-const main = document.querySelector('main');
-
+// input
 const email = document.querySelector('#email');
 const password = document.querySelector('#password');
+// div father of input password
 let parentElem = password.parentElement;
 
 // login
@@ -29,14 +28,14 @@ const getLoginData = async (e) => {
         if (!res.ok) return;
 
         let data = await res.json();
-        
+
         renderResponse(data);
     } catch (error) {
         throw new Error(error);
     }
 };
 document.querySelector('form').addEventListener('submit', getLoginData);
-
+// render response
 const renderResponse = (data) => {
     //erfolgreich msg grün/rot
     emptyError.style.color = data.status === 'success' ? '#919537' : 'red';
@@ -66,6 +65,30 @@ const renderResponse = (data) => {
             }
             break;
     }
+};
+// manage success response
+const redirectHome = () => {
+    // hide main
+    main.style.display = 'none';
+    // create div for the spinner
+    const div = document.createElement('div');
+    div.setAttribute('id', 'spin');
+    div.classList.add('spinner');
+    // create spinner
+    const svg = renderLinkIcon();
+    div.append(svg);
+    //append spinner
+    document.querySelector('body').prepend(div);
+    div.style.visibility = 'visible';
+
+    setTimeout(() => {
+        // remove spinner
+        div.remove();
+        // reset main display
+        main.style.display = 'grid';
+        // redirect to dashboard
+        window.location.href = '/dashboard';
+    }, 4000);
 };
 
 // Remove class
@@ -99,23 +122,3 @@ svg.addEventListener('click', () => {
     />`;
     }
 });
-
-const redirectHome = () => {
-    // hide main
-    main.style.display = 'none';
-
-    const div = document.createElement('div');
-    div.setAttribute('id', 'spin');
-    div.classList.add('spinner');
-    const svg = renderLinkIcon();
-    div.append(svg);
-
-    document.querySelector('body').prepend(div);
-    div.style.visibility = 'visible';
-
-    setTimeout(() => {
-        div.remove();
-        main.style.display = 'grid';
-        window.location.href = '/dashboard';
-    }, 500); // cambiar a 4000
-};

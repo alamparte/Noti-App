@@ -11,7 +11,7 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// responsive menu
+// Mobile Navigation Menu, when user is not logged in (index/menu html)
 const menuBars = document.querySelector('#menuBars');
 const ul = document.querySelector('.menu');
 const links = document.querySelectorAll('.liLink');

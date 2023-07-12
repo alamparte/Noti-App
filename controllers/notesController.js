@@ -1,9 +1,10 @@
 import fs from 'fs';
 import { nanoid } from 'nanoid';
 import { getDatum, jsonNotes, fileName } from '../helpers/helpers.js';
+// database folder name
 const databaseFolder = './database';
 
-// // GET dashboard
+// GET render dashboard
 export const dashboard = (req, res) => {
     const locals = {
         title: 'Start-Ansicht | Noti',
@@ -11,7 +12,8 @@ export const dashboard = (req, res) => {
     };
     res.render('dashboard', { locals });
 };
-// // GET note Form
+
+// GET render note Form
 export const createNoteForm = (req, res) => {
     const locals = {
         title: 'Notizen | Noti',
@@ -19,9 +21,11 @@ export const createNoteForm = (req, res) => {
     };
     res.render('newNote', { locals });
 };
-// // GET notes
+
+// GET notes
 export const showNotes = async (req, res) => {
     try {
+        // get json notes name
         let file = await fileName(req);
         //read JSON notes
         let notes = await jsonNotes(req);
@@ -45,51 +49,18 @@ export const showNotes = async (req, res) => {
     }
 };
 
-// // // POST notes
-// export const createNote = async (req, res) => {
-//     const { titel, description, category } = req.body;
-//     // console.log(titel, description, category);
-//     try {
-//         // read JSON notes
-//         const notes = await jsonNotes();
-//         // read JSON users
-//         const users = await jsonUsers();
-//         const foundUser = users.find((user) => user.username === req.session.username);
-//         console.log(foundUser);
-//         // me faltaba el && description, capaz ahi estaba el eeerror
-//         if (foundUser && titel !== '' && titel && description !== '' && description) {
-//             notes.push({
-//                 id: nanoid(),
-//                 userId: foundUser.id,
-//                 titel,
-//                 description
-//             });
-//             await fs.promises.writeFile('database/notes.json', JSON.stringify(notes, null, 2));
-//             res.send({
-//                 status: 'success',
-//                 message: 'Notiz erfolgreich erstellt',
-//             });
-//         } else {
-//             res.send({
-//                 status: 'failed',
-//                 error: 'alle Felder sind erforderlich',
-//             });
-//         }
-//     } catch (error) {
-//         throw new Error();
-//     }
-// };
-
-// // POST notes
+// POST notes
 export const createNote = async (req, res) => {
     const { titel, description, category } = req.body;
+    // get json notes name
     let file = await fileName(req);
     try {
         if (titel !== '' && titel && description !== '' && description) {
             //read JSON notes
             let notes = await jsonNotes(req);
-
+            // create date
             let date = getDatum();
+            // unshift in the json
             notes.unshift({
                 id: nanoid(),
                 titel,
@@ -109,10 +80,12 @@ export const createNote = async (req, res) => {
             });
         }
     } catch (err) {
+        // if doesn't exists a ''fileName'', create a json
         if (err) {
             let notes = [];
-
+            // create date
             let date = getDatum();
+            // unshift in the json
             notes.unshift({
                 id: nanoid(),
                 titel,
@@ -129,9 +102,10 @@ export const createNote = async (req, res) => {
     }
 };
 
-// GET verFormEdit
+// GET Form Edit with data
 export const viewNoteForm = async (req, res) => {
     try {
+        // get json notes name
         let file = await fileName(req);
         //read JSON notes
         let notes = await jsonNotes(req);
@@ -148,16 +122,17 @@ export const viewNoteForm = async (req, res) => {
     }
 };
 
-// //EDIT notes
+// //EDIT note
 export const editNote = async (req, res) => {
     const { titel, description, category } = req.body;
     try {
+        // get json notes name
         let file = await fileName(req);
         //read JSON notes
         let notes = await jsonNotes(req);
-
+        // create date
         let date = getDatum();
-
+        // edit note with map()
         notes = notes.map((note) => {
             if (note.id === req.params.id) {
                 return { ...note, titel, description, category, date };
@@ -176,9 +151,10 @@ export const editNote = async (req, res) => {
     }
 };
 
-// DELETE notes
+// DELETE note
 export const deleteNote = async (req, res) => {
     try {
+        // get json notes name
         let file = await fileName(req);
         //read JSON notes
         let notes = await jsonNotes(req);
@@ -201,11 +177,13 @@ export const deleteNote = async (req, res) => {
         throw new Error();
     }
 };
+
 // SORT notes
 export const sortNotes = async (req, res) => {
     const { sort } = req.query;
 
     try {
+        // get json notes name
         let file = await fileName(req);
 
         if (sort === 'auf' || sort === 'ab') {
@@ -227,6 +205,7 @@ export const sortNotes = async (req, res) => {
         throw new Error();
     }
 };
+
 // FILTER notes
 export const filterNotes = async (req, res) => {
     const { filter } = req.query;
@@ -235,13 +214,14 @@ export const filterNotes = async (req, res) => {
     let notes = await jsonNotes(req);
 
     try {
+        // get json notes name
         let file = await fileName(req);
 
         if (filter === 'hohe' || filter === 'mittlere' || filter === 'niedrige') {
-            // array copied
+            // copy array
             let notesFilteredArr = [...notes];
 
-            // sortiert nach Datum (aufsteigend / absteigend)
+            // filter per category
             filter === 'hohe'
                 ? (notesFilteredArr = notesFilteredArr.filter((note) => note.category === filter))
                 : filter === 'mittlere'
@@ -270,10 +250,12 @@ export const filterNotes = async (req, res) => {
         throw new Error();
     }
 };
+
 // SEARCH notes
 export const sucheNotes = async (req, res) => {
     const { search } = req.query;
 
+    // get json notes name
     let file = await fileName(req);
 
     //read JSON notes
@@ -288,8 +270,7 @@ export const sucheNotes = async (req, res) => {
     }
 };
 
-// resetFilter
-
+// RESET Filter
 export const resetFilter = async (req, res) => {
     //read JSON notes
     let notes = await jsonNotes(req);

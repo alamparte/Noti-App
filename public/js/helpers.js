@@ -1,4 +1,4 @@
-//create SVGs pinner
+// create SVG spinner
 export const renderLinkIcon = () => {
     const iconSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     const iconPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
@@ -55,13 +55,12 @@ export const renderAllPasswordFelder = () => {
     </div>`;
 };
 
-// // show/hide password -- eye change
+// show/hide password -- eye change
 export const showHidePassword = (svg) => {
     svg.forEach((item) => {
         item.addEventListener('click', (event) => {
             const svgElem = event.currentTarget;
             const inputElem = svgElem.previousElementSibling;
-            console.log(inputElem);
 
             if (inputElem.type === 'password') {
                 inputElem.type = 'text';
@@ -78,7 +77,7 @@ export const showHidePassword = (svg) => {
     });
 };
 
-//create SVGs Lupe
+// create SVGs Lupe
 export const renderLupeIcon = () => {
     const iconSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     const iconPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');

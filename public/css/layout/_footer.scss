@@ -1,5 +1,6 @@
 @import '../utilities/mixins';
 @import '../utilities/maps';
+@import '../utilities/variables';
 
 footer {
     padding: 0 6rem;
@@ -12,7 +13,7 @@ footer {
                 @include measures(3.5rem, auto);
             }
             span {
-                font-size: 2rem;
+                font-size: $fsize-header2;
             }
         }
         .socialMedia {

@@ -1,5 +1,6 @@
 @import '../utilities/mixins';
 @import '../utilities/maps';
+@import '../utilities/variables';
 
 .mainEdit {
     @include measures(100%, auto);
@@ -32,7 +33,7 @@
             }
             .categories {
                 select {
-                    font-size: 1rem;
+                    font-size: $fsize-SM;
                     padding: 0.8rem 1.7rem;
                     border: none;
                     outline: none;

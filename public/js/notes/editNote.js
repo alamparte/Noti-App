@@ -3,14 +3,12 @@ const description = document.querySelector('#description');
 const getId = document.querySelector('#id').value;
 const select = document.querySelector('select');
 
-const btnOpenModal = document.querySelector('#openModal');
-
-
+// edit note
 const geteditNote = async (e) => {
     e.preventDefault();
     try {
         let res = await fetch(`/dashboard/view-note/${getId}`, {
-            method: 'POST',
+            method: 'PUT',
             headers: { 'Content-type': 'application/json' },
             body: JSON.stringify({
                 titel: titel.value,
@@ -19,10 +17,8 @@ const geteditNote = async (e) => {
             }),
         });
         let data = await res.json();
-        console.log(data.status);
 
         if (data.status === 'success') {
-            console.log(data.message);
             window.location.href = '/dashboard';
         }
     } catch (error) {
@@ -30,7 +26,7 @@ const geteditNote = async (e) => {
     }
 };
 document.querySelector('form').addEventListener('submit', geteditNote);
-// modal
+// create modal
 const mainEdit = document.querySelector('.mainEdit');
 const createModal = () => {
     let div = document.createElement('div');
@@ -54,60 +50,44 @@ const createModal = () => {
 
     mainEdit.append(div);
 };
-createModal()
+createModal();
 
-
-  //grab close button
-  const closeBtn = document.querySelector('.modalClose');
-  //grab modal
-  const modal = document.querySelector('.modal');
-
-  //toggle modal
-  function toggleModal() {
-      if (modal.style.display === 'block') {
-          modal.style.display = 'none';
-      } else {
-          modal.style.display = 'block';
-      }
-  }
-
-  //listner for buttons
-  btnOpenModal.addEventListener('click', toggleModal);
-  closeBtn.addEventListener('click', toggleModal);
-
-
-
-
-
-
-
+//grab close button
+const closeBtn = document.querySelector('.modalClose');
+//grab modal
+const modal = document.querySelector('.modal');
+// open modal
+const btnOpenModal = document.querySelector('#openModal');
+// btn delete
 const btnDelete = document.querySelector('#btnDelete');
+
+//toggle modal
+function toggleModal() {
+    if (modal.style.display === 'block') {
+        modal.style.display = 'none';
+    } else {
+        modal.style.display = 'block';
+    }
+}
+
+//listner for buttons
+btnOpenModal.addEventListener('click', toggleModal);
+closeBtn.addEventListener('click', toggleModal);
+
+// delete note
 const deleteModal = () => {
     // DELETE
-    fetch(`/dashboard/delete-note/${getId}`)
+    fetch(`/dashboard/delete-note/${getId}`, {
+        method: 'DELETE',
+    })
         .then((res) => res.json())
         .then((data) => {
-            console.log(data);
             if (data.status === 'success') {
                 window.location.href = '/dashboard';
-            } else {
-                console.log('Oopppss algo salió mal');
             }
+        })
+        .catch((error) => {
+            console.log('Uppps, da ist etwas schief gelaufen');
         });
 };
 btnDelete.addEventListener('click', deleteModal);
-
-// DELETE
-// document.querySelector('#btnDelete').addEventListener('click', () => {
-//     // DELETE
-//     fetch(`/dashboard/delete-note/${getId}`)
-//         .then((res) => res.json())
-//         .then((data) => {
-//             console.log(data);
-//             if (data.status === 'success') {
-//                 window.location.href = '/dashboard';
-//             } else {
-//                 console.log('Oopppss algo salió mal');
-//             }
-//         });
-// });

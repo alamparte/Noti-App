@@ -250,7 +250,6 @@ const arrFilter = async () => {
             if (!res.ok) return;
 
             let data = await res.json();
-            console.log(data);
 
             if (data.status === 'success' || data.status === 'allNotes') {
                 renderFilterNotes(data);

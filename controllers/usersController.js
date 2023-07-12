@@ -31,7 +31,6 @@ export const getDataRegister = async (req, res) => {
         const { username, email, password } = req.body;
 
         const passwordHashed = await encrypt(password);
-        //////-----------------------------------------------
         // users von JSON lesen
         let users = await jsonUsers();
         // user already exists?
@@ -140,7 +139,7 @@ export const forgotPasswordForm = (req, res) => {
 let userFound;
 let emailFound;
 let numericCode;
-// POST checkEmail, um das Passwort zu ändern
+// POST checkEmail, to reset password
 export const checkEmail = async (req, res) => {
     const { email } = req.body;
     emailFound = email;
@@ -166,7 +165,63 @@ export const checkEmail = async (req, res) => {
         });
     }
 };
-// POST Password forgot
+// if checkEmail is successful >> create the fake email with a random code
+export const checkEmailCode = async (req, res) => {
+    try {
+        // create random code
+        numericCode = generateNumericCode();
+        // ein Testkonto in Ethereal.email erstellen
+        const testAccount = await nodemailer.createTestAccount();
+        // mit dem Testkonto ein Transportobjekt erstellen
+        const transporter = nodemailer.createTransport({
+            host: 'smtp.ethereal.email',
+            port: 587,
+            secure: false,
+            auth: {
+                user: 'patrick40@ethereal.email',
+                pass: 'uZ6XHNNDdyA8SS6cM5',
+            },
+        });
+        // E-Mail Optionen
+        const mailOptions = {
+            from: '"Noti" <noreply@noti.com>',
+            to: emailFound,
+            subject: 'Passwortzurücksetzungscode',
+            text: `Hallo ${userFound.username},
+                   Wir haben eine Anfrage zun Zürucksetzen deines Noti-Passworts erhalten.
+                   Gib den folgenden Code zum Zürucksetzen des Passworts ein:
+                   ${numericCode}`,
+            html: ` <p>Hallo ${userFound.username},</p>
+            <p>Wir haben eine Anfrage zun Zürucksetzen deines Noti-Passworts erhalten.</p>
+            <p>Gib den folgenden Code zum Zürucksetzen des Passworts ein:</p>
+            <strong>${numericCode}</strong></p>`,
+        };
+        // E-Mail senden
+        const info = await transporter.sendMail(mailOptions);
+        let emailPreviewURL = nodemailer.getTestMessageUrl(info);
+
+        res.send({ emailPreviewURL, numericCode });
+    } catch (error) {
+        console.error('Error sending email:', error);
+    }
+};
+// PATCH check code (the one received in the fake email)
+export const checkCode = (req, res) => {
+    const { code } = req.body;
+
+    if (Number(numericCode) === Number(code)) {
+        res.send({
+            status: 'successCode',
+            message: 'Code erfolgreich verifiziert.',
+        });
+    } else {
+        res.send({
+            status: 'failed',
+            error: 'Der Code ist nicht korrekt.',
+        });
+    }
+};
+// POST Password forgot - reset password (if check code is successful)
 export const forgotPassword = async (req, res) => {
     const { newPassword, confirmPassword } = req.body;
 
@@ -207,8 +262,7 @@ export const forgotPassword = async (req, res) => {
         });
     }
 };
-
-// GET changePasswordForm
+// GET change Password Form
 export const changePasswordForm = (req, res) => {
     const locals = {
         title: 'Passwort ändern | Noti',
@@ -216,8 +270,7 @@ export const changePasswordForm = (req, res) => {
     };
     res.render('changePassword', { locals });
 };
-
-// // POST change Password
+// // PATCH change Password
 export const changePassword = async (req, res) => {
     const { currentPassword, newPassword, confirmPassword } = req.body;
     // format validate
@@ -228,6 +281,12 @@ export const changePassword = async (req, res) => {
 
     const validPassword = await compare(currentPassword, foundUser.password);
 
+    if ((newPassword == '' && confirmPassword == '' && currentPassword == '') || currentPassword == '' || newPassword == '' || confirmPassword == '') {
+        return res.send({
+            status: 'failed',
+            error: 'alle Felder sind erforderlich.',
+        });
+    }
     if (!validPassword) {
         return res.send({
             status: 'failed-gleich',
@@ -239,11 +298,6 @@ export const changePassword = async (req, res) => {
             res.send({
                 status: 'failed-stimmen',
                 error: 'Das neue Passwort und das Bestätigungspasswort stimmen nicht überein.',
-            });
-        } else if ((newPassword == '' && confirmPassword == '') || newPassword == '' || confirmPassword == '') {
-            res.send({
-                status: 'failed',
-                error: 'alle Felder sind erforderlich.',
             });
         } else if (!passwordValidation) {
             res.send({
@@ -274,58 +328,5 @@ export const changePassword = async (req, res) => {
     }
 };
 
-export const checkEmailCode = async (req, res) => {
-    numericCode = generateNumericCode();
-    try {
-        // ein Testkonto in Ethereal.email erstellen
-        const testAccount = await nodemailer.createTestAccount();
-        // mit dem Testkonto ein Transportobjekt erstellen
-        const transporter = nodemailer.createTransport({
-            host: 'smtp.ethereal.email',
-            port: 587,
-            secure: false,
-            auth: {
-                user: 'patrick40@ethereal.email',
-                pass: 'uZ6XHNNDdyA8SS6cM5',
-            },
-        });
-        // E-Mail Optionen
-        const mailOptions = {
-            from: '"Noti" <noreply@noti.com>',
-            to: emailFound,
-            subject: 'Passwortzurücksetzungscode',
-            text: `Hallo ${userFound.username},
-                   Wir haben eine Anfrage zun Zürucksetzen deines Noti-Passworts erhalten.
-                   Gib den folgenden Code zum Zürucksetzen des Passworts ein:
-                   ${numericCode}`,
-            html: ` <p>Hallo ${userFound.username},</p>
-            <p>Wir haben eine Anfrage zun Zürucksetzen deines Noti-Passworts erhalten.</p>
-            <p>Gib den folgenden Code zum Zürucksetzen des Passworts ein:</p>
-            <strong>${numericCode}</strong></p>`,
-        };
-        // E-Mail senden
-        const info = await transporter.sendMail(mailOptions);
-        let emailPreviewURL = nodemailer.getTestMessageUrl(info);
 
-        res.send({ emailPreviewURL, numericCode });
-    } catch (error) {
-        console.error('Error sending email:', error);
-    }
-};
 
-// POST check code
-export const checkCode = (req, res) => {
-    const { code } = req.body;
-
-    if (Number(numericCode) === Number(code)) {
-        res.send({
-            status: 'successCode',
-            message: 'Code erfolgreich verifiziert.',
-        });
-    } else {
-        res.send({
-            status: 'failed',
-            error: 'Der Code ist nicht korrekt.',
-        });
-    }
-};

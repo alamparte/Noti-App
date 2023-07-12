@@ -4,7 +4,7 @@ const select = document.querySelector('select');
 const allInputs = document.querySelectorAll('.allInputs');
 const emptyError = document.querySelector('.emptyError');
 
-
+// create note
 const createNote = async (e) => {
     e.preventDefault();
     try {

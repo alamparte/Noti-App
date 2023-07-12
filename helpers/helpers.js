@@ -1,7 +1,8 @@
 import fs from 'fs';
-
+// database folder name
 const databaseFolder = './database';
-// Datum generate
+
+// Date generate
 const getDatum = () => {
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
     let dateObj = new Date(),

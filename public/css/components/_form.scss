@@ -11,13 +11,13 @@
     padding: 3rem 0;
     p {
         font-weight: map-get($map: $font-weight, $key: light);
-        font-size: 1.2rem;
+        font-size: $fsize-mainBtn;
         text-align: center;
         a {
             display: block;
             padding: 1rem 0;
             color: map-get($map: $colors, $key: btn);
-            font-size: 1.3rem;
+            font-size: $fsize-second;
             transition: 0.5s;
             &:hover {
                 transform: scale(1.05);
@@ -49,7 +49,7 @@
             }
         }
         .h1ChangePass {
-            font-size: 2rem;
+            font-size: $fsize-header2;
             text-align: center;
         }
     }
@@ -128,6 +128,14 @@
             &:hover {
                 background-color: transparent;
                 @include border(0.099rem, map-get($map: $colors, $key: delete));
+            }
+            &:disabled {
+                color: rgb(151, 149, 149);
+                box-shadow: none;
+                background-color: #e1e1e1;
+                &:hover {
+                    background-color: transparent;
+                }
             }
         }
         .btnGroup {

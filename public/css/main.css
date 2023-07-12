@@ -95,15 +95,17 @@ h2 {
 }
 
 .arrowUp {
+  cursor: pointer;
   display: none;
   position: fixed;
   bottom: 4rem;
-  right: 2rem;
+  right: 1.5rem;
+  background-color: #d5d6b7;
   border: none;
   border-radius: 50%;
   outline: 1px solid;
   outline-color: #3F4E09;
-  box-shadow: 0px 2px 5px 2px rgba(100, 151, 43, 0.3);
+  box-shadow: 0 0 1rem 0.3rem rgba(124, 174, 65, 0.6);
   padding: 0.4rem 0.6rem;
 }
 .arrowUp svg {
@@ -241,6 +243,14 @@ h2 {
 .formStyles form button:hover {
   background-color: transparent;
   border: #743607 solid 0.099rem;
+}
+.formStyles form button:disabled {
+  color: rgb(151, 149, 149);
+  box-shadow: none;
+  background-color: #e1e1e1;
+}
+.formStyles form button:disabled:hover {
+  background-color: transparent;
 }
 .formStyles form .btnGroup {
   display: flex;
@@ -482,14 +492,12 @@ h2 {
   overflow: hidden;
   position: relative;
   margin: 10rem auto 0 auto;
-  z-index: 999;
+  z-index: 1;
 }
 .spinner svg {
   cursor: auto;
 }
-
-.spinner::before,
-.spinner::after {
+.spinner::after, .spinner::before {
   content: "";
   position: absolute;
   width: 90%;
@@ -499,21 +507,19 @@ h2 {
   mix-blend-mode: overlay;
   animation: rotate var(--duration) var(--timing) infinite;
   pointer-events: none;
-  z-index: 999;
+  z-index: 2;
 }
-
 .spinner::before {
   border-left-color: rgb(7, 80, 35);
   --duration: 2s;
   --timing: ease-in;
-  z-index: 999;
+  z-index: 2;
 }
-
 .spinner::after {
   border-right-color: rgb(39, 198, 39);
   --duration: 2.5s;
   --timing: ease-out;
-  z-index: 999;
+  z-index: 2;
 }
 
 .spinner2 {
@@ -524,15 +530,13 @@ h2 {
   align-items: center;
   overflow: hidden;
   position: relative;
-  z-index: 999;
+  z-index: 1;
   margin-right: 5rem;
 }
 .spinner2 svg {
   cursor: auto;
 }
-
-.spinner2::before,
-.spinner2::after {
+.spinner2::before, .spinner2::after {
   content: "";
   position: absolute;
   width: 100%;
@@ -542,21 +546,19 @@ h2 {
   mix-blend-mode: overlay;
   animation: rotate var(--duration) var(--timing) infinite;
   pointer-events: none;
-  z-index: 999;
+  z-index: 2;
 }
-
 .spinner2::before {
   border-left-color: rgb(7, 80, 35);
   --duration: 2s;
   --timing: ease-in;
-  z-index: 999;
+  z-index: 2;
 }
-
 .spinner2::after {
   border-right-color: rgb(39, 198, 39);
   --duration: 2.5s;
   --timing: ease-out;
-  z-index: 999;
+  z-index: 2;
 }
 
 footer {
@@ -760,78 +762,88 @@ header #menuBars {
 }
 
 .errorLayout {
+  width: 100%;
+}
+.errorLayout .errorSeite {
   display: grid;
   justify-items: center;
   align-items: center;
+  width: 100%;
 }
-.errorLayout .errorSeite {
+.errorLayout .errorSeite .prueba {
+  position: relative;
   text-align: center;
 }
-.errorLayout .errorSeite .text {
+.errorLayout .errorSeite .prueba figure .imgSM {
+  display: none;
+}
+.errorLayout .errorSeite .prueba figure .imgXL {
+  width: 100%;
+}
+.errorLayout .errorSeite .prueba .text {
   width: 30rem;
-  line-height: 1.7rem;
+  line-height: 1.6rem;
+  position: absolute;
+  top: 19rem;
+  right: 0.5rem;
 }
-.errorLayout .errorSeite .text h1 {
+.errorLayout .errorSeite .prueba .text h1 {
   padding-bottom: 1.2rem;
-  font-size: 1.9rem;
+  font-size: 1.8rem;
 }
-.errorLayout .errorSeite .text p {
+.errorLayout .errorSeite .prueba .text p {
   padding-bottom: 1.2rem;
   font-size: 1.1rem;
 }
-.errorLayout .errorSeite .text button {
+.errorLayout .errorSeite .prueba .text button {
   margin-top: 1rem;
 }
-.errorLayout .errorSeite .text button a {
+.errorLayout .errorSeite .prueba .text button a {
   padding: 0.8rem 4rem;
   font-size: 1.2rem;
   color: white;
   background-color: #3F4E09;
   border-radius: 0.3rem;
 }
-.errorLayout .errorSeite .text button a:hover {
+.errorLayout .errorSeite .prueba .text button a:hover {
   color: #3F4E09;
   border: #3F4E09 solid 0.125rem;
   background-color: transparent;
   box-shadow: 1px 2px 30px 1px;
 }
-@media only screen and (max-width: 79rem) {
-  .errorLayout .errorSeite {
+@media only screen and (max-width: 66.8rem) {
+  .errorLayout .errorSeite .prueba .text {
+    top: 15rem;
+    width: 25rem;
+  }
+  .errorLayout .errorSeite .prueba .text h1 {
+    padding-bottom: 1.2rem;
+    font-size: 1.5rem;
+  }
+  .errorLayout .errorSeite .prueba .text p {
+    padding-bottom: 1.2rem;
+    font-size: 1.1rem;
+  }
+}
+@media only screen and (max-width: 56.2rem) {
+  .errorLayout .errorSeite .prueba {
     display: grid;
     justify-items: center;
     align-items: center;
-    gap: 1.3rem;
-    width: 100%;
-    text-align: center;
+    gap: 1.5rem;
   }
-  .errorLayout .errorSeite figure {
-    width: 100%;
+  .errorLayout .errorSeite .prueba figure .imgSM {
+    display: block;
+    width: 80%;
+    margin: 0 auto;
   }
-  .errorLayout .errorSeite figure img {
-    width: 100%;
+  .errorLayout .errorSeite .prueba figure .imgXL {
+    display: none;
   }
-  .errorLayout .errorSeite .text {
-    margin-bottom: 3rem;
-  }
-  .errorLayout .errorSeite .text p {
-    padding: 0 1.2rem;
-  }
-  .errorLayout .errorSeite .text button {
-    margin-top: 1.7rem;
-  }
-}
-@media only screen and (min-width: 79.01rem) {
-  .errorLayout .errorSeite {
-    padding-top: 2rem;
-    position: relative;
-  }
-  .errorLayout .errorSeite .text {
-    position: absolute;
-    top: 22rem;
-    left: 48rem;
-  }
-  .errorLayout .errorSeite .text button {
-    margin-top: 1rem;
+  .errorLayout .errorSeite .prueba .text {
+    padding: 0 1rem;
+    position: static;
+    margin-bottom: 2.5rem;
   }
 }
 

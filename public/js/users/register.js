@@ -1,17 +1,17 @@
 import { renderLinkIcon } from '../helpers.js';
 
+const main = document.querySelector('main');
+// variables for show msg
 const allInputs = document.querySelectorAll('.allInputs');
 const nameError = document.querySelector('.nameError');
 const emailError = document.querySelector('.emailError');
 const emptyError = document.querySelector('.emptyError');
 const passError = document.querySelector('.passError');
-
+// input
 const username = document.querySelector('#username');
 const email = document.querySelector('#email');
 const password = document.querySelector('#password');
-
-const main = document.querySelector('main');
-
+// div father of input password
 let parentElem = password.parentElement;
 
 // register
@@ -32,14 +32,13 @@ const getUserData = async (e) => {
         if (!res.ok) return;
 
         let data = await res.json();
-        console.log(data);
         renderResponse(data);
     } catch (error) {
         throw new Error(error);
     }
 };
 document.querySelector('form').addEventListener('submit', getUserData);
-
+// render response
 const renderResponse = (data) => {
     switch (data.status) {
         case 'success':
@@ -76,23 +75,27 @@ const renderResponse = (data) => {
             break;
     }
 };
-// Spinner render und redirect
+// render Spinner und redirect
 const redirectNext = () => {
     // hide main
     main.style.display = 'none';
-
+    // create div for the spinner
     const div = document.createElement('div');
     div.setAttribute('id', 'spin');
     div.classList.add('spinner');
+    // create spinner
     const svg = renderLinkIcon();
     div.append(svg);
-
+    //append spinner
     document.querySelector('body').prepend(div);
     div.style.visibility = 'visible';
 
     setTimeout(() => {
+        // remove spinner
         div.remove();
+        // reset main display
         main.style.display = 'grid';
+        // redirect to login
         window.location.href = '/login';
     }, 4000);
 };

@@ -24,9 +24,9 @@ router.get('/dashboard/noteform', createNoteForm);
 router.post('/dashboard/noteform', createNote);
 // edit note route
 router.get('/dashboard/view-note/:id', viewNoteForm);
-router.post('/dashboard/view-note/:id', editNote);
+router.put('/dashboard/view-note/:id', editNote);
 // delete note route
-router.get('/dashboard/delete-note/:id', deleteNote);
+router.delete('/dashboard/delete-note/:id', deleteNote);
 // note sort route
 router.get('/dashboard/sort-notes', sortNotes);
 // note filter route

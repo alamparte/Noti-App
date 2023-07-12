@@ -1,12 +1,13 @@
 import { renderLinkIcon, renderAllPasswordFelder, showHidePassword } from '../helpers.js';
-
-const emailValidate = document.querySelector('#emailValidate');
-const changePassContainer = document.querySelector('#changePassContainer');
-const message = document.querySelector('.message');
 const main = document.querySelector('main');
+// section container
+const changePassContainer = document.querySelector('#changePassContainer');
+const emailValidate = document.querySelector('#emailValidate'); // input
+const message = document.querySelector('.message');
+// validate code input container
 const containerForm = document.querySelector('.changePassForm');
 
-// erster Teil, Email überprüfen
+// first part >> check if email exists in database
 const checkEmail = async (e) => {
     e.preventDefault();
     try {
@@ -34,17 +35,19 @@ const checkEmail = async (e) => {
     }
 };
 document.querySelector('#formEmailValidate').addEventListener('submit', checkEmail);
-//zweiter Teil >> die Form "Code-überprüfen" erstellen
+// second part >> create the "Review Code" form and btn to get the code
 const renderCodeForm = () => {
+    // create btn 'Check deine E-Mail'
     const checkEmailCodeBtn = document.createElement('button');
     checkEmailCodeBtn.classList.add('checkCodeBtn');
     checkEmailCodeBtn.textContent = 'Check deine E-Mail';
     checkEmailCodeBtn.classList.add('bliknEffect');
-    checkEmailCodeBtn.style.animation = "glowing 1300ms infinite";
+    checkEmailCodeBtn.style.animation = 'glowing 1300ms infinite';
     checkEmailCodeBtn.disabled = false;
     changePassContainer.prepend(checkEmailCodeBtn);
-
+    // get code from server
     checkEmailCodeBtn.addEventListener('click', () => {
+        // create div for the smaller spinner
         const div = document.createElement('div');
         div.classList.add('spinner2');
         checkEmailCodeBtn.disabled = true;
@@ -53,18 +56,19 @@ const renderCodeForm = () => {
         fetch('/checkEmailCode')
             .then((res) => res.json())
             .then((data) => {
-                console.log(data);
                 const { emailPreviewURL } = data;
+                // open the fake email in a new tab
                 window.open(`${emailPreviewURL}`, '_blank');
+                // remove spinner
                 div.remove();
                 checkEmailCodeBtn.classList.remove('bliknEffect');
-                checkEmailCodeBtn.style.animation = 'none'
+                checkEmailCodeBtn.style.animation = 'none';
             })
             .catch((error) => {
                 throw error;
             });
     });
-
+    // create the "Review Code" form
     containerForm.innerHTML = '';
     containerForm.innerHTML = `<p class="textChange">Bitte gib den Bestätigungscode ein, den wir dir per E-Mail gesendet haben, um dein Passwort zurückzusetzen.</p>
                                 <form id="codeValidate">
@@ -75,7 +79,7 @@ const renderCodeForm = () => {
 
     document.querySelector('#codeValidate').addEventListener('submit', checkCode);
 };
-//dritter Teil >> Code hinzufügen und verifizieren
+// third part >> add and verify code
 const checkCode = async (e) => {
     e.preventDefault();
     const codeMessage = document.querySelector('.codeMessage');
@@ -111,8 +115,9 @@ const checkCode = async (e) => {
     }
     removeClass(codeInput, codeMessage);
 };
-// vierter Teil >> Passwort zurücksetzen Form erstellen
+// fourth part >> reset password form create
 const renderInputPassword = () => {
+    // create form
     let form = document.createElement('form');
     form.setAttribute('id', 'formChangePass');
     form.innerHTML = renderAllPasswordFelder();
@@ -122,7 +127,7 @@ const renderInputPassword = () => {
     showHidePassword(svg);
     document.querySelector('#formChangePass').addEventListener('submit', restorePassword);
 };
-// fünfter Teil >> Passwort zurücksetzen - Daten an den Server senden
+// fifth part >> reset password - send data to the server
 const restorePassword = async (e) => {
     e.preventDefault();
     const newPassword = document.querySelector('#newPassword');
@@ -130,7 +135,7 @@ const restorePassword = async (e) => {
 
     try {
         let res = await fetch('/forgot-password', {
-            method: 'POST',
+            method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -150,6 +155,7 @@ const restorePassword = async (e) => {
         throw new Error(error);
     }
 };
+// render response of 'fifth part'
 const renderResponse = (data) => {
     const messageDiv = document.querySelector('.messageDiv');
     const newPassError = document.querySelector('.newPassError');
@@ -193,43 +199,47 @@ const renderResponse = (data) => {
     }
     removeStyles(allInputs, allDivs);
 };
-// Spinner render und redirect
+// render Spinner, manage response of 'first part' & 'third part'
 const redirectNext = (data, codeMessage) => {
+    // create div for the spinner
+    const div = document.createElement('div');
+    div.setAttribute('id', 'spin');
+    div.classList.add('spinner');
+    // create spinner
+    const svg = renderLinkIcon();
+    div.append(svg);
+    // response from the first part
     if (data.status === 'successEmail') {
         // hide main
         main.style.display = 'none';
-
-        const div = document.createElement('div');
-        div.setAttribute('id', 'spin');
-        div.classList.add('spinner');
-        const svg = renderLinkIcon();
-        div.append(svg);
-
+        // spinner zeigen
         document.querySelector('body').prepend(div);
         div.style.visibility = 'visible';
 
         setTimeout(() => {
+            // remove spinner
             div.remove();
+            // reset main display
             main.style.display = 'grid';
+            //
             renderCodeForm();
         }, 2000);
         //cambiar a 5000 despues
     } else {
-        // spinner zeigen
-        const div = document.createElement('div');
-        div.setAttribute('id', 'spin');
-        div.classList.add('spinner');
-        div.style.margin = '0 auto';
-        const svg = renderLinkIcon();
-        div.append(svg);
+        // response from the third part
 
+        // spinner zeigen
+        div.style.margin = '0 auto';
         changePassContainer.append(div);
         div.style.visibility = 'visible';
 
         setTimeout(() => {
+            // showing success code msg
             codeMessage.textContent = data.message;
             codeInput.classList.add('valid');
+            // remove spinner
             div.remove();
+            //
             renderInputPassword();
         }, 2000);
     }

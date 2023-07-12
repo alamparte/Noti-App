@@ -30,10 +30,10 @@ router.get('/forgot-password', checkNoAuth, forgotPasswordForm);
 router.post('/check-email', checkEmail);
 router.get('/checkEmailCode', checkEmailCode);
 router.post('/check-code', checkCode);
-router.post('/forgot-password', forgotPassword);
+router.patch('/forgot-password', forgotPassword);
 // change password route
 router.get('/dashboard/change-password', changePasswordForm);
-router.post('/dashboard/change-password', changePassword);
+router.patch('/dashboard/change-password', changePassword);
 // logout route
 router.get('/dashboard/logout', logout);
 

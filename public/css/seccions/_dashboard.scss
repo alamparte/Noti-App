@@ -1,5 +1,6 @@
 @import '../utilities/mixins';
 @import '../utilities/maps';
+@import '../utilities/variables';
 
 .mainDash {
     @include measures(100%, auto);
@@ -29,7 +30,7 @@
                 }
             }
             h2 {
-                font-size: 2rem;
+                font-size: $fsize-header2;
             }
             p {
                 font-size: 1.5rem;
@@ -93,17 +94,15 @@
                     position: relative;
                 }
                 .dropDownSort {
-                    width: 14.3rem;
-                    height: 10rem;
+                    @include measures(14.3rem, 10rem);
                     p {
-                        font-size: 1rem;
+                        font-size: $fsize-SM;
                     }
                 }
                 .dropDownFilter {
-                    width: 10.6rem;
-                    height: 11.8rem;
+                    @include measures(10.6rem, 11.8rem);
                     p {
-                        font-size: 1.1rem;
+                        font-size: $fsize-primary;
                     }
                 }
                 .dropDownSort,
@@ -240,7 +239,7 @@
                     }
                 }
                 h2 {
-                    font-size: 1.3rem;
+                    font-size: $fsize-second;
                 }
             }
         }

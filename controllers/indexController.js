@@ -1,4 +1,4 @@
-// main Seite
+// render main Seite
 export const renderIndex = (req, res) => {
     const locals = {
         title: 'Beste Notizanwendung | Organisiere deine Notizen mit Noti',
@@ -6,7 +6,7 @@ export const renderIndex = (req, res) => {
     };
     res.render('index', { locals });
 };
-// Warum noti menu link
+// render Warum noti menu link
 export const renderWhy = (req, res) => {
     const locals = {
         title: 'Konzentriere dich auf die wichtigen Dinge | Noti',

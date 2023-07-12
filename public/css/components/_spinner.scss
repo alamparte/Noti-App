@@ -1,3 +1,6 @@
+@import '../utilities/mixins';
+@import '../utilities/maps';
+
 *,
 *::after,
 *::before {
@@ -13,85 +16,76 @@
         transform: rotate(360deg);
     }
 }
+// main spinner
 .spinner {
-    width: 9.3rem;
-    height: 9.3rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include measures(9.3rem, 9.3rem);
+    @include flex(center, center);
     overflow: hidden;
     position: relative;
     margin: 10rem auto 0 auto;
-    z-index: 999;
+    z-index: 1;
     svg {
-        cursor:auto;
+        cursor: auto;
+    }
+    &::after,
+    &::before {
+        content: '';
+        position: absolute;
+        @include measures(90%, 90%);
+        border-radius: 50%;
+        border: 0.5rem solid transparent;
+        mix-blend-mode: overlay;
+        animation: rotate var(--duration) var(--timing) infinite;
+        pointer-events: none;
+        z-index: 2;
+    }
+    &::before {
+        border-left-color: rgb(7, 80, 35);
+        --duration: 2s;
+        --timing: ease-in;
+        z-index: 2;
+    }
+    &::after {
+        border-right-color: rgb(39, 198, 39);
+        --duration: 2.5s;
+        --timing: ease-out;
+        z-index: 2;
     }
 }
-.spinner::before,
-.spinner::after {
-    content: '';
-    position: absolute;
-    width: 90%;
-    height: 90%;
-    border-radius: 50%;
-    border: 0.5rem solid transparent;
-    mix-blend-mode: overlay;
-    animation: rotate var(--duration) var(--timing) infinite;
-    pointer-events: none;
-    z-index: 999;
-}
-.spinner::before {
-    border-left-color: rgb(7, 80, 35);
-    --duration: 2s;
-    --timing: ease-in;
-    z-index: 999;
-}
-.spinner::after {
-    border-right-color: rgb(39, 198, 39);
-    --duration: 2.5s;
-    --timing: ease-out;
-    z-index: 999;
-}
-
 
 // spinner 2
-
 .spinner2 {
-    width: 2.7rem;
-    height: 2.7rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include measures(2.7rem, 2.7rem);
+    @include flex(center, center);
     overflow: hidden;
     position: relative;
-    z-index: 999;
+    z-index: 1;
     margin-right: 5rem;
     svg {
-        cursor:auto;
+        cursor: auto;
     }
-}
-.spinner2::before,
-.spinner2::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    border: 0.3rem solid transparent;
-    mix-blend-mode: overlay;
-    animation: rotate var(--duration) var(--timing) infinite;
-    pointer-events: none;
-    z-index: 999;
-}
-.spinner2::before {
-    border-left-color: rgb(7, 80, 35);
-    --duration: 2s;
-    --timing: ease-in;
-    z-index: 999;
-}
-.spinner2::after {
-    border-right-color: rgb(39, 198, 39);
-    --duration: 2.5s;
-    --timing: ease-out;
-    z-index: 999;
+    &::before,
+    &::after {
+        content: '';
+        position: absolute;
+        @include measures(100%, 100%);
+        border-radius: 50%;
+        border: 0.3rem solid transparent;
+        mix-blend-mode: overlay;
+        animation: rotate var(--duration) var(--timing) infinite;
+        pointer-events: none;
+        z-index: 2;
+    }
+    &::before {
+        border-left-color: rgb(7, 80, 35);
+        --duration: 2s;
+        --timing: ease-in;
+        z-index: 2;
+    }
+    &::after {
+        border-right-color: rgb(39, 198, 39);
+        --duration: 2.5s;
+        --timing: ease-out;
+        z-index: 2;
+    }
 }

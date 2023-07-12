@@ -1,3 +1,4 @@
+// FAQ in the index
 const questions = document.querySelectorAll('.accordion button');
 
 function accordionToggle() {

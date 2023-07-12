@@ -1,5 +1,6 @@
 @import '../utilities/mixins';
 @import '../utilities/maps';
+@import '../utilities/variables';
 
 .mainIndex {
     @include measures(100%, auto);
@@ -31,7 +32,7 @@
             a {
                 font-weight: map-get($map: $font-weight, $key: light);
                 text-decoration: underline;
-                font-size: 1.3rem;
+                font-size: $fsize-second;
             }
         }
     }
@@ -61,7 +62,7 @@
                 position: relative;
                 display: block;
                 text-align: left;
-                font-size: 1rem;
+                font-size: $fsize-SM;
                 @include measures(100%);
                 padding: 1.5rem 0;
                 color: map-get($map: $colors, $key: btn);
