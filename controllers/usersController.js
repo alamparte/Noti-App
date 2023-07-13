@@ -200,9 +200,10 @@ export const checkEmailCode = async (req, res) => {
         const info = await transporter.sendMail(mailOptions);
         let emailPreviewURL = nodemailer.getTestMessageUrl(info);
 
-        res.send({ emailPreviewURL, numericCode });
+        res.send({ status: 'success', emailPreviewURL, numericCode });
     } catch (error) {
         console.error('Error sending email:', error);
+        res.status(500).send({ status: 'failed', error: 'Bei der Codegenerierung ist ein Fehler aufgetreten.\nBitte laden Sie die Seite neu.' });
     }
 };
 // PATCH check code (the one received in the fake email)
@@ -327,6 +328,3 @@ export const changePassword = async (req, res) => {
         }
     }
 };
-
-
-

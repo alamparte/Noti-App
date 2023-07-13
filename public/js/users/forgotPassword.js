@@ -56,13 +56,20 @@ const renderCodeForm = () => {
         fetch('/checkEmailCode')
             .then((res) => res.json())
             .then((data) => {
-                const { emailPreviewURL } = data;
-                // open the fake email in a new tab
-                window.open(`${emailPreviewURL}`, '_blank');
-                // remove spinner
-                div.remove();
-                checkEmailCodeBtn.classList.remove('bliknEffect');
-                checkEmailCodeBtn.style.animation = 'none';
+                console.log(data);
+                if (data.status === 'success') {
+                    const { emailPreviewURL } = data;
+                    // open the fake email in a new tab
+                    window.open(`${emailPreviewURL}`, '_blank');
+                    // remove spinner
+                    div.remove();
+                    checkEmailCodeBtn.classList.remove('bliknEffect');
+                    checkEmailCodeBtn.style.animation = 'none';
+                } else {
+                    // remove spinner
+                    div.remove();
+                    changePassContainer.innerHTML = data.error;
+                }
             })
             .catch((error) => {
                 throw error;
