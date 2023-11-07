@@ -1,0 +1,71 @@
+@import '../utilities/mixins';
+@import '../utilities/maps';
+@import '../utilities/variables';
+
+.mainEdit {
+    @include measures(100%, auto);
+    @include grid(center);
+    padding: 4rem 0;
+    section {
+        @include flex(false, false, 1.5rem, column);
+        @include measures(50%);
+        max-width: 50rem;
+        div {
+            @include flex(space-between, center);
+            button {
+                @include btnModal;
+            }
+            .trash {
+                display: none;
+            }
+        }
+        form {
+            @include flex(false, false, 1.5rem, column);
+            input,
+            textarea {
+                @include input;
+            }
+            button {
+                @include BtnGroups;
+            }
+            .btnGroup {
+                @include flex(flex-end, center, 1.2rem);
+            }
+            .categories {
+                select {
+                    font-size: $fsize-SM;
+                    padding: 0.8rem 1.7rem;
+                    border: none;
+                    outline: none;
+                    border-radius: 0.3rem;
+                    @include border(0.094rem, map-get($map: $colors, $key: bg-color-1));
+                    &:focus {
+                        @include border(0.094rem, map-get($map: $colors, $key: link));
+                        box-shadow: 0px 2px 18px rgba(145, 149, 55, 0.7);
+                    }
+                }
+            }
+        }
+    }
+    @media only screen and (max-width: 70rem) {
+        section {
+            @include measures(80%, auto);
+        }
+    }
+    @media only screen and (max-width: 37rem) {
+        section {
+            div {
+                .remover {
+                    display: none;
+                }
+                .trash {
+                    display: inline-block;
+                    fill: map-get($map: $colors, $key: delete);
+                    &:hover {
+                        box-shadow: 0px 2px 18px rgba(145, 149, 55, 0.7);
+                    }
+                }
+            }
+        }
+    }
+}

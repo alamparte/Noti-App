@@ -1,0 +1,55 @@
+@font-face {
+    font-family: 'Josefin Sans';
+    src: url('font/JosefinSans-Regular.woff2') format('woff2'), url('font/JosefinSans-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Josefin Sans';
+    src: url('font/JosefinSans-SemiBold.woff2') format('woff2'), url('font/JosefinSans-SemiBold.woff') format('woff');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Josefin Sans';
+    src: url('font/JosefinSans-Bold.woff2') format('woff2'), url('font/JosefinSans-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Josefin Sans';
+    src: url('font/JosefinSans-Light.woff2') format('woff2'), url('font/JosefinSans-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@import 'base/reset';
+@import 'base/base';
+
+@import 'components/arrowToTop';
+@import 'components/form';
+@import 'components/modal';
+@import 'components/notes';
+@import 'components/spinner';
+
+@import 'layout/footer';
+@import 'layout/header';
+
+@import 'seccions/404';
+@import 'seccions/dashboard';
+@import 'seccions/editNote';
+@import 'seccions/index';
+@import 'seccions/login-register';
+@import 'seccions/menu';
+@import 'seccions/newNote';
+
+@import 'utilities/mixins';
+@import 'utilities/variables';
+@import 'utilities/maps';

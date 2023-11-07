@@ -1,0 +1,80 @@
+@import '../utilities/mixins';
+@import '../utilities/maps';
+@import '../utilities/variables';
+
+footer {
+    padding: 0 6rem;
+    section {
+        @include flex(space-between, flex-end);
+        padding: 3rem 0;
+        .logo {
+            @include flex(false, flex-end, 0.7rem);
+            img {
+                @include measures(3.5rem, auto);
+            }
+            span {
+                font-size: $fsize-header2;
+            }
+        }
+        .socialMedia {
+            ul {
+                @include flex(false, false, 3rem);
+                li {
+                    a {
+                        svg {
+                            border: none;
+                            border-radius: 50%;
+                            outline-offset: 0px;
+                            transition: all 500ms;
+                            &:hover {
+                                fill: map-get($map: $colors, $key: link);
+                                outline: 1px solid;
+                                outline-color: #91915c;
+                                outline-offset: 0.8rem;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    hr {
+        border: none;
+        background-color: map-get($map: $colors, $key: btn);
+        color: map-get($map: $colors, $key: btn);
+        @include measures(auto, 0.08rem);
+    }
+    .legalInfo {
+        @include flex(space-between);
+        padding: 3rem 0;
+        nav {
+            ul {
+                @include flex(center, center, 2.5rem);
+                li {
+                    a {
+                        &:hover {
+                            text-decoration: underline;
+                            color: map-get($map: $colors, $key: link);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    @media only screen and (max-width: 67rem) {
+        .legalInfo {
+            @include flex(center, center, 2.5rem, column);
+        }
+    }
+
+    @media only screen and (max-width: 44rem) {
+    padding: 0 1.5rem;
+    
+        section {
+            @include flex(center, center, 2.5rem, column);
+        }
+        .legalInfo {
+            text-align: center;
+        }
+    }
+}

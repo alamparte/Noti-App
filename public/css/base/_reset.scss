@@ -1,0 +1,28 @@
+@import '../utilities/variables';
+@import '../utilities/maps';
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+ul {
+    list-style: none;
+}
+a {
+    text-decoration: none;
+    color: map-get($map: $colors, $key: base);
+    transition: 0.2s ease-in-out;
+    font-size: $fsize-primary;
+}
+button {
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    font-size: $fsize-primary;
+}
+input, textarea{
+    font-size: $fsize-primary;
+}
+svg{
+    cursor: pointer;
+}

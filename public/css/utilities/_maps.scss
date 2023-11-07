@@ -1,0 +1,19 @@
+// colors
+$colors: (
+    'base': $base-color,
+    'base-2': $base-color-2,
+    'bg-color-1': $neutral-color-1,
+    'bg-color-2': $neutral-color-2,
+    'btn': $primary-color-1,
+    'link': $primary-color-2,
+    'btn-accent': $accent-color,
+    'delete': $delete-btn,
+    'error': $error,
+);
+// font weight
+$font-weight: (
+    'light': 300,
+    'regular': 400,
+    'medium': 600,
+    'bold': 700,
+);

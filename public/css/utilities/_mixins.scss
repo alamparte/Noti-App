@@ -1,0 +1,125 @@
+@import './variables';
+
+// width - height
+@mixin measures($width, $height: false) {
+    width: $width;
+    @if $height {
+        height: $height;
+    }
+}
+// flex
+@mixin flex($x: false, $y: false, $gap: false, $direction: false) {
+    display: flex;
+    @if $x {
+        justify-content: $x;
+    }
+    @if $y {
+        align-items: $y;
+    }
+    @if $gap {
+        gap: $gap;
+    }
+    @if $direction {
+        flex-direction: $direction;
+    }
+}
+// grid
+@mixin grid($x: false, $y: false, $gap: false) {
+    display: grid;
+    @if $x {
+        justify-items: $x;
+    }
+    @if $y {
+        align-items: $y;
+    }
+    @if $gap {
+        gap: $gap;
+    }
+}
+// border
+@mixin border($color, $width) {
+    border: $width solid $color;
+}
+// input , textarea
+@mixin input {
+    padding: 1rem;
+    border-radius: 0.3rem;
+    @include border(0.094rem, map-get($map: $colors, $key: bg-color-1));
+    transition: all 0.5s;
+    outline: none;
+    &:focus {
+        @include border(0.094rem, map-get($map: $colors, $key: link));
+        box-shadow: 0px 2px 18px rgba(145, 149, 55, 0.7);
+    }
+}
+//Animation dashboard
+@mixin animationDash {
+    border-radius: 0.4rem;
+    background-color: map-get($map: $colors, $key: bg-color-1);
+    position: relative;
+    &::before,
+    &::after {
+        content: '';
+        position: absolute;
+        left: -2px;
+        top: -2px;
+        border-radius: 0.5rem;
+        background: linear-gradient(45deg, #1caa12, #07774c, #1d6829, #1fcb09, #4cff52, #1caa12, #07774c, #1d6829, #1fcb09, #4cff52);
+        background-size: 400%;
+        width: calc(100% + 4px);
+        height: calc(100% + 4px);
+        z-index: -1;
+        animation: steam 20s linear infinite;
+        @keyframes steam {
+            0% {
+                background-position: 0 0;
+            }
+            50% {
+                background-position: 400% 0;
+            }
+            100% {
+                background-position: 0 0;
+            }
+        }
+    }
+}
+// main Button
+@mixin mainBtn {
+    font-size: $fsize-mainBtn;
+    color: map-get($map: $colors, $key: base-2);
+    background-color: map-get($map: $colors, $key: btn);
+    border-radius: 0.3rem;
+    &:hover {
+        color: map-get($map: $colors, $key: btn);
+        @include border(0.125rem, map-get($map: $colors, $key: btn));
+        background-color: transparent;
+        box-shadow: 1px 2px 30px 1px;
+    }
+}
+// // form Button Group
+@mixin BtnGroups {
+    color: map-get($map: $colors, $key: base-2);
+    background-color: map-get($map: $colors, $key: btn);
+    padding: 0.8rem 2rem;
+    transition: all 0.4s;
+    border-radius: 0.2rem;
+    &:hover {
+        background-color: transparent;
+        @include border(0.099rem, map-get($map: $colors, $key: btn));
+        color: map-get($map: $colors, $key: btn);
+    }
+}
+
+@mixin btnModal {
+    @include border(0.106rem, map-get($map: $colors, $key: delete));
+    padding: 0.5rem 2rem;
+    background-color: map-get($map: $colors, $key: delete);
+    border-radius: 0.2rem;
+    color: map-get($map: $colors, $key: base-2);
+    transition: all 0.5s;
+    &:hover {
+        background-color: transparent;
+        @include border(0.106rem, map-get($map: $colors, $key: delete));
+        color: map-get($map: $colors, $key: delete);
+    }
+}

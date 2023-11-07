@@ -1,0 +1,91 @@
+@import '../utilities/mixins';
+@import '../utilities/maps';
+@import '../utilities/variables';
+
+.errorLayout {
+    @include measures(100%);
+
+    .errorSeite {
+        @include grid(center, center);
+        @include measures(100%);
+        .prueba {
+            position: relative;
+
+            figure {
+                .imgSM {
+                    display: none;
+                }
+                .imgXL {
+                    @include measures(100%);
+                }
+            }
+            text-align: center;
+            .text {
+                @include measures(30rem);
+                line-height: 1.6rem;
+                position: absolute;
+                top: 19rem;
+                right: 0.5rem;
+
+                h1 {
+                    padding-bottom: 1.2rem;
+                    font-size: 1.8rem;
+                }
+                p {
+                    padding-bottom: 1.2rem;
+                    font-size: $fsize-primary;
+                }
+                button {
+                    margin-top: 1rem;
+                    a {
+                        padding: 0.8rem 4rem;
+                        @include mainBtn;
+                    }
+                }
+            }
+        }
+    }
+    @media only screen and (max-width: 66.8rem) {
+        .errorSeite {
+            .prueba {
+                .text {
+                    top: 15rem;
+                    @include measures(25rem);
+
+                    h1 {
+                        padding-bottom: 1.2rem;
+                        font-size: 1.5rem;
+                    }
+                    p {
+                        padding-bottom: 1.2rem;
+                        font-size: $fsize-primary;
+                    }
+                }
+            }
+        }
+    }
+    @media only screen and (max-width: 56.2rem) {
+        .errorSeite {
+            .prueba {
+                @include grid(center, center, 1.5rem);
+
+                figure {
+                    .imgSM {
+                        display: block;
+                        @include measures(80%);
+                        margin: 0 auto;
+                    }
+
+                    .imgXL {
+                        display: none;
+                    }
+                }
+                .text {
+                    padding: 0 1rem;
+                    position: static;
+                    margin-bottom: 2.5rem;
+                }
+            }
+        }
+    }
+}

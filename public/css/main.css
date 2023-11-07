@@ -1,0 +1,1661 @@
+@font-face {
+  font-family: "Josefin Sans";
+  src: url("font/JosefinSans-Regular.woff2") format("woff2"), url("font/JosefinSans-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Josefin Sans";
+  src: url("font/JosefinSans-SemiBold.woff2") format("woff2"), url("font/JosefinSans-SemiBold.woff") format("woff");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Josefin Sans";
+  src: url("font/JosefinSans-Bold.woff2") format("woff2"), url("font/JosefinSans-Bold.woff") format("woff");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Josefin Sans";
+  src: url("font/JosefinSans-Light.woff2") format("woff2"), url("font/JosefinSans-Light.woff") format("woff");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+  transition: 0.2s ease-in-out;
+  font-size: 1.1rem;
+}
+
+button {
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  font-size: 1.1rem;
+}
+
+input, textarea {
+  font-size: 1.1rem;
+}
+
+svg {
+  cursor: pointer;
+}
+
+body {
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 1.1rem;
+  background-color: #d5d6b7;
+  scroll-behavior: smooth;
+}
+
+h1 {
+  font-size: 2.3rem;
+}
+
+h2 {
+  font-size: 1.3rem;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #d5d6b7;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #3F4E09;
+  border-radius: 1rem;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #919537;
+}
+
+.arrowUp {
+  cursor: pointer;
+  display: none;
+  position: fixed;
+  bottom: 4rem;
+  right: 1.5rem;
+  background-color: #d5d6b7;
+  border: none;
+  border-radius: 50%;
+  outline: 1px solid;
+  outline-color: #3F4E09;
+  box-shadow: 0 0 1rem 0.3rem rgba(124, 174, 65, 0.6);
+  padding: 0.4rem 0.6rem;
+}
+.arrowUp svg {
+  fill: #3F4E09;
+}
+
+.formStyles {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  gap: 1.5rem;
+  background-color: #F0F1EC;
+  width: 100%;
+  max-width: 36rem;
+  border-radius: 0.3rem;
+  box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.2);
+  padding: 3rem 0;
+}
+.formStyles p {
+  font-weight: 300;
+  font-size: 1.2rem;
+  text-align: center;
+}
+.formStyles p a {
+  display: block;
+  padding: 1rem 0;
+  color: #3F4E09;
+  font-size: 1.3rem;
+  transition: 0.5s;
+}
+.formStyles p a:hover {
+  transform: scale(1.05);
+}
+.formStyles .textChange {
+  text-align: start;
+  width: 80%;
+}
+.formStyles .changePassForm {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  gap: 1rem;
+}
+.formStyles .head .logo {
+  text-align: center;
+  padding-bottom: 1.2rem;
+}
+.formStyles .head .logo figure {
+  padding-bottom: 0.7rem;
+}
+.formStyles .head .logo figure img {
+  width: 4rem;
+}
+.formStyles .head .logo span {
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 0.8rem;
+}
+.formStyles .head .h1ChangePass {
+  font-size: 2rem;
+  text-align: center;
+}
+.formStyles .checkCodeBtn {
+  color: #3F4E09;
+  border-radius: 10rem;
+  padding: 0.7rem 2rem;
+  box-shadow: 0px 2px 18px rgba(145, 149, 55, 0.4);
+  margin-right: 1.5rem;
+}
+.formStyles .checkCodeBtn:hover {
+  background-color: #d5d6b7;
+}
+.formStyles .checkCodeBtn:disabled {
+  color: rgb(151, 149, 149);
+  box-shadow: none;
+}
+.formStyles .checkCodeBtn:disabled:hover {
+  background-color: transparent;
+}
+.formStyles .spinner2,
+.formStyles .checkCodeBtn {
+  justify-self: end;
+}
+@keyframes glowing {
+  0% {
+    box-shadow: 0 0 5px #688011;
+  }
+  50% {
+    box-shadow: 0 0 20px #919537;
+  }
+  100% {
+    box-shadow: 0 0 5px #688011;
+  }
+}
+.formStyles .resetPass a {
+  color: #3F4E09;
+}
+.formStyles .resetPass a:hover {
+  color: #919537;
+}
+.formStyles form {
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+  width: 80%;
+}
+.formStyles form .inputStyles {
+  padding: 1rem;
+  font-size: 1.1rem;
+  border-radius: 0.3rem;
+  border: #d5d6b7 solid 0.094rem;
+  transition: 0.5s;
+  outline: none;
+}
+.formStyles form .inputStyles:focus {
+  border: #919537 solid 0.094rem;
+  box-shadow: 0px 2px 18px rgba(145, 149, 55, 0.4);
+}
+.formStyles form .btnDisabled {
+  color: #bdbdbd;
+  background-color: #e1e1e1;
+}
+.formStyles form .btnDisabled:hover {
+  background-color: #e1e1e1;
+  border: none;
+}
+.formStyles form button {
+  border: none;
+  padding: 1rem 0;
+  background-color: rgba(145, 80, 31, 0.411);
+  border-radius: 0.2rem;
+  color: #743607;
+  transition: 0.8s ease-in-out;
+}
+.formStyles form button:hover {
+  background-color: transparent;
+  border: #743607 solid 0.099rem;
+}
+.formStyles form button:disabled {
+  color: rgb(151, 149, 149);
+  box-shadow: none;
+  background-color: #e1e1e1;
+}
+.formStyles form button:disabled:hover {
+  background-color: transparent;
+}
+.formStyles form .btnGroup {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1.2rem;
+}
+.formStyles form .inputBox {
+  margin: 0.7rem 0;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  font-size: 1.1rem;
+  border-radius: 0.3rem;
+  border: #d5d6b7 solid 0.094rem;
+  transition: 0.5s;
+}
+.formStyles form .inputBox:focus-within {
+  border: #919537 solid 0.094rem;
+  box-shadow: 0px 2px 18px rgba(145, 149, 55, 0.4);
+}
+.formStyles form .inputBox .passStyles {
+  width: 100%;
+  border: 0;
+  outline: 0;
+}
+.formStyles form .invalid {
+  border: red solid 0.15rem;
+}
+.formStyles form .valid {
+  border: #919537 solid 0.15rem;
+}
+.formStyles form .error {
+  color: red;
+}
+.formStyles #formEmailValidate {
+  gap: 0.7rem;
+  margin: 1.3rem auto 0 auto;
+}
+.formStyles .changePass button {
+  color: white;
+  background-color: #3F4E09;
+  padding: 0.8rem 2rem;
+  transition: all 0.4s;
+  border-radius: 0.2rem;
+}
+.formStyles .changePass button:hover {
+  background-color: transparent;
+  border: #3F4E09 solid 0.099rem;
+  color: #3F4E09;
+}
+@media only screen and (max-width: 80rem) {
+  .formStyles {
+    width: 70%;
+  }
+}
+@media only screen and (max-width: 43rem) {
+  .formStyles {
+    width: 90%;
+  }
+}
+@media only screen and (max-width: 31rem) {
+  .formStyles .h1ChangePass {
+    font-size: 1.7rem;
+  }
+}
+
+/*Modal*/
+.modal {
+  display: none;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.modal .modalContent {
+  padding: 0 1.5rem 1rem 1.5rem;
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  gap: 1.5rem;
+  width: 28rem;
+  height: auto;
+  border-radius: 0.2rem;
+  background-color: #F0F1EC;
+  margin: 13rem auto 0 auto;
+  box-shadow: inset 0px 2px 50px 2px rgba(145, 149, 55, 0.3);
+}
+.modal .modalContent .modalClose {
+  justify-self: end;
+  color: #3F4E09;
+  font-size: 3.5rem;
+  cursor: pointer;
+}
+.modal .modalContent .modalClose:hover {
+  color: #919537;
+}
+.modal .modalContent p {
+  text-align: center;
+}
+.modal .modalContent .h1Modal {
+  font-size: 1.7rem;
+  text-align: center;
+}
+.modal .modalContent .groupBtn {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1.2rem;
+}
+.modal .modalContent .groupBtn button {
+  border: #743607 solid 0.106rem;
+  padding: 0.5rem 2rem;
+  background-color: #743607;
+  border-radius: 0.2rem;
+  color: white;
+  transition: all 0.5s;
+}
+.modal .modalContent .groupBtn button:hover {
+  background-color: transparent;
+  border: #743607 solid 0.106rem;
+  color: #743607;
+}
+@media only screen and (max-width: 37rem) {
+  .modal .modalContent {
+    width: 90%;
+    height: auto;
+  }
+}
+
+/*animate modal transition*/
+.modalAnimation {
+  animation: fadeIn 0.5s;
+}
+
+/*keyframe for modal animation*/
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.1;
+  }
+  20% {
+    opacity: 0.2;
+  }
+  30% {
+    opacity: 0.3;
+  }
+  40% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  60% {
+    opacity: 0.6;
+  }
+  70% {
+    opacity: 0.7;
+  }
+  80% {
+    opacity: 0.8;
+  }
+  90% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.notes .note {
+  position: relative;
+  cursor: pointer;
+  width: 16rem;
+  height: 12rem;
+  overflow: hidden;
+  padding: 1rem;
+  background-color: #F0F1EC;
+  border-radius: 0.2rem;
+  box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.2);
+  transition: 0.5s ease-in-out;
+}
+.notes .note p {
+  line-height: 1.5rem;
+  overflow: hidden;
+}
+.notes .note h2 {
+  overflow: hidden;
+  padding-bottom: 0.6rem;
+  color: #3F4E09;
+}
+.notes .note:hover {
+  box-shadow: 0px 2px 10px 2px #3F4E09;
+}
+.notes .note .datum {
+  font-size: 1rem;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-color: #F0F1EC;
+  width: 100%;
+  padding: 0.8rem 0 0.8rem 1rem;
+  border-top: 1px solid #919537;
+  box-shadow: 0px 2px 10px 2px #919537;
+}
+@media only screen and (max-width: 41.1rem) {
+  .notes .note {
+    width: 18rem;
+    height: 16rem;
+  }
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.spinner {
+  width: 9.3rem;
+  height: 9.3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  margin: 10rem auto 0 auto;
+  z-index: 1;
+}
+.spinner svg {
+  cursor: auto;
+}
+.spinner::after, .spinner::before {
+  content: "";
+  position: absolute;
+  width: 90%;
+  height: 90%;
+  border-radius: 50%;
+  border: 0.5rem solid transparent;
+  mix-blend-mode: overlay;
+  animation: rotate var(--duration) var(--timing) infinite;
+  pointer-events: none;
+  z-index: 2;
+}
+.spinner::before {
+  border-left-color: rgb(7, 80, 35);
+  --duration: 2s;
+  --timing: ease-in;
+  z-index: 2;
+}
+.spinner::after {
+  border-right-color: rgb(39, 198, 39);
+  --duration: 2.5s;
+  --timing: ease-out;
+  z-index: 2;
+}
+
+.spinner2 {
+  width: 2.7rem;
+  height: 2.7rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+  margin-right: 5rem;
+}
+.spinner2 svg {
+  cursor: auto;
+}
+.spinner2::before, .spinner2::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 0.3rem solid transparent;
+  mix-blend-mode: overlay;
+  animation: rotate var(--duration) var(--timing) infinite;
+  pointer-events: none;
+  z-index: 2;
+}
+.spinner2::before {
+  border-left-color: rgb(7, 80, 35);
+  --duration: 2s;
+  --timing: ease-in;
+  z-index: 2;
+}
+.spinner2::after {
+  border-right-color: rgb(39, 198, 39);
+  --duration: 2.5s;
+  --timing: ease-out;
+  z-index: 2;
+}
+
+footer {
+  padding: 0 6rem;
+}
+footer section {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 3rem 0;
+}
+footer section .logo {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.7rem;
+}
+footer section .logo img {
+  width: 3.5rem;
+  height: auto;
+}
+footer section .logo span {
+  font-size: 2rem;
+}
+footer section .socialMedia ul {
+  display: flex;
+  gap: 3rem;
+}
+footer section .socialMedia ul li a svg {
+  border: none;
+  border-radius: 50%;
+  outline-offset: 0px;
+  transition: all 500ms;
+}
+footer section .socialMedia ul li a svg:hover {
+  fill: #919537;
+  outline: 1px solid;
+  outline-color: #91915c;
+  outline-offset: 0.8rem;
+}
+footer hr {
+  border: none;
+  background-color: #3F4E09;
+  color: #3F4E09;
+  width: auto;
+  height: 0.08rem;
+}
+footer .legalInfo {
+  display: flex;
+  justify-content: space-between;
+  padding: 3rem 0;
+}
+footer .legalInfo nav ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2.5rem;
+}
+footer .legalInfo nav ul li a:hover {
+  text-decoration: underline;
+  color: #919537;
+}
+@media only screen and (max-width: 67rem) {
+  footer .legalInfo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2.5rem;
+    flex-direction: column;
+  }
+}
+@media only screen and (max-width: 44rem) {
+  footer {
+    padding: 0 1.5rem;
+  }
+  footer section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2.5rem;
+    flex-direction: column;
+  }
+  footer .legalInfo {
+    text-align: center;
+  }
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 6rem;
+}
+header .logo {
+  width: 6rem;
+}
+header svg {
+  color: #3F4E09;
+}
+header svg:hover {
+  fill: #919537;
+}
+header nav ul {
+  display: flex;
+  gap: 1.3rem;
+  flex-direction: column;
+}
+header nav ul div {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1.3rem;
+}
+header nav ul .menu li a {
+  font-weight: 300;
+}
+header nav ul .menu li a:hover {
+  color: #919537;
+}
+header .user li a,
+header .navDash li a {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+header .user li a:hover,
+header .navDash li a:hover {
+  color: #919537;
+}
+header .user li a:hover svg,
+header .navDash li a:hover svg {
+  fill: #919537;
+}
+header .navDash {
+  position: absolute;
+  display: none;
+  width: 13rem;
+  height: 9rem;
+  top: 8.56rem;
+  right: 0;
+  background-color: #d5d6b7;
+  box-shadow: 0 1px 20px #3F4E09;
+  border-radius: 0.3rem;
+  padding: 1rem;
+}
+header .navDash.active {
+  display: block;
+}
+header #menuBars {
+  display: none;
+}
+@media only screen and (max-width: 56rem) {
+  header {
+    padding: 2rem;
+  }
+  header #menuBars {
+    display: block;
+  }
+  header .noneUser {
+    display: none;
+  }
+  header .menu {
+    position: fixed;
+    flex-direction: column;
+    top: -280px;
+    left: 5%;
+    width: 90%;
+    transition: all 0.5s;
+    background-color: #d5d6b7;
+    box-shadow: 0 1px 20px #3F4E09;
+    padding: 2rem 0;
+    border-radius: 0.2rem;
+  }
+  header .menu li {
+    width: 80%;
+    border-bottom: 1px solid #919537;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 0.8rem;
+  }
+  header .menu.show {
+    transform: translateY(164%);
+  }
+}
+
+.headerDash {
+  box-shadow: 0 1px 20px #3F4E09;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background-color: #d5d6b7;
+  padding-right: 3rem;
+}
+
+.is-sticky {
+  position: sticky;
+  top: 0;
+  background-color: #d5d6b7;
+  transition: 0.3s all;
+  box-shadow: 0 1px 20px #3F4E09;
+  z-index: 2;
+}
+
+.errorLayout {
+  width: 100%;
+}
+.errorLayout .errorSeite {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  width: 100%;
+}
+.errorLayout .errorSeite .prueba {
+  position: relative;
+  text-align: center;
+}
+.errorLayout .errorSeite .prueba figure .imgSM {
+  display: none;
+}
+.errorLayout .errorSeite .prueba figure .imgXL {
+  width: 100%;
+}
+.errorLayout .errorSeite .prueba .text {
+  width: 30rem;
+  line-height: 1.6rem;
+  position: absolute;
+  top: 19rem;
+  right: 0.5rem;
+}
+.errorLayout .errorSeite .prueba .text h1 {
+  padding-bottom: 1.2rem;
+  font-size: 1.8rem;
+}
+.errorLayout .errorSeite .prueba .text p {
+  padding-bottom: 1.2rem;
+  font-size: 1.1rem;
+}
+.errorLayout .errorSeite .prueba .text button {
+  margin-top: 1rem;
+}
+.errorLayout .errorSeite .prueba .text button a {
+  padding: 0.8rem 4rem;
+  font-size: 1.2rem;
+  color: white;
+  background-color: #3F4E09;
+  border-radius: 0.3rem;
+}
+.errorLayout .errorSeite .prueba .text button a:hover {
+  color: #3F4E09;
+  border: #3F4E09 solid 0.125rem;
+  background-color: transparent;
+  box-shadow: 1px 2px 30px 1px;
+}
+@media only screen and (max-width: 66.8rem) {
+  .errorLayout .errorSeite .prueba .text {
+    top: 15rem;
+    width: 25rem;
+  }
+  .errorLayout .errorSeite .prueba .text h1 {
+    padding-bottom: 1.2rem;
+    font-size: 1.5rem;
+  }
+  .errorLayout .errorSeite .prueba .text p {
+    padding-bottom: 1.2rem;
+    font-size: 1.1rem;
+  }
+}
+@media only screen and (max-width: 56.2rem) {
+  .errorLayout .errorSeite .prueba {
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  .errorLayout .errorSeite .prueba figure .imgSM {
+    display: block;
+    width: 80%;
+    margin: 0 auto;
+  }
+  .errorLayout .errorSeite .prueba figure .imgXL {
+    display: none;
+  }
+  .errorLayout .errorSeite .prueba .text {
+    padding: 0 1rem;
+    position: static;
+    margin-bottom: 2.5rem;
+  }
+}
+
+.mainDash {
+  width: 100%;
+  height: auto;
+  padding: 4rem 0;
+  margin: 0 auto;
+  max-width: 85rem;
+}
+.mainDash .firstNote {
+  margin: 0 auto;
+  border-radius: 0.4rem;
+  background-color: #d5d6b7;
+  position: relative;
+  width: 80%;
+  height: auto;
+  max-width: 45rem;
+  padding: 3rem 1.5rem;
+}
+.mainDash .firstNote::before, .mainDash .firstNote::after {
+  content: "";
+  position: absolute;
+  left: -2px;
+  top: -2px;
+  border-radius: 0.5rem;
+  background: linear-gradient(45deg, #1caa12, #07774c, #1d6829, #1fcb09, #4cff52, #1caa12, #07774c, #1d6829, #1fcb09, #4cff52);
+  background-size: 400%;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  z-index: -1;
+  animation: steam 20s linear infinite;
+}
+@keyframes steam {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 400% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+.mainDash .firstNote .servus {
+  justify-self: start;
+}
+.mainDash .firstNote .servus h1 {
+  font-size: 2.5rem;
+}
+.mainDash .firstNote .createNote {
+  margin-top: 2rem;
+  text-align: center;
+  display: flex;
+  gap: 1.5rem;
+  flex-direction: column;
+}
+.mainDash .firstNote .createNote figure {
+  width: 100%;
+  height: auto;
+}
+.mainDash .firstNote .createNote figure img {
+  width: 25rem;
+  height: auto;
+}
+.mainDash .firstNote .createNote h2 {
+  font-size: 2rem;
+}
+.mainDash .firstNote .createNote p {
+  font-size: 1.5rem;
+  font-weight: 300;
+}
+.mainDash .firstNote .createNote p a {
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: #3F4E09;
+}
+.mainDash .firstNote .createNote p a:hover {
+  color: #919537;
+}
+.mainDash .divPadre {
+  width: 88%;
+  height: auto;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin: 0 auto 2rem auto;
+  max-width: 80rem;
+}
+.mainDash .divPadre .searchContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 25rem;
+  box-shadow: 0px 2px 5px 2px rgba(100, 151, 43, 0.3);
+  padding: 0.6rem 1.2rem;
+  border-radius: 0.3rem;
+  background-color: #F0F1EC;
+}
+.mainDash .divPadre .searchContainer input {
+  width: 90%;
+  height: auto;
+  background-color: #F0F1EC;
+  outline: none;
+  border: none;
+}
+.mainDash .divPadre .searchContainer span {
+  border-radius: 10rem;
+}
+.mainDash .renderNotes {
+  margin: 0 auto;
+  border-radius: 0.4rem;
+  background-color: #d5d6b7;
+  position: relative;
+  width: 90%;
+  height: auto;
+  padding: 4rem;
+  max-width: 80rem;
+  box-shadow: 0px 2px 50px 2px rgba(145, 149, 55, 0.3);
+}
+.mainDash .renderNotes::before, .mainDash .renderNotes::after {
+  content: "";
+  position: absolute;
+  left: -2px;
+  top: -2px;
+  border-radius: 0.5rem;
+  background: linear-gradient(45deg, #1caa12, #07774c, #1d6829, #1fcb09, #4cff52, #1caa12, #07774c, #1d6829, #1fcb09, #4cff52);
+  background-size: 400%;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  z-index: -1;
+  animation: steam 20s linear infinite;
+}
+@keyframes steam {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 400% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+.mainDash .renderNotes .head {
+  margin-bottom: 3rem;
+  display: grid;
+  align-items: center;
+  gap: 1.5rem;
+}
+.mainDash .renderNotes .head .options {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+}
+.mainDash .renderNotes .head .options svg {
+  fill: #3F4E09;
+}
+.mainDash .renderNotes .head .options svg:hover {
+  fill: #919537;
+}
+.mainDash .renderNotes .head .options .sortGroup,
+.mainDash .renderNotes .head .options .filterGroup,
+.mainDash .renderNotes .head .options .resetFilter {
+  position: relative;
+}
+.mainDash .renderNotes .head .options .dropDownSort {
+  width: 14.3rem;
+  height: 10rem;
+}
+.mainDash .renderNotes .head .options .dropDownSort p {
+  font-size: 1rem;
+}
+.mainDash .renderNotes .head .options .dropDownFilter {
+  width: 10.6rem;
+  height: 11.8rem;
+}
+.mainDash .renderNotes .head .options .dropDownFilter p {
+  font-size: 1.1rem;
+}
+.mainDash .renderNotes .head .options .dropDownSort,
+.mainDash .renderNotes .head .options .dropDownFilter {
+  top: 3.3rem;
+  padding: 1rem;
+  position: absolute;
+  background-color: #F0F1EC;
+  box-shadow: 0px 2px 10px 2px #919537;
+  border-radius: 0.5rem;
+  z-index: 1;
+}
+.mainDash .renderNotes .head .options .dropDownSort p,
+.mainDash .renderNotes .head .options .dropDownFilter p {
+  margin-bottom: 0.9rem;
+}
+.mainDash .renderNotes .head .options .dropDownSort select,
+.mainDash .renderNotes .head .options .dropDownFilter select {
+  background-color: #F0F1EC;
+  font-size: 0.9rem;
+  padding: 0.5rem 0.1rem;
+  border: none;
+  outline: none;
+  border-radius: 0.3rem;
+  border: #d5d6b7 solid 0.094rem;
+}
+.mainDash .renderNotes .head .options .dropDownSort select:focus,
+.mainDash .renderNotes .head .options .dropDownFilter select:focus {
+  border: #919537 solid 0.094rem;
+  box-shadow: 0px 2px 18px rgba(145, 149, 55, 0.7);
+}
+.mainDash .renderNotes .head .options button a {
+  font-size: 1.2rem;
+  color: white;
+  background-color: #3F4E09;
+  border-radius: 0.3rem;
+  border: #3F4E09 solid 0.125rem;
+  padding: 0.5rem 2rem;
+  outline: 1px solid;
+  outline-color: #3F4E09;
+  outline-offset: 0px;
+  transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+.mainDash .renderNotes .head .options button a:hover {
+  color: #3F4E09;
+  border: #3F4E09 solid 0.125rem;
+  background-color: transparent;
+  box-shadow: 1px 2px 30px 1px;
+}
+.mainDash .renderNotes .head .options button a:hover {
+  box-shadow: none;
+  outline-color: rgba(255, 255, 255, 0);
+  outline-offset: 0.938rem;
+}
+.mainDash .renderNotes .head .hoverDiv {
+  position: relative;
+}
+.mainDash .renderNotes .head .hoverDiv:hover .hover {
+  opacity: 1;
+  visibility: visible;
+  transition: all 0.25s;
+}
+.mainDash .renderNotes .head .hoverDiv .hover {
+  background: black;
+  color: white;
+  cursor: pointer;
+  opacity: 0;
+  padding: 0.7rem 0.3rem;
+  position: absolute;
+  visibility: hidden;
+  border-radius: 0.3rem;
+  transition: all 0.25s;
+}
+.mainDash .renderNotes .head .hoverDiv .divPosition {
+  text-align: center;
+  bottom: 165%;
+  left: -261%;
+  width: 10.3rem;
+}
+.mainDash .renderNotes .head .hoverDiv .divPosition::after,
+.mainDash .renderNotes .head .hoverDiv .hover::after {
+  border: 8px solid transparent;
+  border-top-color: black;
+  bottom: -15px;
+  content: "";
+  height: 0px;
+  left: 0;
+  margin: 0 auto;
+  position: absolute;
+  right: 0;
+  width: 0px;
+}
+.mainDash .renderNotes .notes {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+  grid-template-rows: auto;
+  row-gap: 1.6rem;
+  margin: 0 auto;
+  max-width: 70rem;
+}
+@media only screen and (max-width: 52rem) {
+  .mainDash .firstNote {
+    width: 90%;
+    height: auto;
+  }
+  .mainDash .firstNote .createNote figure {
+    width: 100%;
+    height: auto;
+  }
+  .mainDash .firstNote .createNote figure img {
+    width: 20rem;
+    height: auto;
+  }
+  .mainDash .firstNote .createNote h2 {
+    font-size: 1.6rem;
+  }
+  .mainDash .renderNotes {
+    padding: 3rem 1.5rem;
+  }
+  .mainDash .renderNotes .head .options button a #newNoteText {
+    display: none;
+  }
+}
+@media only screen and (max-width: 25rem) {
+  .mainDash .firstNote .createNote figure img {
+    width: 16rem;
+    height: auto;
+  }
+  .mainDash .firstNote .createNote h2 {
+    font-size: 1.3rem;
+  }
+}
+
+.mainEdit {
+  width: 100%;
+  height: auto;
+  display: grid;
+  justify-items: center;
+  padding: 4rem 0;
+}
+.mainEdit section {
+  display: flex;
+  gap: 1.5rem;
+  flex-direction: column;
+  width: 50%;
+  max-width: 50rem;
+}
+.mainEdit section div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.mainEdit section div button {
+  border: #743607 solid 0.106rem;
+  padding: 0.5rem 2rem;
+  background-color: #743607;
+  border-radius: 0.2rem;
+  color: white;
+  transition: all 0.5s;
+}
+.mainEdit section div button:hover {
+  background-color: transparent;
+  border: #743607 solid 0.106rem;
+  color: #743607;
+}
+.mainEdit section div .trash {
+  display: none;
+}
+.mainEdit section form {
+  display: flex;
+  gap: 1.5rem;
+  flex-direction: column;
+}
+.mainEdit section form input,
+.mainEdit section form textarea {
+  padding: 1rem;
+  border-radius: 0.3rem;
+  border: #d5d6b7 solid 0.094rem;
+  transition: all 0.5s;
+  outline: none;
+}
+.mainEdit section form input:focus,
+.mainEdit section form textarea:focus {
+  border: #919537 solid 0.094rem;
+  box-shadow: 0px 2px 18px rgba(145, 149, 55, 0.7);
+}
+.mainEdit section form button {
+  color: white;
+  background-color: #3F4E09;
+  padding: 0.8rem 2rem;
+  transition: all 0.4s;
+  border-radius: 0.2rem;
+}
+.mainEdit section form button:hover {
+  background-color: transparent;
+  border: #3F4E09 solid 0.099rem;
+  color: #3F4E09;
+}
+.mainEdit section form .btnGroup {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1.2rem;
+}
+.mainEdit section form .categories select {
+  font-size: 1rem;
+  padding: 0.8rem 1.7rem;
+  border: none;
+  outline: none;
+  border-radius: 0.3rem;
+  border: #d5d6b7 solid 0.094rem;
+}
+.mainEdit section form .categories select:focus {
+  border: #919537 solid 0.094rem;
+  box-shadow: 0px 2px 18px rgba(145, 149, 55, 0.7);
+}
+@media only screen and (max-width: 70rem) {
+  .mainEdit section {
+    width: 80%;
+    height: auto;
+  }
+}
+@media only screen and (max-width: 37rem) {
+  .mainEdit section div .remover {
+    display: none;
+  }
+  .mainEdit section div .trash {
+    display: inline-block;
+    fill: #743607;
+  }
+  .mainEdit section div .trash:hover {
+    box-shadow: 0px 2px 18px rgba(145, 149, 55, 0.7);
+  }
+}
+
+.mainIndex {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  flex-direction: column;
+  padding: 3rem 0 0 0;
+}
+.mainIndex .mainContent {
+  max-width: 75rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  flex-direction: column;
+  font-size: 1.5rem;
+}
+.mainIndex .mainContent h1 {
+  line-height: 4rem;
+  text-align: center;
+  padding: 0 1.5rem;
+}
+.mainIndex .mainContent p {
+  width: 75%;
+  line-height: 2rem;
+  text-align: center;
+}
+.mainIndex .mainContent button {
+  margin: 2rem;
+}
+.mainIndex .mainContent button a {
+  padding: 1.3rem 4rem;
+  font-weight: 400;
+  font-size: 1.2rem;
+  color: white;
+  background-color: #3F4E09;
+  border-radius: 0.3rem;
+}
+.mainIndex .mainContent button a:hover {
+  color: #3F4E09;
+  border: #3F4E09 solid 0.125rem;
+  background-color: transparent;
+  box-shadow: 1px 2px 30px 1px;
+}
+.mainIndex .mainContent .plogin a {
+  font-weight: 300;
+  text-decoration: underline;
+  font-size: 1.3rem;
+}
+.mainIndex .faq {
+  max-width: 118rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2.5rem;
+  padding: 6rem;
+  text-align: center;
+  width: 100%;
+  height: auto;
+}
+.mainIndex .faq figure img {
+  width: 30rem;
+  height: auto;
+}
+.mainIndex .faq h2 {
+  padding-bottom: 1rem;
+}
+.mainIndex .faq .accordion {
+  padding: 0 2rem;
+}
+.mainIndex .faq .accorItem {
+  border-bottom: 0.11rem solid #3F4E09;
+}
+.mainIndex .faq .accorItem .accorTitle {
+  width: 90%;
+}
+.mainIndex .faq .accorItem button {
+  position: relative;
+  display: block;
+  text-align: left;
+  font-size: 1rem;
+  width: 100%;
+  padding: 1.5rem 0;
+  color: #3F4E09;
+  font-weight: 600;
+  border: none;
+  outline: none;
+}
+.mainIndex .faq .accorItem button:hover, .mainIndex .faq .accorItem button:focus {
+  color: #919537;
+}
+.mainIndex .faq .accorItem button .icon {
+  display: inline-block;
+  position: absolute;
+  top: 1.125rem;
+  right: 0;
+  width: 1.375rem;
+  height: 1.375rem;
+  border: 0.06rem solid;
+  border-radius: 50%;
+}
+.mainIndex .faq .accorItem button .icon::before, .mainIndex .faq .accorItem button .icon::after {
+  content: "";
+  display: block;
+  position: absolute;
+  background: currentColor;
+}
+.mainIndex .faq .accorItem button .icon::before {
+  top: 0.5625rem;
+  left: 0.3125rem;
+  width: 0.625rem;
+  height: 0.125rem;
+}
+.mainIndex .faq .accorItem button .icon::after {
+  top: 0.3125rem;
+  left: 0.5625rem;
+  width: 0.125rem;
+  height: 0.625rem;
+}
+.mainIndex .faq .accorItem button[aria-expanded=true] {
+  border-bottom: 0.11rem solid #919537;
+}
+.mainIndex .faq .accorItem button[aria-expanded=true] .icon::after {
+  width: 0;
+}
+.mainIndex .faq .accorItem button[aria-expanded=true] + .accorContent {
+  opacity: 1;
+  max-height: 9rem;
+  transition: all 200ms linear;
+}
+.mainIndex .faq .accorItem .accorContent {
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 200ms linear, max-height 200ms linear;
+}
+.mainIndex .faq .accorItem .accorContent p {
+  line-height: 1.5rem;
+  font-weight: 300;
+  margin: 2rem 0;
+  text-align: left;
+}
+@media only screen and (max-width: 60rem) {
+  .mainIndex .faq {
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4rem;
+    flex-direction: column;
+  }
+  .mainIndex .faq figure img {
+    width: 25rem;
+    height: auto;
+  }
+  .mainIndex .faq .accorItem button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+}
+@media only screen and (min-width: 60.01rem) and (max-width: 87rem) {
+  .mainIndex .faq {
+    max-width: 88rem;
+    gap: 0.5rem;
+    padding: 1rem;
+  }
+  .mainIndex .faq figure {
+    padding-left: 1rem;
+  }
+  .mainIndex .faq figure img {
+    width: 20rem;
+    height: auto;
+  }
+  .mainIndex .faq .accorItem button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+}
+
+.loginRegister {
+  width: 100%;
+  height: auto;
+  display: grid;
+  justify-items: center;
+  padding: 4rem 0;
+}
+.loginRegister .back {
+  width: 70%;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 2.5rem;
+}
+.loginRegister .back img {
+  width: 1.3rem;
+}
+
+.mainMenu {
+  width: 100%;
+  height: auto;
+  padding: 3rem 0;
+  text-align: center;
+}
+.mainMenu .header {
+  margin: 0 auto;
+  max-width: 60rem;
+}
+.mainMenu .header h1 {
+  font-size: 3rem;
+}
+.mainMenu .header p {
+  line-height: 2.3rem;
+  margin: 2rem;
+  font-size: 1.6rem;
+}
+.mainMenu .header button {
+  margin: 2.3rem;
+}
+.mainMenu .header button a {
+  font-size: 1.2rem;
+  color: white;
+  background-color: #3F4E09;
+  border-radius: 0.3rem;
+  padding: 1rem 4rem;
+}
+.mainMenu .header button a:hover {
+  color: #3F4E09;
+  border: #3F4E09 solid 0.125rem;
+  background-color: transparent;
+  box-shadow: 1px 2px 30px 1px;
+}
+.mainMenu .cards,
+.mainMenu .ideas {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+  padding: 0 1.5rem;
+}
+.mainMenu .cards {
+  margin: 3rem auto 5rem auto;
+  max-width: 80rem;
+  grid-auto-rows: 26rem;
+}
+.mainMenu .cards .card {
+  background-color: #f0f1ec;
+  text-align: left;
+  box-shadow: 2px 2px 15px 1px #919537;
+  padding: 1.9rem 1.3rem;
+  border-radius: 0.4rem;
+  border: #919537 solid 0.123rem;
+  width: auto;
+  height: 26rem;
+}
+.mainMenu .cards .card h2,
+.mainMenu .cards .card h3 {
+  font-size: 1.7rem;
+  margin-top: 1.3rem;
+}
+.mainMenu .cards .card p {
+  font-size: 1.3rem;
+  line-height: 1.6rem;
+}
+.mainMenu .cards .card span svg {
+  fill: #3F4E09;
+}
+.mainMenu .ideas {
+  margin: 0 auto;
+  max-width: 82rem;
+  grid-auto-rows: 15rem;
+}
+.mainMenu .ideas .idea h4,
+.mainMenu .ideas .idea h5 {
+  font-size: 1.3rem;
+}
+.mainMenu .ideas .idea p {
+  margin: 0 auto;
+  line-height: 1.7rem;
+  width: 90%;
+}
+.mainMenu .ideas .idea span svg {
+  fill: #919537;
+}
+.mainMenu .card,
+.mainMenu .idea {
+  display: flex;
+  justify-content: flex-start;
+  gap: 1.3rem;
+  flex-direction: column;
+}
+.mainMenu .header2 {
+  margin: 0 auto;
+  max-width: 60rem;
+}
+.mainMenu .header2 h3 {
+  font-size: 2.6rem;
+}
+.mainMenu .header2 p {
+  font-size: 1.5rem;
+  line-height: 2.3rem;
+  margin: 2rem;
+}
+@media only screen and (max-width: 39.99rem) {
+  .mainMenu .header h1,
+  .mainMenu .header2 h3 {
+    padding: 0 1rem;
+  }
+  .mainMenu .cards .card {
+    width: 20rem;
+    height: 26rem;
+  }
+}
+@media only screen and (max-width: 77.5rem) {
+  .mainMenu .cards .card p {
+    line-height: 1.8rem;
+  }
+}
+
+.mainNote {
+  width: 100%;
+  height: auto;
+  display: grid;
+  justify-items: center;
+  padding: 4rem 0;
+}
+.mainNote section {
+  width: 50%;
+  height: auto;
+  max-width: 50rem;
+  display: grid;
+  gap: 1.5rem;
+}
+.mainNote section form {
+  display: grid;
+  gap: 1.5rem;
+}
+.mainNote section form input,
+.mainNote section form textarea {
+  padding: 1rem;
+  border-radius: 0.3rem;
+  border: #d5d6b7 solid 0.094rem;
+  transition: all 0.5s;
+  outline: none;
+}
+.mainNote section form input:focus,
+.mainNote section form textarea:focus {
+  border: #919537 solid 0.094rem;
+  box-shadow: 0px 2px 18px rgba(145, 149, 55, 0.7);
+}
+.mainNote section form .btnGroup {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1.2rem;
+}
+.mainNote section form button {
+  color: white;
+  background-color: #3F4E09;
+  padding: 0.8rem 2rem;
+  transition: all 0.4s;
+  border-radius: 0.2rem;
+}
+.mainNote section form button:hover {
+  background-color: transparent;
+  border: #3F4E09 solid 0.099rem;
+  color: #3F4E09;
+}
+.mainNote section form .categories select {
+  font-size: 1rem;
+  padding: 0.8rem 1.7rem;
+  border: none;
+  outline: none;
+  border-radius: 0.3rem;
+  border: #d5d6b7 solid 0.094rem;
+}
+.mainNote section form .categories select:focus {
+  border: #919537 solid 0.094rem;
+  box-shadow: 0px 2px 18px rgba(145, 149, 55, 0.7);
+}
+.mainNote section .invalid {
+  border: red solid 0.15rem;
+}
+.mainNote section .emptyError {
+  color: red;
+}
+@media only screen and (max-width: 70rem) {
+  .mainNote section {
+    width: 80%;
+    height: auto;
+  }
+}/*# sourceMappingURL=main.css.map */

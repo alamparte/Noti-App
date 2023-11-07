@@ -1,0 +1,55 @@
+@import '../utilities/mixins';
+@import '../utilities/variables';
+@import '../utilities/maps';
+
+.mainNote {
+    @include measures(100%, auto);
+    @include grid(center);
+    padding: 4rem 0;
+    section {
+        @include measures(50%, auto);
+        max-width: 50rem;
+        display: grid;
+        gap: 1.5rem;
+        form {
+            display: grid;
+            gap: 1.5rem;
+            input,
+            textarea {
+                @include input;
+            }
+            .btnGroup {
+                @include flex(flex-end, center, 1.2rem);
+            }
+            button {
+                @include BtnGroups;
+            }
+            .categories {
+                select {
+                    font-size: $fsize-SM;
+                    padding: 0.8rem 1.7rem;
+                    border: none;
+                    outline: none;
+                    border-radius: 0.3rem;
+                    @include border(0.094rem, map-get($map: $colors, $key: bg-color-1));
+                    &:focus {
+                        @include border(0.094rem, map-get($map: $colors, $key: link));
+                        box-shadow: 0px 2px 18px rgba(145, 149, 55, 0.7);
+                    }
+                }
+            }
+        }
+
+        .invalid {
+            @include border(0.15rem, map-get($map: $colors, $key: error));
+        }
+        .emptyError {
+            color: map-get($map: $colors, $key: error);
+        }
+    }
+    @media only screen and (max-width: 70rem) {
+        section {
+            @include measures(80%, auto);
+        }
+    }
+}

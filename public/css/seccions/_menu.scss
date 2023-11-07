@@ -1,0 +1,120 @@
+@import '../utilities/mixins';
+@import '../utilities/maps';
+@import '../utilities/variables';
+
+.mainMenu {
+    @include measures(100%, auto);
+    padding: 3rem 0;
+    text-align: center;
+    .header {
+        margin: 0 auto;
+        max-width: 60rem;
+        h1 {
+            font-size: $fsize-header1;
+        }
+        p {
+            line-height: 2.3rem;
+            margin: 2rem;
+            font-size: 1.6rem;
+        }
+        button {
+            margin: 2.3rem;
+            a {
+                @include mainBtn;
+                padding: 1rem 4rem;
+            }
+        }
+    }
+    .cards,
+    .ideas {
+        @include grid(center, center, 1rem);
+        grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+        padding: 0 1.5rem;
+    }
+    .cards {
+        margin: 3rem auto 5rem auto;
+        max-width: 80rem;
+        grid-auto-rows: 26rem;
+        .card {
+            background-color: #f0f1ec;
+            text-align: left;
+            box-shadow: 2px 2px 15px 1px map-get($map: $colors, $key: link);
+            padding: 1.9rem 1.3rem;
+            border-radius: 0.4rem;
+            @include border(0.123rem, map-get($map: $colors, $key: link));
+            @include measures(auto, 26rem);
+            h2,
+            h3 {
+                font-size: 1.7rem;
+                margin-top: 1.3rem;
+            }
+            p {
+                font-size: $fsize-second;
+                line-height: 1.6rem;
+            }
+            span {
+                svg {
+                    fill: map-get($map: $colors, $key: btn);
+                }
+            }
+        }
+    }
+    .ideas {
+        margin: 0 auto;
+        max-width: 82rem;
+        grid-auto-rows: 15rem;
+        .idea {
+            h4,
+            h5 {
+                font-size: $fsize-second;
+            }
+            p {
+                margin: 0 auto;
+                line-height: 1.7rem;
+                width: 90%;
+            }
+            span {
+                svg {
+                    fill: map-get($map: $colors, $key: link);
+                }
+            }
+        }
+    }
+    .card,
+    .idea {
+        @include flex(flex-start, false, 1.3rem, column);
+    }
+    .header2 {
+        margin: 0 auto;
+        max-width: 60rem;
+        h3 {
+            font-size: 2.6rem;
+        }
+
+        p {
+            font-size: 1.5rem;
+            line-height: 2.3rem;
+            margin: 2rem;
+        }
+    }
+    @media only screen and (max-width: 39.99rem) {
+        .header h1,
+        .header2 h3 {
+            padding: 0 1rem;
+        }
+        .cards {
+            .card {
+                @include measures(20rem, 26rem);
+            }
+        }
+    }
+    @media only screen and (max-width: 77.5rem) {
+        .cards {
+            .card {
+                p {
+                    line-height: 1.8rem;
+                }
+            }
+        }
+    }
+}

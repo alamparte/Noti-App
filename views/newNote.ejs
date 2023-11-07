@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self'" />
+        <meta name="description" content="<%= locals.description %>" />
+        <title><%= locals.title %></title>
+        <!-- FAVICON -->
+        <link rel="icon" href="/img/favicon.ico" />
+        <!-- LINK CSS -->
+        <link rel="stylesheet" href="/css/main.css" />
+    </head>
+    <body>
+        <!-- START HEADER -->
+        <%- include('partials/header_dashboard') %>
+        <!-- END HEADER -->
+
+        <!-- START MAIN -->
+        <main class="mainNote grid">
+            <section>
+                <h1>Notiz hinzufügen</h1>
+                <form name="newNote">
+                    <div class="categories">
+                        <select name="category">
+                            <option value="hohe">hohe Priorität</option>
+                            <option value="mittlere">mittlere Priorität</option>
+                            <option value="niedrige">niedrige Priorität</option>
+                        </select>
+                    </div>
+                    <div class="emptyError error"></div>
+                    <input type="text" id="titel" placeholder="Titel" class="allInputs" />
+                    <textarea id="description" cols="30" rows="14" placeholder="Beschreibung. . ." class="allInputs"></textarea>
+                    <div class="btnGroup">
+                        <a href="/dashboard">Abbrechen</a>
+                        <button type="submit">+ Hinzufügen</button>
+                    </div>
+                </form>
+            </section>
+            <!-- arrow up icon -->
+            <div class="arrowUp" id="scrollToTop">
+                <svg height="1.1rem" viewBox="0 0 384 512">
+                    <path
+                        d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"
+                    />
+                </svg>
+            </div>
+        </main>
+        <!-- END MAIN -->
+
+        <!-- START FOOTER -->
+        <%- include('partials/footer') %>
+        <!-- END FOOTER -->
+
+        <!-- JS LINK -->
+        <script src="/js/menuHamb.js"></script>
+        <script src="/js/scrollToTop.js"></script>
+        <script src="/js/notes/createNote.js"></script>
+    </body>
+</html>

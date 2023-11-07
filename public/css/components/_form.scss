@@ -1,0 +1,194 @@
+@import '../utilities/mixins';
+@import '../utilities/maps';
+@import '../utilities/variables';
+.formStyles {
+    @include grid(center, center, 1.5rem);
+    background-color: map-get($map: $colors, $key: bg-color-2);
+    @include measures(100%);
+    max-width: 36rem;
+    border-radius: 0.3rem;
+    box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.2);
+    padding: 3rem 0;
+    p {
+        font-weight: map-get($map: $font-weight, $key: light);
+        font-size: $fsize-mainBtn;
+        text-align: center;
+        a {
+            display: block;
+            padding: 1rem 0;
+            color: map-get($map: $colors, $key: btn);
+            font-size: $fsize-second;
+            transition: 0.5s;
+            &:hover {
+                transform: scale(1.05);
+            }
+        }
+    }
+    .textChange {
+        text-align: start;
+        width: 80%;
+    }
+    .changePassForm {
+        @include grid(center, center, 1rem);
+    }
+    .head {
+        .logo {
+            text-align: center;
+            padding-bottom: 1.2rem;
+            figure {
+                padding-bottom: 0.7rem;
+
+                img {
+                    @include measures(4rem);
+                }
+            }
+            span {
+                font-size: 1.6rem;
+                font-weight: map-get($map: $font-weight, $key: bold);
+                letter-spacing: 0.8rem;
+            }
+        }
+        .h1ChangePass {
+            font-size: $fsize-header2;
+            text-align: center;
+        }
+    }
+    .checkCodeBtn {
+        color: map-get($map: $colors, $key: btn);
+        border-radius: 10rem;
+        padding: 0.7rem 2rem;
+        box-shadow: 0px 2px 18px rgba(145, 149, 55, 0.4);
+        margin-right: 1.5rem;
+        &:hover {
+            background-color: map-get($map: $colors, $key: bg-color-1);
+        }
+        &:disabled {
+            color: rgb(151, 149, 149);
+            box-shadow: none;
+            &:hover {
+                background-color: transparent;
+            }
+        }
+    }
+    .spinner2,
+    .checkCodeBtn {
+        justify-self: end;
+    }
+    .bliknEffect {
+        @keyframes glowing {
+            0% {
+                box-shadow: 0 0 5px #688011;
+            }
+            50% {
+                box-shadow: 0 0 20px #919537;
+            }
+            100% {
+                box-shadow: 0 0 5px #688011;
+            }
+        }
+    }
+    .resetPass {
+        a {
+            color: map-get($map: $colors, $key: btn);
+            &:hover {
+                color: map-get($map: $colors, $key: link);
+            }
+        }
+    }
+    form {
+        @include flex(false, false, 1rem, column);
+        @include measures(80%);
+        .inputStyles {
+            padding: 1rem;
+            font-size: $fsize-primary;
+            border-radius: 0.3rem;
+            @include border(0.094rem, map-get($map: $colors, $key: bg-color-1));
+            transition: 0.5s;
+            outline: none;
+            &:focus {
+                @include border(0.094rem, map-get($map: $colors, $key: link));
+                box-shadow: 0px 2px 18px rgba(145, 149, 55, 0.4);
+            }
+        }
+        .btnDisabled {
+            color: #bdbdbd;
+            background-color: #e1e1e1;
+            &:hover {
+                background-color: #e1e1e1;
+                border: none;
+            }
+        }
+        button {
+            border: none;
+            padding: 1rem 0;
+            background-color: rgba(145, 80, 31, 0.411);
+            border-radius: 0.2rem;
+            color: map-get($map: $colors, $key: delete);
+            transition: 0.8s ease-in-out;
+            &:hover {
+                background-color: transparent;
+                @include border(0.099rem, map-get($map: $colors, $key: delete));
+            }
+            &:disabled {
+                color: rgb(151, 149, 149);
+                box-shadow: none;
+                background-color: #e1e1e1;
+                &:hover {
+                    background-color: transparent;
+                }
+            }
+        }
+        .btnGroup {
+            @include flex(flex-end, center, 1.2rem);
+        }
+        .inputBox {
+            margin: 0.7rem 0;
+            background-color: map-get($map: $colors, $key: base-2);
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            font-size: $fsize-primary;
+            border-radius: 0.3rem;
+            @include border(0.094rem, map-get($map: $colors, $key: bg-color-1));
+            transition: 0.5s;
+            &:focus-within {
+                @include border(0.094rem, map-get($map: $colors, $key: link));
+                box-shadow: 0px 2px 18px rgba(145, 149, 55, 0.4);
+            }
+            .passStyles {
+                width: 100%;
+                border: 0;
+                outline: 0;
+            }
+        }
+        .invalid {
+            @include border(0.15rem, map-get($map: $colors, $key: error));
+        }
+        .valid {
+            @include border(0.15rem, map-get($map: $colors, $key: link));
+        }
+        .error {
+            color: map-get($map: $colors, $key: error);
+        }
+    }
+    #formEmailValidate {
+        gap: 0.7rem;
+        margin: 1.3rem auto 0 auto;
+    }
+    .changePass {
+        button {
+            @include BtnGroups;
+        }
+    }
+    @media only screen and (max-width: 80rem) {
+        @include measures(70%);
+    }
+    @media only screen and (max-width: 43rem) {
+        @include measures(90%);
+    }
+    @media only screen and (max-width: 31rem) {
+        .h1ChangePass {
+            font-size: 1.7rem;
+        }
+    }
+}
